@@ -32,12 +32,12 @@ public class TestHibernate
 		session.save(users);
 		
 		
-		
 		System.out.println(">>init():Users persisted!!!"); 
 		session.getTransaction().commit();
 		
 		
 		System.out.println("\n***************************************************");
+		
 	}
 	
 	@Test
