@@ -7,16 +7,16 @@
         version="2.1">
         
       <!--  I add this pary -  mandatory.My App will search for this name-->
-     <persistence-unit name="BookStoreWebSiet">
+     <persistence-unit name="BookStoreWebSite">
      	<properties>
      		<!-- jdbc url  -->
-     		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstoredb"/>
+     		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstoredb?useSSL=false"/>
      	 	<!-- db user -->
      	 	<property name="javax.pseristence.jdbc.user" value="root"/>
      	 	<!-- user password -->
      	 	<property name="javax.pseristence.jdbc.password" value=""/>
      	 	<!-- driver class name -->
-     	 	<property name="javax.pseristence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+     	 	<property name="javax.pseristence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
      	  </properties>
      </persistence-unit>
  </persistence>

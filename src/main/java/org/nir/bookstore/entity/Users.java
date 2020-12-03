@@ -12,7 +12,6 @@ import javax.persistence.Table;
 public class Users 
 {
 	@Id
-	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private Integer userId; 
@@ -25,9 +24,22 @@ public class Users
 	
 	@Column(name="password")
 	private String password;
+	
+	public Users() {}
+	
+	
+	
+	
+	public Users(String email, String fullName, String password) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+	}
 
-	
-	
+
+
+
 	public Integer getUserId() {
 		return userId;
 	}
