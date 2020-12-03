@@ -8,5 +8,11 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bookstoredb</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <!-- Drop and re-create the database schema on startup –> -->
+         <property name="hbm2ddl.auto">create</property>
+        
+       <!-- Stack Over Flow... -->
+       <property name="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</property>
     </session-factory>
 </hibernate-configuration>
