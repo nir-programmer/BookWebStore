@@ -1,5 +1,5 @@
 package org.nir.bookstore.entities;
-// Generated 3 Dec 2020, 20:30:31 by Hibernate Tools 5.4.18.Final
+// Generated 3 Dec 2020, 20:47:46 by Hibernate Tools 5.4.18.Final
 
 import java.util.Date;
 
