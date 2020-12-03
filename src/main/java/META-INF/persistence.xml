@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  Copy from Oracle web site! (search for persistence xml schemas -->
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
         version="2.1">
+        
+      <!--  I add this pary -  mandatory.My App will search for this name-->
+     <persistence-unit name="BookStoreWebSiet">
+     	<properties>
+     		<!-- jdbc url  -->
+     		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstoredb"/>
+     	 	<!-- db user -->
+     	 	<property name="javax.pseristence.jdbc.user" value="root"/>
+     	 	<!-- user password -->
+     	 	<property name="javax.pseristence.jdbc.password" value=""/>
+     	 	<!-- driver class name -->
+     	 	<property name="javax.pseristence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+     	  </properties>
+     </persistence-unit>
  </persistence>
