@@ -1,10 +1,9 @@
-package org.nir.bookstore.test.hibernate;
+package org.nir.bookstore.entities;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.archive.scan.spi.ClassDescriptor.Categorization;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterAll;
@@ -23,7 +22,7 @@ import org.nir.bookstore.entities.OrderDetailId;
 import org.nir.bookstore.entities.Review;
 import org.nir.bookstore.entities.Users;
 
-public class TestHibernate 
+public class TestCategory 
 {
 	private static SessionFactory sessionFactory ; 
 	private static Session session; 
@@ -84,6 +83,9 @@ public class TestHibernate
 	{
 		if(session != null)
 		{
+			System.out.println(">>closeSession():try to commit transaction..."); 
+		session.getTransaction().commit();
+		System.out.println(">>closeSession():transaction commited!"); 
 		
 		System.out.println(">>closeSession():try to close the session..."); 
 		session.close();
@@ -95,33 +97,39 @@ public class TestHibernate
 		
 	}
 	
+	
+	/*
+	 * **********************************TESTS***********************************
+	 * */
+	
+	
 	@Test
 	@Disabled
-	@DisplayName("when trying to save a new Book")
-	void testAddUsers()
+	@DisplayName("when trying to add a new category to db")
+	void testAddNewCategory()
 	{
-		
-		//session = sessionFactory.getCurrentSession();
-		Users users = new Users("niritzha@sdf", "password", "NironXXXX");
-		System.out.println(">>testAddUsers():try to add a new Users named NironXXXX to db..");
-		session.save(users);
-		System.out.println(">>testAddUsers()):new Users named NironXXXX Persisted");
-		
-		session.getTransaction().commit();
+			System.out.println(">>testAddNewCategory():try to add 2 categories : Comix and Science");
+			Category category1 = new Category("Comix");
+			Category category2 = new Category("Science");
+			
+			session.save(category1);
+			session.save(category2);
+			
+			
+			System.out.println(">>testAddNewCategory():Comix and Science presisted!!!");
 	}
 	
 	@Test
 	//@Disabled
-	@DisplayName("when reading users")
-	void testGetAllUsers() 
+	@DisplayName("when reading categories")
+	void testGetAllCategories() 
 	{
 		
-		Query<Users> query = session.createQuery("FROM Users");
-		List<Users> users = query.getResultList();
-		System.out.println(">>testGetAllUsers():users:");
-		System.out.println(users);
+		Query<Category> query = session.createQuery("FROM Category");
+		List<Category> categories = query.getResultList();
+		System.out.println(">>testGetAllCategories(): categories:");
+		System.out.println(categories);
 		
 	}
-	
 
 }
