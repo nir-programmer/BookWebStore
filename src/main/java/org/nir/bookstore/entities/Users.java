@@ -15,6 +15,12 @@ import javax.persistence.Table;
 @Table(name = "users", catalog = "bookstoredb")
 public class Users implements java.io.Serializable {
 
+	@Override
+	public String toString() {
+		return "Users [userId=" + userId + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+				+ "]";
+	}
+
 	private Integer userId;
 	private String email;
 	private String password;
