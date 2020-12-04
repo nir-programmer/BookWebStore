@@ -104,7 +104,7 @@ public class TestCategory
 	
 	
 	@Test
-	@Disabled
+	//@Disabled
 	@DisplayName("when trying to add a new category to db")
 	void testAddNewCategory()
 	{
