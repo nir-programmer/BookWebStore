@@ -2,9 +2,11 @@ package org.nir.bookstore.dao;
 
 import java.util.List;
 
+import org.nir.bookstore.entities.Users;
+
 public interface GenericeDAO<T> 
 {
-	public void create(T t);
+	public T create(T t);
 	
 	public T update(T t);
 	
