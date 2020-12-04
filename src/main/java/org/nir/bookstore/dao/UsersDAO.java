@@ -17,18 +17,19 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	
 
 	@Override
-	public Users create(Users t) 
+	public Users create(Users user) 
 	{
 		// TODO Auto-generated method stub
-		return super.create(t);
+		return super.create(user);
 	}
 
 
 
 	@Override
-	public Users update(Users t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Users update(Users user) 
+	{
+		
+		return super.update(user);
 	}
 
 	@Override

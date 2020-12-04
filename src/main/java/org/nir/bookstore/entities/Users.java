@@ -68,4 +68,11 @@ public class Users implements java.io.Serializable {
 		this.fullName = fullName;
 	}
 
+	@Override
+	public String toString() {
+		return "Users [userId=" + userId + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+				+ "]";
+	}
+	
+
 }

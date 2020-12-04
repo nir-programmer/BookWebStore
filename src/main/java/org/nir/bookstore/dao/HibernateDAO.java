@@ -2,7 +2,7 @@ package org.nir.bookstore.dao;
 
 import org.hibernate.Session;
 
-public class HibernateDAO<T>
+public class HibernateDAO<E>
 {
 	protected Session session ;
 
@@ -12,15 +12,30 @@ public class HibernateDAO<T>
 		this.session = session;
 	} 
 	
-	
-	public T create(T t)
+	public E create(E e)
 	{
 		session.getTransaction().begin();
-		session.save(t);
+		session.save(e);
 		session.flush();
-		session.refresh(t);
+		session.refresh(e);
 		
 		session.getTransaction().commit();
-		return t; 
+		return e; 
 	}
+	
+	public E update(E e)
+	{
+		session.getTransaction().begin();
+		session.saveOrUpdate(e);
+		session.flush();
+		session.refresh(e);
+		
+		session.getTransaction().commit();
+		return e; 
+		
+	}
+	
+	
+	
+	
 }

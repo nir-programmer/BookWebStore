@@ -1,6 +1,6 @@
 package org.nir.bookstore.dao;
 
-
+import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -8,94 +8,91 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.nir.bookstore.entities.Users;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 public class TestUsersDAO 
 {
-	private static SessionFactory sessionFactory; 
-	private static Session session; 
+	private static SessionFactory sessionFactory;
+	private static Session session;
+	private static UsersDAO usersDAO;
 	
 	@BeforeAll
 	@DisplayName("when try to create a session factory")
-	static void init()
+	public static void init() 
 	{
-		Users user1 = new Users();
-		user1.setEmail("NironYYYY");
-		user1.setFullName("NIRONYYYY");
-		user1.setPassword("123");
-		
-		
-		System.out.println(">>init():try to create session factory"); 
 		sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class).buildSessionFactory();
-		System.out.println(">>init():SESSION FACTORY CREATED!!!"); 
+				.addAnnotatedClass(Users.class)
+				.buildSessionFactory();
 		
 		session = sessionFactory.getCurrentSession();
-		System.out.println(">>init():SESSION CREATED!!!"); 
-		
-		System.out.println(">>init():Try to create UserDAO object.."); 
-		UsersDAO usersDAO = new UsersDAO(session);
-		
-		user1 = usersDAO.create(user1);
-		
-		assertTrue(user1.getUserId() > 0);
-		
-		
-		
-		
-		System.out.println("\n***************************************************");
-	}
 	
-	@AfterAll
-	@DisplayName("when try close the session factory")
-	static void tearDown()
-	{
-		if(sessionFactory != null)
-		{
-		System.out.println(">>tearDown():try to close the session factory..."); 
-		sessionFactory.close();
-		System.out.println(">>teadDown():session factory  closed!"); 
+		usersDAO = new UsersDAO(session);
 		System.out.println("\n***************************************************");
-		}
-		
-		
 	}
-	@BeforeEach
-	@DisplayName(">>createSession():try to create a new Session")
-	void createSession()
-	{
-		System.out.println(">>createSession():try to create a new Session..."); 
-		session = sessionFactory.getCurrentSession();
-		System.out.println(">>createSession():Session Created!");
-		
-		
-		System.out.println("\n***************************************************");
 
-	}
-	
-	@AfterEach
-	@DisplayName("when try close the session")
-	void closeSession()
+	@AfterAll
+	@DisplayName("when try to close SessionFactory and Session objects")
+	public  static void tearDown()
 	{
 		if(session != null)
-		{
-		System.out.println(">>closeSession():try to close the session..."); 
-		session.close();
-		System.out.println(">>closeSession():session closed!"); 
-		System.out.println("\n***************************************************");
+			session.close();
+		if(sessionFactory != null)
+			sessionFactory.close();	
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
-		}
-		
+	@Test
+	@Disabled
+	void testCreateUsersWithMandotoryFileds() 
+	{
+		Users users = new Users("niritzhak10@gmail.com", "1234", "nir itzhak");
+		System.out.println(">>testCreateUsersWithMandotoryFileds() :try to create a users nir itzhak..");
+		users = usersDAO.create(users);
+		System.out.println(">>testCreateUsersWithMandotoryFileds():users nir itzhak created");
+
+		System.out.println("\n***************************************************");
 		
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Test
-	void f()
+	@Disabled
+	@DisplayName("when trying to add a user with empty field")
+	void testAddEmptyUsers()
 	{
 		
+		System.out.println(">>testAddEmptyUsers():before assertThrows...");
+		assertThrows(PropertyValueException.class,() -> new UsersDAO(session).create(new Users())); 
+		System.out.println(">>testAddEmptyUsers():After assertThrows");
+
+		System.out.println("\n***************************************************");
 	}
+	
+	@Test
+	//@Disabled
+	@DisplayName("when update a user")
+	void testUpdateUser()
+	{
+		
+		Users user = new Users();
+		
+		user.setUserId(19);
+		user.setEmail("ZZZZZZZ");
+		user.setFullName("YYY");
+		user.setPassword("11111111111");
+		
+		
+		
+		System.out.println(">>testUpdateUser():user after update:" + usersDAO.update(user));
+		
+		
+	}
+	
 }
