@@ -1,5 +1,5 @@
 package org.nir.bookstore.entities;
-// Generated 4 Dec 2020, 10:51:52 by Hibernate Tools 5.2.12.Final
+// Generated 4 Dec 2020, 11:44:04 by Hibernate Tools 5.2.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
