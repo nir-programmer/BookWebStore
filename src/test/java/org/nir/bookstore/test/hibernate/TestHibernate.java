@@ -43,8 +43,7 @@ public class TestHibernate
 				.addAnnotatedClass(Customer.class)
 				.buildSessionFactory();
 		
-		
-		
+	
 	}
 	
 	@AfterAll
@@ -97,7 +96,7 @@ public class TestHibernate
 	}
 	
 	@Test
-	@Disabled
+	//@Disabled
 	@DisplayName("when trying to save a new Book")
 	void testAddBook()
 	{
