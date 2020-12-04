@@ -96,21 +96,22 @@ public class TestHibernate
 	}
 	
 	@Test
-	//@Disabled
+	@Disabled
 	@DisplayName("when trying to save a new Book")
-	void testAddBook()
+	void testAddUsers()
 	{
 		
 		//session = sessionFactory.getCurrentSession();
-		Users users = new Users("niritzha@sdf", "password", "Nir Ithzak");
-		System.out.println(">>testAddBook():try to add a new book to db..");
+		Users users = new Users("niritzha@sdf", "password", "NironXXXX");
+		System.out.println(">>testAddUsers():try to add a new Users named NironXXXX to db..");
 		session.save(users);
-		System.out.println(">>testAddBook():new Book Persisted");
+		System.out.println(">>testAddUsers()):new Users named NironXXXX Persisted");
 		
 		session.getTransaction().commit();
 	}
 	
 	@Test
+	//@Disabled
 	@DisplayName("when reading users")
 	void testGetAllUsers() 
 	{
@@ -121,5 +122,6 @@ public class TestHibernate
 		System.out.println(users);
 		
 	}
+	
 
 }
