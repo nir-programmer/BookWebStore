@@ -12,4 +12,6 @@
 		<a href="view_cart">Cart</a>
 	</div>
 	
+	
+	
 </div>
