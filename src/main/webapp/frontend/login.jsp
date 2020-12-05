@@ -7,9 +7,8 @@
 <title>Login</title>
 </head>
 <body>
-	<div align="center">
-		<h1>This is a header:Logo , Search , Menu</h1>
-	</div>
+	
+	<jsp:include page="header.jsp"></jsp:include>
 	
 	<div align="center">
 		<h2>Please Login</h2>
@@ -20,9 +19,8 @@
 		</form>
 	</div>
 	
-	<div align="center">
-		<h4>This is a footer:Copyright , About , Contact</h4>
-	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
+	
 	
 </body>
 </html>

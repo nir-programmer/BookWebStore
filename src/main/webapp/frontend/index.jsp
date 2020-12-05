@@ -7,9 +7,9 @@
 <title>Evergreen Books - Online Books Store</title>
 </head>
 <body>
-	<div align="center">
-		<h1>This is a header:Logo , Search , Menu</h1>
-	</div>
+	<jsp:include page="header.jsp"></jsp:include>
+	
+	<br>
 	
 	<div align="center">
 		<h3>This is a main content:New Book , Best Selling books</h3>
@@ -18,9 +18,7 @@
 		<h2>Most-Popular Books</h2>
 	</div>
 	
-	<div align="center">
-		<h4>This is a footer:Copyright , About , Contact</h4>
-	</div>
-	
+	<br>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
