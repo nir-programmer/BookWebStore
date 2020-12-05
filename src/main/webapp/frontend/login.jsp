@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Evergreen Books - Online Books Store</title>
+<title>Login</title>
 </head>
 <body>
 	<div align="center">
@@ -12,10 +12,12 @@
 	</div>
 	
 	<div align="center">
-		<h3>This is a main content:New Book , Best Selling books</h3>
-		<h2>New Books:</h2>
-		<h2>Best-selling Books:</h2>
-		<h2>Most-Popular Books</h2>
+		<h2>Please Login</h2>
+		<form >
+			Email:<input type="text" size="10"> <br/>
+			Password:<input type="password" size="10"> <br/>
+			<input type="submit" value="login" >
+		</form>
 	</div>
 	
 	<div align="center">
