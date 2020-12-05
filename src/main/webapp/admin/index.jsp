@@ -8,10 +8,13 @@
 
 </head>
 <body>
+
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
+	
 		<h2>Administrative Dashboard</h2>
+		${message}
 	</div>
 
 	<div align="center">

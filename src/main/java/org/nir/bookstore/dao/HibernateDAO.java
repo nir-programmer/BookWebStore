@@ -32,9 +32,12 @@ public class HibernateDAO<E>
 		
 		session.getTransaction().commit();
 		return e; 
-		
 	}
 	
+	public E find(Class<E>)
+	{
+		
+	}
 	
 	
 	

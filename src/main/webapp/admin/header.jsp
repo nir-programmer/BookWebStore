@@ -3,7 +3,7 @@
 			<img src="../images/logo.jpg">
 		</div>
 		<div>
-			Welcome, Admin | <a href="logout">logout</a>
+			Welcome, ${message} | <a href="logout">logout</a>
 		</div>
 		<div>
 			<br>

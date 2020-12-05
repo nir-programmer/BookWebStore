@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HomePageServlet
+ * Servlet implementation class AdminHomeServlet
  */
-@WebServlet("")
-public class HomePageServlet extends HttpServlet
+@WebServlet("/admin/")
+public class AdminHomeServlet extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomePageServlet() {
+    public AdminHomeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,9 @@ public class HomePageServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		request.getRequestDispatcher("frontend/index.jsp").forward(request, response);
+		System.out.println("HELLO HOME PAGE");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		
 	}
 
 	/**
