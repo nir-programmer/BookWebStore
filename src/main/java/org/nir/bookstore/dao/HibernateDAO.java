@@ -33,6 +33,7 @@ public class HibernateDAO<E>
 		session.refresh(e);
 		
 		session.getTransaction().commit();
+		
 		return e; 
 	}
 	
@@ -40,9 +41,21 @@ public class HibernateDAO<E>
 	{
 		session.getTransaction().begin();
 		E entity =  session.find(e, id);
-		//session.refresh(entity);
+		if(entity != null)
+			session.refresh(entity);
 		
+		session.getTransaction().commit();
 		return entity ;
+		
+	}
+	
+	public void delete(Class<E> e , Object id)
+	{
+		//session.getTransaction().begin();
+		
+		Object refeObject  = this.find(e,  id);
+		session.delete(refeObject);
+		//session.getTransaction().commit();
 		
 		
 	}

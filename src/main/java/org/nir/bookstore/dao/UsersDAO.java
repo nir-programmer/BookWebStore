@@ -39,8 +39,9 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	}
 
 	@Override
-	public void delete(Object id) {
-		// TODO Auto-generated method stub
+	public void delete(Object id)
+	{
+		super.delete(Users.class, id);
 		
 	}
 
