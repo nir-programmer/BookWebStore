@@ -76,7 +76,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
-	//@Disabled
+	@Disabled
 	@DisplayName("when update a user")
 	void testUpdateUser()
 	{
@@ -88,9 +88,23 @@ public class TestUsersDAO
 		user.setFullName("YYY");
 		user.setPassword("11111111111");
 		
-		
-		
 		System.out.println(">>testUpdateUser():user after update:" + usersDAO.update(user));
+		
+		
+	}
+	
+	@Test
+	@DisplayName("when calling get method")
+	void testGetUsersFound()
+	{
+		
+		Integer id = 1; 
+		Users user = usersDAO.get(id); 
+		
+		System.out.println(">>testGetUsersFound():when calling get method with id = "+ id );
+		System.out.println("testGetUsersFound():the user :"+ user);
+		
+		
 		
 		
 	}

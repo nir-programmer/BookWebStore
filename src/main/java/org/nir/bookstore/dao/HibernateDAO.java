@@ -1,5 +1,7 @@
 package org.nir.bookstore.dao;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.Session;
 
 public class HibernateDAO<E>
@@ -34,8 +36,14 @@ public class HibernateDAO<E>
 		return e; 
 	}
 	
-	public E find(Class<E>)
+	public E find(Class<E> e , Object id)
 	{
+		session.getTransaction().begin();
+		E entity =  session.find(e, id);
+		//session.refresh(entity);
+		
+		return entity ;
+		
 		
 	}
 	
