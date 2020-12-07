@@ -10,6 +10,7 @@ import org.nir.bookstore.entities.Users;
 
 public class UsersService 
 {
+	
 	private SessionFactory sessionFactory; 
 	private Session session;
 	private UsersDAO usersDAO; 
