@@ -54,6 +54,7 @@ public class HibernateDAO<E>
 	{
 		session.getTransaction().begin();
 		Object reference  = session.getReference(e, id);
+		
 		session.delete(reference);
 		session.getTransaction().commit();
 		

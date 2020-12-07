@@ -133,14 +133,14 @@ public class TestUsersDAO
 	@DisplayName("when calling the delete method on exititng user")
 	public void testDeleteUsersFound()
 	{
-		Integer id = 2; 
+		Integer id = 1; 
 		System.out.println(">>testDeleteUsersFound():try to delete user with id = " + id);
 		usersDAO.delete(id);
 		
-		System.out.println(">>testDeleteUsersFound():User Deleted!");
-		
 		
 	}
+	
+	
 	
 	
 	
