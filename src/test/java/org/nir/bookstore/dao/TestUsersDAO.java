@@ -137,7 +137,6 @@ public class TestUsersDAO
 		System.out.println(">>testDeleteUsersFound():try to delete user with id = " + id);
 		usersDAO.delete(id);
 		
-		
 	}
 	
 	
