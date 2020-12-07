@@ -52,11 +52,7 @@ public class HibernateDAO<E>
 	
 	public void delete(Class<E> e , Object id)
 	{
-		//session.getTransaction().begin();
 		
-		Object refeObject  = this.find(e,  id);
-		session.delete(refeObject);
-		//session.getTransaction().commit();
 	
 	}
 	
