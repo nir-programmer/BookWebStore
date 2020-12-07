@@ -35,6 +35,7 @@ public class TestUsersDAO
 
 		 session = sessionFactory.getCurrentSession();
 		 
+		 
 		 usersDAO = new UsersDAO(session); 
 		 
 	}
@@ -47,58 +48,34 @@ public class TestUsersDAO
 		sessionFactory.close();
 	}
 	
-	
-	
-	
+	/*************************************************************/
 	@Test
-	public void testCreateUsers() {
+	@Disabled
+	public void testCreateUsers() 
+	{
 		Users user1 = new Users();
 		user1.setEmail("niritziahk10@gmial.com");
-		user1.setFullName("Nir Ithzak");
-		user1.setPassword("power");
-
-		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class).buildSessionFactory();
-
-		Session session = sessionFactory.getCurrentSession();
-
-		session.getTransaction().begin();
-
-		session.persist(user1);
-
-		session.getTransaction().commit();
-
-		session.close();
-		sessionFactory.close();
-
+		user1.setFullName("nironnnnn");
+		user1.setPassword("powerrrrrr");
+		
+		System.out.println(">>testCreateUsers():try to add nironnnnn user... ");
+		usersDAO.create(user1);
+		System.out.println(">>testCreateUsers():nironnnn user persisted!");
+		
 		assertTrue(user1.getUserId() > 0);
-
+		
 	}
 
 	@Test
-	@Disabled
+	//@Disabled
 	void testCreateUsersFieldsNotSet() 
 	{
-		Users user1 = new Users();
-		/*
-		 * user1.setEmail("niritziahk10@gmial.com"); user1.setFullName("Nir Ithzak");
-		 * user1.setPassword("power");
-		 */
+		System.out.println(">>testCreateUsersFieldsNotSet() :try to add a user with empty fields....");
 		
-		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class)
-				.buildSessionFactory();
 		
-		Session session = sessionFactory.getCurrentSession();
 		
-		session.getTransaction().begin();
+		assertThrows(PropertyValueException.class, () -> usersDAO.create(new Users()));
 		
-		session.persist(user1);
-		
-		session.getTransaction().commit();
-		
-		session.close();
-		sessionFactory.close();
 		
 	}
 
