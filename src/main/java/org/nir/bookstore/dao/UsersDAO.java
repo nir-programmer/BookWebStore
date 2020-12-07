@@ -34,6 +34,10 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	@Override
 	public Users get(Object userId)
 	{
+		/*
+		 * The Users.class will translate to Class<Users> 
+		 * in supper class
+		 */
 		return super.find(Users.class, userId);
 	}
 

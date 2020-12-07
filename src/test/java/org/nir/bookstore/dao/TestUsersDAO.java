@@ -1,6 +1,7 @@
 package org.nir.bookstore.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -76,6 +77,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
+	@Disabled
 	@DisplayName("when trying to update users")
 	public void testUpdataUsers()
 	{
@@ -95,8 +97,20 @@ public class TestUsersDAO
 		
 		System.out.println(">>testUpdataUsers():user updated!");
 		
+	}
+
+	@Test
+	@DisplayName("when calling get() method")
+	void testGetUsersFound()
+	{
+		Integer id = 1; 
+		System.out.println(">>testGetUsersFound():try to get user with id = " + id);
+		Users users = usersDAO.get(id);
+		
+		assertNotNull(users);
+		
+		System.out.println("The user: " + users);
 		
 		
 	}
-
 }
