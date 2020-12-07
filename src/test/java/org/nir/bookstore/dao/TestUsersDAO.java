@@ -116,6 +116,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
+	@Disabled
 	@DisplayName("when calling get() method on no exiting user")
 	void testGetUsersNotFound()
 	{
@@ -127,4 +128,20 @@ public class TestUsersDAO
 		
 		System.out.println("The user: " + users);
 	}
+	
+	@Test
+	@DisplayName("when calling the delete method on exititng user")
+	public void testDeleteUsersFound()
+	{
+		Integer id = 2; 
+		System.out.println(">>testDeleteUsersFound():try to delete user with id = " + id);
+		usersDAO.delete(id);
+		
+		System.out.println(">>testDeleteUsersFound():User Deleted!");
+		
+		
+	}
+	
+	
+	
 }
