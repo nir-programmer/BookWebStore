@@ -67,14 +67,31 @@ public class TestUsersDAO
 	}
 
 	@Test
-	//@Disabled
+	@Disabled
 	void testCreateUsersFieldsNotSet() 
 	{
 		System.out.println(">>testCreateUsersFieldsNotSet() :try to add a user with empty fields....");
 		
+		assertThrows(PropertyValueException.class, () -> usersDAO.create(new Users()));	
+	}
+	
+	@Test
+	@DisplayName("when trying to update users")
+	public void testUpdataUsers()
+	{
+		Users user = new Users();
+		
+		Integer id = 2; 
+		user.setUserId(id);
+		user.setEmail("xxxxxxxxxxx");
+		user.setFullName("YYYYYYYY");
+		user.setPassword("ZZZZZZZ");
 		
 		
-		assertThrows(PropertyValueException.class, () -> usersDAO.create(new Users()));
+		System.out.println(">>testUpdataUsers():try to update users with id = " + id);
+		usersDAO.update(user);
+		System.out.println(">>testUpdataUsers():user updated!");
+		
 		
 		
 	}

@@ -28,7 +28,6 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	@Override
 	public Users update(Users user) 
 	{
-		
 		return super.update(user);
 	}
 
