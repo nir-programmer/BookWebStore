@@ -1,8 +1,11 @@
 package org.nir.bookstore.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 public class HibernateDAO<E>
 {
@@ -57,6 +60,16 @@ public class HibernateDAO<E>
 		
 		session.delete(reference);
 		session.getTransaction().commit();
+		
+	}
+	
+	public List<E> findWithNamedQuery(String queryName)
+	{
+		Query<E> query = session.createNamedQuery(queryName);
+		
+		List<E> elements = query.getResultList();
+		
+		return elements;
 		
 	}
 	

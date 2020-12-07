@@ -49,9 +49,12 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	}
 
 	@Override
-	public List<Users> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Users> listAll() 
+	{
+		
+		String query = "Users.findAll";
+		return super.findWithNamedQuery(query);
+		
 	}
 
 	@Override
