@@ -16,19 +16,19 @@
 	</div>
 
 	<div align="center">
-		<form action="create_user" method="post">
+		<form action="create_user" method="post" onsubmit="return validateFormInput()">
 			<table>
 				<tr>
 					<td align="right">Email:</td>
-					<td align="left"><input type="text" name="email" size="20"></td>
+					<td align="left"><input id = "email" type="text" name="email" size="20"></td>
 				</tr>
 				<tr>
 					<td align="right">Full Name:</td>
-					<td align="left"><input type="text" name="fullname" size="20"></td>
+					<td align="left"><input id = "fullname" type="text" name="fullname" size="20"></td>
 				</tr>
 				<tr>
 					<td align="right">Password:</td>
-					<td align="left"><input type="password" name="password" size="20"></td>
+					<td align="left"><input id = "password" type="password" name="password" size="20"></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
@@ -43,12 +43,43 @@
 		</form>
 
 
-
 	</div>
-
 
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
+
+<script type="text/javascript">
+	function validateFormInput() 
+	{
+		var fieldEmail=  document.getElementById("email");
+		var fieldFullName = document.getElementById("fullname");
+		var fieldPassword = document.getElementById("password");
+		
+		if(fieldEmail.value.length == 0)
+		{
+			alert("Email is required!"); 
+			fieldEmail.focus();
+			return false;
+		}
+		
+		if(fieldFullName.value.length == 0)
+		{
+			alert("full name is required!"); 
+			fieldFullName.focus();
+			return false;
+		}
+		if(fieldPassword.value.length == 0)
+		{
+			alert("password is required!"); 
+			fieldPassword.focus();
+			return false;
+		}
+		return true;
+		
+	}
+	
+	
+</script>
 
 
 
