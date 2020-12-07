@@ -2,6 +2,7 @@ package org.nir.bookstore.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -100,7 +101,8 @@ public class TestUsersDAO
 	}
 
 	@Test
-	@DisplayName("when calling get() method")
+	@Disabled
+	@DisplayName("when calling get() method on exiting user")
 	void testGetUsersFound()
 	{
 		Integer id = 1; 
@@ -111,6 +113,18 @@ public class TestUsersDAO
 		
 		System.out.println("The user: " + users);
 		
+	}
+	
+	@Test
+	@DisplayName("when calling get() method on no exiting user")
+	void testGetUsersNotFound()
+	{
+		Integer id = 9; 
+		System.out.println(">>testGetUsersNOtFound():try to get user with id = " + id);
+		Users users = usersDAO.get(id);
 		
+		assertNull(users);
+		
+		System.out.println("The user: " + users);
 	}
 }
