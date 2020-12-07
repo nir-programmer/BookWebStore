@@ -85,11 +85,14 @@ public class TestUsersDAO
 		user.setUserId(id);
 		user.setEmail("xxxxxxxxxxx");
 		user.setFullName("YYYYYYYY");
-		user.setPassword("ZZZZZZZ");
+		user.setPassword("mysecret");
 		
 		
 		System.out.println(">>testUpdataUsers():try to update users with id = " + id);
 		usersDAO.update(user);
+		
+		assertEquals("mysecret", user.getPassword());
+		
 		System.out.println(">>testUpdataUsers():user updated!");
 		
 		

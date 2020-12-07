@@ -28,6 +28,7 @@ public class HibernateDAO<E>
 	public E update(E e)
 	{
 		session.getTransaction().begin();
+		//he used merge...
 		session.saveOrUpdate(e);
 		session.flush();
 		session.refresh(e);
