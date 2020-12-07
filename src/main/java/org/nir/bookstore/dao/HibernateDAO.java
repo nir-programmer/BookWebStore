@@ -3,6 +3,7 @@ package org.nir.bookstore.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -65,14 +66,26 @@ public class HibernateDAO<E>
 	
 	public List<E> findWithNamedQuery(String queryName)
 	{
+		session.getTransaction().begin();
 		Query<E> query = session.createNamedQuery(queryName);
 		
 		List<E> elements = query.getResultList();
 		
+		session.getTransaction().commit();
 		return elements;
 		
 	}
 	
+	public long countWithNamedQuery(String queryName)
+	{
+		session.getTransaction().begin();
+		Query<E> query = session.createNamedQuery(queryName);
+		long count = (long)query.getSingleResult();
+	
+		session.getTransaction().commit();
+		
+		return count; 
+	}
 	
 	
 }

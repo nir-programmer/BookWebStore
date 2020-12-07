@@ -58,9 +58,10 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	}
 
 	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long count() 
+	{
+		
+		return super.countWithNamedQuery("Users.countAll"); 
 	}
 
 	

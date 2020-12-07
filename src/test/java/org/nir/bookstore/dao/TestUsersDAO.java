@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.hibernate.PropertyValueException;
@@ -52,7 +54,7 @@ public class TestUsersDAO
 	
 	/*************************************************************/
 	@Test
-	@Disabled
+	//@Disabled
 	public void testCreateUsers() 
 	{
 		Users user1 = new Users();
@@ -130,6 +132,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
+	@Disabled
 	@DisplayName("when calling the delete method on exititng user")
 	public void testDeleteUsersFound()
 	{
@@ -138,6 +141,35 @@ public class TestUsersDAO
 		usersDAO.delete(id);
 		
 	}
+	
+	@Test
+	@Disabled
+	@DisplayName("when calling listAll() method")
+	void testListAll()
+	{
+		System.out.println(">>testListAll():try to get all users form db.");
+		List<Users> users = usersDAO.listAll();
+		
+		System.out.println(">>testListAll():List of users:");
+		
+		assertTrue(users.size() == 0);
+		users.stream().forEach(System.out::println);
+		
+	}
+	
+	@Test
+	@DisplayName("when calling to count() method")
+	void testCount()
+	{
+		System.out.println(">>testCount():Calling to count method...");
+		long count = usersDAO.count();
+		
+		System.out.println("number of users = " + count);
+		
+		assertEquals(2, count);
+		
+	}
+	
 	
 	
 	
