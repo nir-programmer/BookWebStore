@@ -14,7 +14,6 @@
 	<div align="center">
 	
 		<h2>Administrative Dashboard</h2>
-		${message}
 	</div>
 
 	<div align="center">

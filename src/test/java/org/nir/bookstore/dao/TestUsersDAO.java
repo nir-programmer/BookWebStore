@@ -58,15 +58,23 @@ public class TestUsersDAO
 	public void testCreateUsers() 
 	{
 		Users user1 = new Users();
-		user1.setEmail("niritziahk10@gmial.com");
-		user1.setFullName("nironnnnn");
-		user1.setPassword("powerrrrrr");
+		user1.setEmail("jon@gmail.com");
+		user1.setFullName("John Smith");
+		user1.setPassword("123444");
 		
-		System.out.println(">>testCreateUsers():try to add nironnnnn user... ");
+		Users users2 = new Users("Chad@gmail.com", "1233", "Chad Darby");
+		
+		Users users3 = new Users("mary@tmail.com", "1223", "Mary Loo"); 
+		
+		System.out.println(">>testCreateUsers():try to add new User ");
 		usersDAO.create(user1);
-		System.out.println(">>testCreateUsers():nironnnn user persisted!");
+		/*
+		 * usersDAO.create(users2); usersDAO.create(users3);
+		 */
 		
-		assertTrue(user1.getUserId() > 0);
+		System.out.println(">>testCreateUsers():user persisted!");
+		
+		//assertTrue(user1.getUserId() > 0);
 		
 	}
 
