@@ -67,8 +67,6 @@ public class TestUsersDAO {
 		session.close();
 		sessionFactory.close();
 		
-		
-
 	}
 
 }
