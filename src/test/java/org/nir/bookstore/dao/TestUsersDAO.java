@@ -166,6 +166,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
+	@Disabled
 	@DisplayName("when calling to count() method")
 	void testCount()
 	{
@@ -180,6 +181,47 @@ public class TestUsersDAO
 	
 	
 	
+	@Test
+	@Disabled
+	@DisplayName("when calling findById() method")
+	void testFindByIdFound()
+	{
+		//String email = "niritzhak10@gmail.com";
+		Integer id = 2 ; 
+		Users users = usersDAO.findById(id);
+		//usersDAO.findByEmail(email);
+		
+		System.out.println(">>testFindIdEmailFound():The user with id = " +  id);
+		
+		System.out.println(users);
+		
+	}
+	
+	@Test
+	@DisplayName("when calling findByEmail() method")
+	void testFindByEmailFound()
+	{
+		/* String email = "niritzhak10@gmail.com"; */
+		String email = "a";
+		Users users = usersDAO.findByEmailFound(email);
+		System.out.println(">>testFindByEmailFound():User with email = " + email);
+		System.out.println(users); 
+		
+		
+	}
+	
+	@Test
+	@DisplayName("when calling findByEmailNotFound() method")
+	void testFindByEmailNotFound()
+	{
+		/* String email = "niritzhak10@gmail.com"; */
+		String email = "b";
+		Users users = usersDAO.findByEmailFound(email);
+		System.out.println(">>testFindByEmailFound():User with email = " + email);
+		System.out.println(users); 
+		
+		
+	}
 	
 	
 	

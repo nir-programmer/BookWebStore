@@ -3,6 +3,7 @@ package org.nir.bookstore.dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
 public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
@@ -62,6 +63,31 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	{
 		
 		return super.countWithNamedQuery("Users.countAll"); 
+	}
+	
+	public Users findById(Integer id)
+	{
+		session.getTransaction().begin();
+		//Integer id = 1; 
+		String hql = "FROM Users U WHERE U.userId =: id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", id);
+		Users users =(Users) query.getSingleResult();
+		session.getTransaction().commit();
+		return users; 
+		
+	}
+	
+	public Users findByEmailFound(String email )
+	{
+		session.getTransaction().begin();
+		String hql = "FROM Users U WHERE U.email =: email";
+		Query<Users> query = session.createQuery(hql);
+		query.setParameter("email" , email);
+		Users users = query.getSingleResult();
+		session.getTransaction().commit();
+		return users;
+			
 	}
 
 	
