@@ -197,7 +197,10 @@ public class TestUsersDAO
 		
 	}
 	
+	
+	
 	@Test
+	//@Disabled
 	@DisplayName("when calling findByEmail() method")
 	void testFindByEmailFound()
 	{
@@ -211,6 +214,7 @@ public class TestUsersDAO
 	}
 	
 	@Test
+	@Disabled
 	@DisplayName("when calling findByEmailNotFound() method")
 	void testFindByEmailNotFound()
 	{

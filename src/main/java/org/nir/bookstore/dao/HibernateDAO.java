@@ -7,6 +7,7 @@ import javax.persistence.NamedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
 {
@@ -85,6 +86,15 @@ public class HibernateDAO<E>
 		session.getTransaction().commit();
 		
 		return count; 
+	}
+
+	public List<E> findWithNamedQuery(String hql, String paramName, Object paramValue)
+	{
+		session.getTransaction().begin();
+		Query<E> query = session.createNamedQuery(hql);
+		query.setParameter(paramName, paramName); 
+		return query.getResultList();
+		
 	}
 	
 	
