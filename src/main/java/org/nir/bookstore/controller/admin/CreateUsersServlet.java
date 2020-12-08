@@ -32,18 +32,16 @@ public class CreateUsersServlet extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		ListUsersServlet listUsersServlet = new ListUsersServlet();
 		UsersService usersService = new UsersService();
 		
 		String email = request.getParameter("email"); 
 		String fullName = request.getParameter("fullname");
 		String password = request.getParameter("password"); 
 		
-		
-		
 		usersService.createUser(email, fullName,password);
 		
 		//listUsersServlet.doGet(request, response);
+		request.setAttribute("message", "User created Successfully!!!");
 		request.getRequestDispatcher("list_users").forward(request, response);
 	}
 
