@@ -30,8 +30,22 @@ public class ListUsersServlet extends HttpServlet {
 			throws ServletException, IOException 
 	{
 		UsersService usersService = new UsersService();
+		List<Users> users =  usersService.listUsers();
 		
-		usersService.listUsers(request, response);
+		request.setAttribute("users", users);
+		
+		request.getRequestDispatcher("users_list.jsp").forward(request, response);
+		
 	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		doGet(request, response);
+		
+	}
+	
+	
+	
 
 }

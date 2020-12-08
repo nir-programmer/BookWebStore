@@ -34,13 +34,12 @@ public class UsersService
 	}
 
 
-	public void listUsers(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+	public List<Users> listUsers() 
 	{
 		List<Users> users = this.usersDAO.listAll();
 		
-		request.setAttribute("users", users);
+		return users; 
 		
-		request.getRequestDispatcher("/admin/users_list.jsp").forward(request, response);
 	}
 
 

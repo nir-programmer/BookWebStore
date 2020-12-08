@@ -43,8 +43,8 @@ public class CreateUsersServlet extends HttpServlet
 		
 		usersService.createUser(email, fullName,password);
 		
-		listUsersServlet.doGet(request, response);
-		//request.getRequestDispatcher("list_users").forward(request, response);
+		//listUsersServlet.doGet(request, response);
+		request.getRequestDispatcher("list_users").forward(request, response);
 	}
 
 }
