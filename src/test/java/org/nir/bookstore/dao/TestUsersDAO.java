@@ -202,13 +202,14 @@ public class TestUsersDAO
 	@Test
 	//@Disabled
 	@DisplayName("when calling findByEmail() method")
-	void testFindByEmailFound()
+	void testFindByEmailFoundNameQuery()
 	{
 		/* String email = "niritzhak10@gmail.com"; */
 		String email = "a";
-		Users users = usersDAO.findByEmailFound(email);
-		System.out.println(">>testFindByEmailFound():User with email = " + email);
-		System.out.println(users); 
+		List<Users> users = usersDAO.findByEmail(email);
+		System.out.println(">>testFindByEmailFound():Users with email = " + email);
+		users.stream().forEach(System.out::println);
+		//System.out.println(users); 
 		
 		
 	}

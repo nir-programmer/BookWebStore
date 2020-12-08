@@ -92,7 +92,7 @@ public class HibernateDAO<E>
 	{
 		session.getTransaction().begin();
 		Query<E> query = session.createNamedQuery(hql);
-		query.setParameter(paramName, paramName); 
+		query.setParameter(paramName, paramValue); 
 		return query.getResultList();
 		
 	}
