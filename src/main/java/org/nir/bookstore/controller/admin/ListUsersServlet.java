@@ -16,27 +16,24 @@ import org.nir.bookstore.service.UsersService;
  * Servlet implementation class ListUsersServlet
  */
 @WebServlet("/admin/list_users")
-public class ListUsersServlet extends HttpServlet
-{
-	
-	private static final long serialVersionUID = 1L;
-       
-    
-    public ListUsersServlet() 
-    {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+public class ListUsersServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	private static final long serialVersionUID = 1L;
+
+	public ListUsersServlet()
 	{
-		UsersService usersService = new UsersService();
-		List<Users> users = usersService.listUsers();
-		request.setAttribute("users", users);
-		
-		
-		request.getRequestDispatcher("/admin/users_list.jsp").forward(request, response);
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		UsersService usersService = new UsersService();
+
+		List<Users> users = usersService.listUsers();
+		request.setAttribute("users", users);
+		request.getRequestDispatcher("/admin/users_list.jsp").forward(request, response);
+
+	}
+
 }

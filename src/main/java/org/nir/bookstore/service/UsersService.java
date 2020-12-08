@@ -1,6 +1,12 @@
 package org.nir.bookstore.service;
 
+import java.io.IOException;
+import java.net.HttpRetryException;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,7 +36,18 @@ public class UsersService
 
 	public List<Users> listUsers()
 	{
-		return this.usersDAO.listAll();
+		List<Users> users = this.usersDAO.listAll();
+		return users;
 	}
+
+
+	public void createUser(String email, String fullName, String password) 
+	{
+		
+		
+	}
+
+
+	
 
 }

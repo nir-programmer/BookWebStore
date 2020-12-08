@@ -16,7 +16,7 @@
 	</div>
 
 	<div align="center">
-		<form action="create_user" method="post" onsubmit="return validateFormInput()">
+		<form action="create_users" method="post" onsubmit="return validateFormInput()">
 			<table>
 				<tr>
 					<td align="right">Email:</td>
