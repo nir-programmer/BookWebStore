@@ -39,7 +39,6 @@ public class UsersService
 		List<Users> users = this.usersDAO.listAll();
 		
 		return users; 
-		
 	}
 
 
@@ -48,8 +47,6 @@ public class UsersService
 		Users users = new Users(email, password, fullName);
 		
 		this.usersDAO.create(users);
-		
-		
 		
 	}
 

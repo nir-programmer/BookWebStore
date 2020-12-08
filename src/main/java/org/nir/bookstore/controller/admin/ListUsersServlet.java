@@ -35,7 +35,6 @@ public class ListUsersServlet extends HttpServlet {
 		request.setAttribute("users", users);
 		
 		request.getRequestDispatcher("users_list.jsp").forward(request, response);
-		
 	}
 
 	@Override
