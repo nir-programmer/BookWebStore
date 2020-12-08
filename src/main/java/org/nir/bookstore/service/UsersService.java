@@ -34,15 +34,22 @@ public class UsersService
 	}
 
 
-	public List<Users> listUsers()
+	public void listUsers(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
 	{
 		List<Users> users = this.usersDAO.listAll();
-		return users;
+		
+		request.setAttribute("users", users);
+		
+		request.getRequestDispatcher("/admin/users_list.jsp").forward(request, response);
 	}
 
 
 	public void createUser(String email, String fullName, String password) 
 	{
+		Users users = new Users(email, password, fullName);
+		
+		this.usersDAO.create(users);
+		
 		
 		
 	}
