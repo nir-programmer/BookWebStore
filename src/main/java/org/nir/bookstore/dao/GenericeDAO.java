@@ -13,7 +13,7 @@ public interface GenericeDAO<T, Id extends Serializable>
 	
 	public T get(Id id );
 	
-	public void delete(Object id);
+	public void delete(Id id);
 	
 	public List<T> listAll(); 
 	

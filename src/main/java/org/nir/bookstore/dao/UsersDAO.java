@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
-public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users , Integer> {
+public class UsersDAO extends HibernateDAO<Users, Integer> implements GenericeDAO<Users , Integer> {
 
 	public UsersDAO(Session session) {
 		super(session);
@@ -19,16 +19,18 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users ,
 	
 	public Users create(Users user)
 	{
-		return super.create(user);
+		return super.create(Users.class);
 	}
 	
 	@Override
-	public Users get(Integer id) {
+	public Users get( Integer id) {
 		return super.find(Users.class, id);
 	}
 
 	@Override
-	public void delete(Object id) {
+	public void delete(Integer id) 
+	{
+		super.delete(Users.class, id);
 		// TODO Auto-generated method stub
 		
 	}

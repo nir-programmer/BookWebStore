@@ -61,7 +61,18 @@ public class TestUsersDAO
 		Users user = usersDAO.get(id);
 		System.out.println("User with id = " + user);
 		usersDAO.closeCurrentSession();
+	
+	}
+	
+	@Test
+	@DisplayName("when calling delete(id)")
+	void testDelete()
+	{
+		Integer id = 14; 
 		
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.delete(id);
+		usersDAO.closeCurrentSessionWithTransaction();
 		
 		
 	}

@@ -1,5 +1,6 @@
 package org.nir.bookstore.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
-public class HibernateDAO<E>
+public class HibernateDAO<E , Id extends Serializable>
 {
 	private  Session currentSession;  ;
 	private Transaction currentTransaction; 
@@ -92,17 +93,27 @@ public class HibernateDAO<E>
 		this.currentSession = session;
 	} 
 	
-	public E create(E entity)
+	//OK
+	public E create(Class<E> entity)
 	{
 		getCurrentSession().save(entity);
 		
-		return entity; 
+		return null; 
 	}
 	
-	public E find (Class<E> entity , Integer id)
+	//OK
+	public E find (Class<E> entity , Id id)
 	{
 		E e = getCurrentSession().get(entity, id);
 		return e; 
+	}
+	
+	public void delete(Class<E> entity, Object id) 
+	{
+		Session session = getCurrentSession();
+		Object reference = session.getReference(entity, id);
+		session.delete(reference);
+		
 	}
 	/*
 	 * public E update(E entity) { getCurrentSession().update(entity);
@@ -153,5 +164,7 @@ public class HibernateDAO<E>
 	 * 
 	 * }
 	 */
+
+	
 	
 }
