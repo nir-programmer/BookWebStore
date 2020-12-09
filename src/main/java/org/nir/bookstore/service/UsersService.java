@@ -55,8 +55,8 @@ public class UsersService
 		
 		this.usersDAO.create(user);
 		
-		
-		request.getRequestDispatcher("").forward(request, response);
+		//listUsers(request, response);
+		//request.getRequestDispatcher("users_list.jsp").forward(request, response);
 		
 		
 	}

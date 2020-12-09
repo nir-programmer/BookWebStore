@@ -34,6 +34,7 @@ public class CreateUsersServlet extends HttpServlet
 	{
 		UsersService usersService = new UsersService();
 		usersService.createUser(request, response);
+		usersService.listUsers(request, response);
 	}
 
 }
