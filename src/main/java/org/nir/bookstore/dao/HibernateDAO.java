@@ -115,6 +115,15 @@ public class HibernateDAO<E , Id extends Serializable>
 		session.delete(reference);
 		
 	}
+
+	public E update(E entity) 
+	{
+		getCurrentSession().update(entity);
+		return entity;
+		
+	}
+	
+	
 	/*
 	 * public E update(E entity) { getCurrentSession().update(entity);
 	 * 

@@ -74,6 +74,24 @@ public class TestUsersDAO
 		usersDAO.delete(id);
 		usersDAO.closeCurrentSessionWithTransaction();
 		
+	}
+	
+	@Test
+	@DisplayName("when calling update(user)")
+	void testUpdate()
+	{
+		Users user = new Users("IIIII" ,"IIII" ,"IIIII");
+		user.setUserId(1);
+		
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.update(user);
+		usersDAO.closeCurrentSessionWithTransaction();
+		
+	}
+	@Test
+	@DisplayName("when calling findAll() ")
+	void testFindAll()
+	{
 		
 	}
 	
