@@ -123,12 +123,20 @@ public class HibernateDAO<E , Id extends Serializable>
 		
 	}
 
-	public List<E> findWithNamedQuery(String queryName) 
+	protected List<E> findWithNamedQuery(String queryName) 
 	{
 		Session session = getCurrentSession();
 		Query<E> query = session.createNamedQuery(queryName);
 		List<E> entities = query.getResultList();
 		return entities;
+	}
+
+	protected long countWithNamedQuery(String queryName) 
+	{
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		long n = (long)query.getSingleResult(); 
+		return n;
 	}
 	
 	

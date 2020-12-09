@@ -88,6 +88,7 @@ public class TestUsersDAO
 		usersDAO.closeCurrentSessionWithTransaction();
 		
 	}
+	
 	@Test
 	@DisplayName("when calling findAll() ")
 	void testFindAll()
@@ -101,5 +102,20 @@ public class TestUsersDAO
 		usersDAO.closeCurrentSession();
 		
 	}
+	
+	@Test
+	@DisplayName("when calling count")
+	void testCount()
+	{
+		
+		usersDAO.openCurrentSession();
+		long n= usersDAO.count();
+		System.out.println("Number of users = " + n); 
+		
+		usersDAO.closeCurrentSession();
+		
+	}
+	
+	
 	
 }
