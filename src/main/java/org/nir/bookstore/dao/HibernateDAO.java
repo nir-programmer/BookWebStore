@@ -49,13 +49,19 @@ public class HibernateDAO<E>
 	
 	private static SessionFactory getSessionFactory()
 	{
-		Configuration configuration = new Configuration().configure();
-		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-				.applySettings(configuration.getProperties());
 		
-		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				.addAnnotatedClass(Users.class)
+				.buildSessionFactory();
 		return sessionFactory;
-	
+		/*
+		 * Configuration configuration = new Configuration().configure();
+		 * StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+		 * .applySettings(configuration.getProperties());
+		 * 
+		 * SessionFactory sessionFactory =
+		 * configuration.buildSessionFactory(builder.build()); return sessionFactory;
+		 */
 	}
 	
 	/*
@@ -93,6 +99,11 @@ public class HibernateDAO<E>
 		return entity; 
 	}
 	
+	public E find (Class<E> entity , Integer id)
+	{
+		E e = getCurrentSession().get(entity, id);
+		return e; 
+	}
 	/*
 	 * public E update(E entity) { getCurrentSession().update(entity);
 	 * 

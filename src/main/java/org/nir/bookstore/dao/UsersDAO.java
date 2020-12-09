@@ -24,8 +24,7 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users ,
 	
 	@Override
 	public Users get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.find(Users.class, id);
 	}
 
 	@Override

@@ -24,210 +24,46 @@ import org.nir.bookstore.entities.Users;
 
 public class TestUsersDAO 
 {
-	private static SessionFactory sessionFactory; 
-	private static Session session ; 
+	
 	private static UsersDAO usersDAO; 
 	
 	
 	@BeforeAll
-	@DisplayName("when create SessionFactory , Session , UsersDAO object")
+	@DisplayName("when create UsersDAO object")
 	public static void init()
 	{
-		sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class)
-				.buildSessionFactory();
-
-		 session = sessionFactory.getCurrentSession();
-		 
-		 
-		 usersDAO = new UsersDAO(session); 
-		 
+		 usersDAO = new UsersDAO(); 
 	}
 	
-	@AfterAll
-	@DisplayName("when colose the SessionFactroy and Session")
-	public static void tearDown()
-	{
-		session.close();
-		sessionFactory.close();
-	}
+	
 	
 	/*************************************************************/
+	
+	
 	@Test
-	//@Disabled
-	public void testCreateUsers() 
+	@DisplayName("when creating a new user by the userDao")
+	void testCreateUsers()
 	{
-		Users user1 = new Users();
-		user1.setEmail("jon@gmail.com");
-		user1.setFullName("John Smith");
-		user1.setPassword("123444");
-		
-		Users users2 = new Users("Chad@gmail.com", "1233", "Chad Darby");
-		
-		Users users3 = new Users("mary@tmail.com", "1223", "Mary Loo"); 
-		
-		System.out.println(">>testCreateUsers():try to add new User ");
+		Users user1 = new Users("YYY", "YYY", "YYY");
+		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.create(user1);
-		/*
-		 * usersDAO.create(users2); usersDAO.create(users3);
-		 */
-		
-		System.out.println(">>testCreateUsers():user persisted!");
-		
-		//assertTrue(user1.getUserId() > 0);
-		
-	}
-
-	@Test
-	@Disabled
-	void testCreateUsersFieldsNotSet() 
-	{
-		System.out.println(">>testCreateUsersFieldsNotSet() :try to add a user with empty fields....");
-		
-		assertThrows(PropertyValueException.class, () -> usersDAO.create(new Users()));	
+		usersDAO.closeCurrentSessionWithTransaction();
 	}
 	
+	
 	@Test
-	@Disabled
-	@DisplayName("when trying to update users")
-	public void testUpdataUsers()
+	@DisplayName("when calling get(id)")
+	void testGet()
 	{
-		Users user = new Users();
-		
 		Integer id = 2; 
-		user.setUserId(id);
-		user.setEmail("xxxxxxxxxxx");
-		user.setFullName("YYYYYYYY");
-		user.setPassword("mysecret");
 		
+		usersDAO.openCurrentSession();
+		Users user = usersDAO.get(id);
+		System.out.println("User with id = " + user);
+		usersDAO.closeCurrentSession();
 		
-		System.out.println(">>testUpdataUsers():try to update users with id = " + id);
-		usersDAO.update(user);
-		
-		assertEquals("mysecret", user.getPassword());
-		
-		System.out.println(">>testUpdataUsers():user updated!");
-		
-	}
-
-	@Test
-	@Disabled
-	@DisplayName("when calling get() method on exiting user")
-	void testGetUsersFound()
-	{
-		Integer id = 1; 
-		System.out.println(">>testGetUsersFound():try to get user with id = " + id);
-		Users users = usersDAO.get(id);
-		
-		assertNotNull(users);
-		
-		System.out.println("The user: " + users);
-		
-	}
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling get() method on no exiting user")
-	void testGetUsersNotFound()
-	{
-		Integer id = 9; 
-		System.out.println(">>testGetUsersNOtFound():try to get user with id = " + id);
-		Users users = usersDAO.get(id);
-		
-		assertNull(users);
-		
-		System.out.println("The user: " + users);
-	}
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling the delete method on exititng user")
-	public void testDeleteUsersFound()
-	{
-		Integer id = 1; 
-		System.out.println(">>testDeleteUsersFound():try to delete user with id = " + id);
-		usersDAO.delete(id);
-		
-	}
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling listAll() method")
-	void testListAll()
-	{
-		System.out.println(">>testListAll():try to get all users form db.");
-		List<Users> users = usersDAO.listAll();
-		
-		System.out.println(">>testListAll():List of users:");
-		
-		assertTrue(users.size() == 0);
-		users.stream().forEach(System.out::println);
-		
-	}
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling to count() method")
-	void testCount()
-	{
-		System.out.println(">>testCount():Calling to count method...");
-		long count = usersDAO.count();
-		
-		System.out.println("number of users = " + count);
-		
-		assertEquals(2, count);
-		
-	}
-	
-	
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling findById() method")
-	void testFindByIdFound()
-	{
-		//String email = "niritzhak10@gmail.com";
-		Integer id = 2 ; 
-		Users users = usersDAO.findById(id);
-		//usersDAO.findByEmail(email);
-		
-		System.out.println(">>testFindIdEmailFound():The user with id = " +  id);
-		
-		System.out.println(users);
-		
-	}
-	
-	
-	
-	@Test
-	//@Disabled
-	@DisplayName("when calling findByEmail() method")
-	void testFindByEmailFoundNameQuery()
-	{
-		/* String email = "niritzhak10@gmail.com"; */
-		String email = "a";
-		List<Users> users = usersDAO.findByEmail(email);
-		System.out.println(">>testFindByEmailFound():Users with email = " + email);
-		users.stream().forEach(System.out::println);
-		//System.out.println(users); 
 		
 		
 	}
-	
-	@Test
-	@Disabled
-	@DisplayName("when calling findByEmailNotFound() method")
-	void testFindByEmailNotFound()
-	{
-		/* String email = "niritzhak10@gmail.com"; */
-		String email = "b";
-		Users users = usersDAO.findByEmailFound(email);
-		System.out.println(">>testFindByEmailFound():User with email = " + email);
-		System.out.println(users); 
-		
-		
-	}
-	
-	
 	
 }
