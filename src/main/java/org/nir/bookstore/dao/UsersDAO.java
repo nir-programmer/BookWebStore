@@ -6,10 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
-public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> {
+public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users , Integer> {
 
-	public UsersDAO(Session session) {
-		super(session);
+	public UsersDAO() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,7 +25,7 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 	}
 
 	@Override
-	public Users get(Object userId) {
+	public Users get(Integer userId) {
 		/*
 		 * The Users.class will translate to Class<Users> in supper class
 		 */
@@ -33,7 +33,7 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 	}
 
 	@Override
-	public void delete(Object id) {
+	public void delete(Integer id) {
 		super.delete(Users.class, id);
 
 	}
@@ -52,15 +52,15 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 		return super.countWithNamedQuery("Users.countAll");
 	}
 
-	public Users findById(Integer id) {
-		session.getTransaction().begin();
-		// Integer id = 1;
-		String hql = "FROM Users U WHERE U.userId =: id";
-		Query query = session.createQuery(hql);
-		query.setParameter("id", id);
-		Users users = (Users) query.getSingleResult();
-		session.getTransaction().commit();
-		return users;
+	public Users findById(Integer id) 
+	{
+		return null;
+		/*
+		 * session.getTransaction().begin(); // Integer id = 1; String hql =
+		 * "FROM Users U WHERE U.userId =: id"; Query query = session.createQuery(hql);
+		 * query.setParameter("id", id); Users users = (Users) query.getSingleResult();
+		 * session.getTransaction().commit(); return users;
+		 */
 
 	}
 
