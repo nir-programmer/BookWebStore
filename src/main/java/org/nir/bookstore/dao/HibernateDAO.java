@@ -6,21 +6,67 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
 {
-	protected Session session ;
-
+	private  Session currentSession;  ;
+	private Transaction currentTransaction; 
+	
+	public HibernateDAO()
+	{
+		
+	}
+	
+	public Session openCurrentSession()
+	{
+		currentSession = getSessionFactory().openSession();
+		return currentSession;
+	}
+	
+	public void openCurrentSessionWithTransaction() 
+	{
+		currentSession = getSessionFactory().openSession();
+		currentTransaction = currentSession.beginTransaction();
+	}
+	
+	
+	public void closeCurrentSession()
+	{
+		currentSession.close();
+	}
+	
+	public void closeCurrentSessionWithTransaction()
+	{
+		currentTransaction.commit();
+		currentSession.close();
+	}
+	
+	private static SessionFactory getSessionFactory()
+	{
+		Configuration configuration = new Configuration().configure();
+		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+				.applySettings(configuration.getProperties());
+		
+		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+		return sessionFactory;
+	
+	}
+	
 	public HibernateDAO(Session session) 
 	{
 		super();
-		this.session = session;
+		this.currentSession = session;
 	} 
 	
 	public E create(E e)
 	{
+		
 		session.getTransaction().begin();
 		session.save(e);
 		session.flush();

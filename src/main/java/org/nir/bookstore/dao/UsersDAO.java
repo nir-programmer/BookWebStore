@@ -13,6 +13,10 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 		// TODO Auto-generated constructor stub
 	}
 
+	public UsersDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public Users create(Users user) {
 		// TODO Auto-generated method stub
@@ -80,5 +84,7 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 		return users;
 
 	}
+
+	
 
 }

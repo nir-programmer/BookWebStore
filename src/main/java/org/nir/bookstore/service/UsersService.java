@@ -17,21 +17,26 @@ import org.nir.bookstore.entities.Users;
 public class UsersService 
 {
 	
-	private SessionFactory sessionFactory; 
-	private Session session;
-	private UsersDAO usersDAO; 
+	/*
+	 * private SessionFactory sessionFactory; private Session session;
+	 */
+	private static UsersDAO usersDAO; 
 	
 	
 	public UsersService()
 	{
-		this.sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class)
-				.buildSessionFactory();
-		
-		this.session = this.sessionFactory.getCurrentSession();
-		
-		this.usersDAO = new UsersDAO(session);
+		usersDAO = new UsersDAO();
+		/*
+		 * this.sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+		 * .addAnnotatedClass(Users.class) .buildSessionFactory();
+		 * 
+		 * this.session = this.sessionFactory.getCurrentSession();
+		 * 
+		 * this.usersDAO = new UsersDAO(session);
+		 */
 	}
+	
+	
 
 
 	public List<Users> listUsers() 
@@ -44,9 +49,11 @@ public class UsersService
 
 	public void createUser(String email, String fullName, String password) 
 	{
+		usersDAO.openCurrentSessionWithTransaction();
 		Users users = new Users(email, password, fullName);
-		
 		this.usersDAO.create(users);
+		usersDAO.closeCurrentSessionWithTransaction();
+		
 		
 	}
 
