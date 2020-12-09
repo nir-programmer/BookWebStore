@@ -93,6 +93,13 @@ public class TestUsersDAO
 	void testFindAll()
 	{
 		
+		usersDAO.openCurrentSession();
+		List<Users> users = usersDAO.listAll();
+		System.out.println("List Of All users:");
+		users.stream().forEach(System.out::println);
+		
+		usersDAO.closeCurrentSession();
+		
 	}
 	
 }
