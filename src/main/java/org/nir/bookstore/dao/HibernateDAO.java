@@ -58,90 +58,89 @@ public class HibernateDAO<E>
 	
 	}
 	
+	/*
+	 * **************************Getters and setters***********************************************
+	 */
+	public Session getCurrentSession()
+	{
+		return currentSession;
+	}
+	
+	public void setCurrentSession(Session currentSession) {
+		this.currentSession = currentSession;
+	}
+	
+	public Transaction getCurrentTransaction() {
+		return currentTransaction;
+	}
+
+	public void setCurrentTransaction(Transaction currentTransaction) {
+		this.currentTransaction = currentTransaction;
+	}
+
+/*************************************Interface********************************************** */
+
 	public HibernateDAO(Session session) 
 	{
 		super();
 		this.currentSession = session;
 	} 
 	
-	public E create(E e)
+	public E create(E entity)
 	{
+		getCurrentSession().save(entity);
 		
-		session.getTransaction().begin();
-		session.save(e);
-		session.flush();
-		session.refresh(e);
-		
-		session.getTransaction().commit();
-		return e; 
+		return entity; 
 	}
 	
-	public E update(E e)
-	{
-		session.getTransaction().begin();
-		//he used merge...
-		session.saveOrUpdate(e);
-		session.flush();
-		session.refresh(e);
-		
-		session.getTransaction().commit();
-		
-		return e; 
-	}
-	
-	public E find(Class<E> e , Object id)
-	{
-		session.getTransaction().begin();
-		E entity =  session.find(e, id);
-		if(entity != null)
-			session.refresh(entity);
-		
-		session.getTransaction().commit();
-		return entity ;
-		
-	}
-	
-	public void delete(Class<E> e , Object id)
-	{
-		session.getTransaction().begin();
-		Object reference  = session.getReference(e, id);
-		
-		session.delete(reference);
-		session.getTransaction().commit();
-		
-	}
-	
-	public List<E> findWithNamedQuery(String queryName)
-	{
-		session.getTransaction().begin();
-		Query<E> query = session.createNamedQuery(queryName);
-		
-		List<E> elements = query.getResultList();
-		
-		session.getTransaction().commit();
-		return elements;
-		
-	}
-	
-	public long countWithNamedQuery(String queryName)
-	{
-		session.getTransaction().begin();
-		Query<E> query = session.createNamedQuery(queryName);
-		long count = (long)query.getSingleResult();
-	
-		session.getTransaction().commit();
-		
-		return count; 
-	}
-
-	public List<E> findWithNamedQuery(String hql, String paramName, Object paramValue)
-	{
-		session.getTransaction().begin();
-		Query<E> query = session.createNamedQuery(hql);
-		query.setParameter(paramName, paramValue); 
-		return query.getResultList();
-		
-	}
-	
+	/*
+	 * public E update(E entity) { getCurrentSession().update(entity);
+	 * 
+	 * return entity; }
+	 * 
+	 * public E find(Class<E> e , Object id) {
+	 * 
+	 * //E entity = getCurrentSession().get(e, id); Session session =
+	 * getCurrentSession(); E entity = session.find(e, id); if(entity != null)
+	 * session.refresh(entity);
+	 * 
+	 * return entity ;
+	 * 
+	 * }
+	 * 
+	 * public void delete(Class<E> e , Object id) {
+	 * session.getTransaction().begin(); Object reference = session.getReference(e,
+	 * id);
+	 * 
+	 * session.delete(reference); session.getTransaction().commit();
+	 * 
+	 * }
+	 * 
+	 * public List<E> findWithNamedQuery(String queryName) {
+	 * session.getTransaction().begin(); Query<E> query =
+	 * session.createNamedQuery(queryName);
+	 * 
+	 * List<E> elements = query.getResultList();
+	 * 
+	 * session.getTransaction().commit(); return elements;
+	 * 
+	 * }
+	 * 
+	 * public long countWithNamedQuery(String queryName) {
+	 * session.getTransaction().begin(); Query<E> query =
+	 * session.createNamedQuery(queryName); long count =
+	 * (long)query.getSingleResult();
+	 * 
+	 * session.getTransaction().commit();
+	 * 
+	 * return count; }
+	 * 
+	 * public List<E> findWithNamedQuery(String hql, String paramName, Object
+	 * paramValue) { session.getTransaction().begin(); Query<E> query =
+	 * session.createNamedQuery(hql); query.setParameter(paramName, paramValue);
+	 * return query.getResultList();
+	 * 
+	 * }
+	 */
 	
 }
