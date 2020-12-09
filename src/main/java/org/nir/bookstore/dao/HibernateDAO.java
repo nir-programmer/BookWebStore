@@ -138,6 +138,12 @@ public class HibernateDAO<E , Id extends Serializable>
 		long n = (long)query.getSingleResult(); 
 		return n;
 	}
+
+	public Users create(Users user) 
+	{
+		getCurrentSession().save(user);
+		return user;
+	}
 	
 	
 	/*

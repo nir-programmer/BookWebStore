@@ -26,18 +26,12 @@ public class UsersService
 	public UsersService()
 	{
 		usersDAO = new UsersDAO();
-		/*
-		 * this.sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-		 * .addAnnotatedClass(Users.class) .buildSessionFactory();
-		 * 
-		 * this.session = this.sessionFactory.getCurrentSession();
-		 * 
-		 * this.usersDAO = new UsersDAO(session);
-		 */
+		
 	}
 	
 	
-
+	
+	
 
 	public List<Users> listUsers() 
 	{
@@ -50,10 +44,43 @@ public class UsersService
 	public void createUser(String email, String fullName, String password) 
 	{
 		usersDAO.openCurrentSessionWithTransaction();
-		Users users = new Users(email, password, fullName);
-		this.usersDAO.create(users);
+		Users user = new Users(email, password, fullName);
+		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
 		
+		/*
+		 * usersDAO.openCurrentSessionWithTransaction(); Users users = new Users(email,
+		 * password, fullName); this.usersDAO.create(users);
+		 * usersDAO.closeCurrentSessionWithTransaction();
+		 */
+		
+		
+	}
+
+
+
+
+
+	public void createUser(Users user) 
+	{
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.create(user);
+		usersDAO.closeCurrentSessionWithTransaction();
+		
+	}
+
+
+
+
+
+	public List<Users> findAll() 
+	{
+		usersDAO.openCurrentSession();
+		List<Users> users = usersDAO.listAll();
+		
+		usersDAO.closeCurrentSession();
+		
+		return users;
 		
 	}
 

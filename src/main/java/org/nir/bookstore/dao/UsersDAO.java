@@ -19,7 +19,7 @@ public class UsersDAO extends HibernateDAO<Users, Integer> implements GenericeDA
 	
 	public Users create(Users user)
 	{
-		return super.create(Users.class);
+		return super.create(user);
 	}
 	
 	@Override
