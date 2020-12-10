@@ -60,14 +60,14 @@ public class TestUsersDAO
 	@DisplayName("when calling get(id)")
 	void testGet()
 	{
-		Integer id = 4; 
+		Integer id = 2; 
 		
 		usersDAO.openCurrentSession();
 		Users user = usersDAO.get(id);
 		System.out.println("User with id = " + user);
 		usersDAO.closeCurrentSession();
 		
-		assertNull(user);
+		assertNotNull(user);
 		
 	}
 	
@@ -75,7 +75,7 @@ public class TestUsersDAO
 	@DisplayName("when calling delete(id)")
 	void testDelete()
 	{
-		Integer id = 14; 
+		Integer id = 1; 
 		
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.delete(id);

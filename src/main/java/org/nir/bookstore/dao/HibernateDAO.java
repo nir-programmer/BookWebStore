@@ -105,6 +105,8 @@ public class HibernateDAO<E>
 	protected E find (Class<E> entity ,Object id)
 	{
 		Session session = getCurrentSession();
+		
+		//find method can return null but get doesn't
 		E e = session.find(entity, id);
 		if(e != null)
 			session.refresh(e);
