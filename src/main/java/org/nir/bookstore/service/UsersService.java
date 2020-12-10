@@ -29,10 +29,6 @@ public class UsersService
 		
 	}
 	
-	
-	
-	
-
 	public List<Users> listUsers() 
 	{
 		usersDAO.openCurrentSession();
