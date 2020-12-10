@@ -87,11 +87,20 @@ public class TestUsersDAO
 	@DisplayName("when calling update(user)")
 	void testUpdate()
 	{
-		Users user = new Users("IIIII" ,"IIII" ,"IIIII");
-		user.setUserId(1);
+		usersDAO.openCurrentSession();
+		Integer id = 3; 
+		Users user = usersDAO.get(id);
+		System.out.println(">>testUpdate():User with id = " + id +" Before update:");
+		System.out.println(user);
+		usersDAO.closeCurrentSession();
 		
 		usersDAO.openCurrentSessionWithTransaction();
-		usersDAO.update(user);
+		user.setEmail("NNN");
+		user.setFullName("NNN");
+		user.setPassword("NNN");
+		user = usersDAO.update(user);
+		System.out.println(">>testUpdate():User with id = " + id +" AFTER update:");
+		System.out.println(user);
 		usersDAO.closeCurrentSessionWithTransaction();
 		
 	}

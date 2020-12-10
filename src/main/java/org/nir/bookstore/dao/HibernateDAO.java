@@ -123,7 +123,13 @@ public class HibernateDAO<E>
 
 	protected E update(E entity) 
 	{
-		getCurrentSession().update(entity);
+		Session session = getCurrentSession();
+		/*
+		 * The merge method will create an entity if 
+		 * there isn't
+		 */
+		
+		E e = (E)session.merge(entity);
 		return entity;
 		
 	}

@@ -67,12 +67,12 @@
 			<!--  Hibernate is required at both compile time and run time! -->
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>5.4.22.Final</version>
 		</dependency>
-
+ -->
 
 		<!-- JUNIT 5 -->
 		<dependency>
