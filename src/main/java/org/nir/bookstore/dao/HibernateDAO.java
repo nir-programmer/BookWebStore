@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Users;
 
-public class HibernateDAO<E , Id extends Serializable>
+public class HibernateDAO<E>
 {
 	private  Session currentSession;  ;
 	private Transaction currentTransaction; 
@@ -102,9 +102,11 @@ public class HibernateDAO<E , Id extends Serializable>
 	}
 	
 	//OK
-	protected E find (Class<E> entity , Id id)
+	protected E find (Class<E> entity ,Object id)
 	{
-		E e = getCurrentSession().get(entity, id);
+		Session session = getCurrentSession();
+		E e = session.find(entity, id);
+		session.refresh(e);
 		return e; 
 	}
 	
