@@ -27,7 +27,7 @@ public class TestUsersService
 		Users user1 = new Users("YYY", "YYY", "YYY");
 		Users user2 = new Users("AAA", "BBB", "CCC");
 		
-		System.out.println("*** Persist - Start ***");
+		System.out.println("*** TestUsersService:Persist - Start ***");
 		usersService.createUser(user1);
 		usersService.createUser(user2);
 		List<Users> users1 = usersService.findAll();
