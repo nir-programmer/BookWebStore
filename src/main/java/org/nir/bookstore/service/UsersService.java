@@ -14,90 +14,106 @@ import org.hibernate.cfg.Configuration;
 import org.nir.bookstore.dao.UsersDAO;
 import org.nir.bookstore.entities.Users;
 
-public class UsersService 
-{
-	private static UsersDAO usersDAO; 
-	
-	private HttpServletRequest request ; 
+public class UsersService {
+	private static UsersDAO usersDAO;
+
+	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
-	public UsersService(HttpServletRequest request, HttpServletResponse response)
-	{
+
+	public UsersService(HttpServletRequest request, HttpServletResponse response) {
 		usersDAO = new UsersDAO();
 		this.request = request;
 		this.response = response;
 	}
-	
-	public void getAllUsers() throws ServletException, IOException
-	{
+
+	public UsersService() {
+		usersDAO = new UsersDAO();
+
+	}
+
+	public void getAllUsers(String message) throws ServletException, IOException {
+		if (message != null)
+			request.setAttribute("message", message);
+
 		usersDAO.openCurrentSession();
 		List<Users> users = usersDAO.listAll();
 		usersDAO.closeCurrentSession();
-		
+
 		request.setAttribute("users", users);
 		request.getRequestDispatcher("users_list.jsp").forward(request, response);
+
 	}
-	
-	public UsersService()
+
+	public void getAllUsers() throws ServletException, IOException {
+		getAllUsers(null);
+		/*
+		 * usersDAO.openCurrentSession(); List<Users> users = usersDAO.listAll();
+		 * usersDAO.closeCurrentSession();
+		 * 
+		 * request.setAttribute("users", users);
+		 * request.getRequestDispatcher("users_list.jsp").forward(request, response);
+		 */
+	}
+
+	public void createUser() 
 	{
-		usersDAO = new UsersDAO();
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullname");
+		String password = request.getParameter("password");
+
+		Users user = new Users(email, password, fullName);
+
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.create(user);
+		usersDAO.closeCurrentSessionWithTransaction();
+
 		
+
 	}
-	
-	public List<Users> listUsers() 
-	{
+
+	public List<Users> listUsers() {
 		usersDAO.openCurrentSession();
 		List<Users> users = this.usersDAO.listAll();
 		usersDAO.closeCurrentSession();
-		return users; 
+		return users;
 	}
-	
-	public Users findUserById(Object id)
-	{
+
+	public Users findUserById(Object id) {
 		usersDAO.openCurrentSession();
-		Users user =  usersDAO.get(id);
+		Users user = usersDAO.get(id);
 		usersDAO.closeCurrentSession();
-		return user ; 
+		return user;
 	}
 
-
-	public void createUser(String email, String fullName, String password) 
-	{
+	public void createUser(String email, String fullName, String password) {
 		usersDAO.openCurrentSessionWithTransaction();
 		Users user = new Users(email, password, fullName);
 		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
-		
+
 		/*
 		 * usersDAO.openCurrentSessionWithTransaction(); Users users = new Users(email,
 		 * password, fullName); this.usersDAO.create(users);
 		 * usersDAO.closeCurrentSessionWithTransaction();
 		 */
-		
-		
+
 	}
 
-	public void createUser(Users user) 
-	{
+	public void createUser(Users user) {
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
-		
+
 	}
 
-
-	public List<Users> findAll() 
-	{
+	public List<Users> findAll() {
 		usersDAO.openCurrentSession();
 		List<Users> users = usersDAO.listAll();
-		
+
 		usersDAO.closeCurrentSession();
-		
+
 		return users;
-		
+
 	}
-
-
-	
 
 }

@@ -29,21 +29,12 @@ public class ListUsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException 
 	{
-		UsersService usersService = new UsersService();
-		List<Users> users =  usersService.listUsers();
-		
+		UsersService usersService = new UsersService(request, response);
+		usersService.getAllUsers();
 	
-		request.setAttribute("users", users);
-		
-		request.getRequestDispatcher("users_list.jsp").forward(request, response);
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		doGet(request, response);
-		
-	}
+	
 	
 	
 	
