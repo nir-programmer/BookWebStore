@@ -45,8 +45,13 @@ public class TestUsersDAO
 	void testCreateUsers()
 	{
 		Users user1 = new Users("YYY", "YYY", "YYY");
+		Users user2 = new Users("AAA", "AAA", "AAA");
+		Users user3 = new Users("BBB", "BBB", "BBB");
+		
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.create(user1);
+		usersDAO.create(user2);
+		usersDAO.create(user3);
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 	

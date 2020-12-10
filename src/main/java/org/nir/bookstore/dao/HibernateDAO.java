@@ -94,7 +94,7 @@ public class HibernateDAO<E , Id extends Serializable>
 	} 
 	
 	//OK
-	public E create(Class<E> entity)
+	protected E create(E entity)
 	{
 		getCurrentSession().save(entity);
 		
@@ -102,13 +102,13 @@ public class HibernateDAO<E , Id extends Serializable>
 	}
 	
 	//OK
-	public E find (Class<E> entity , Id id)
+	protected E find (Class<E> entity , Id id)
 	{
 		E e = getCurrentSession().get(entity, id);
 		return e; 
 	}
 	
-	public void delete(Class<E> entity, Object id) 
+	protected void delete(Class<E> entity, Object id) 
 	{
 		Session session = getCurrentSession();
 		Object reference = session.getReference(entity, id);
@@ -116,7 +116,7 @@ public class HibernateDAO<E , Id extends Serializable>
 		
 	}
 
-	public E update(E entity) 
+	protected E update(E entity) 
 	{
 		getCurrentSession().update(entity);
 		return entity;
@@ -139,11 +139,7 @@ public class HibernateDAO<E , Id extends Serializable>
 		return n;
 	}
 
-	public Users create(Users user) 
-	{
-		getCurrentSession().save(user);
-		return user;
-	}
+	
 	
 	
 	/*
