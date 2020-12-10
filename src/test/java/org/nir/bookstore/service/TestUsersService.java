@@ -12,6 +12,7 @@ public class TestUsersService
 {
 	private static UsersService usersService;
 	
+	//OK
 	@BeforeAll
 	@DisplayName("create UsersService")
 	public static void init()
@@ -20,6 +21,7 @@ public class TestUsersService
 	}
 	
 	
+	//OK
 	@Test
 	@DisplayName("when creating a new user by the UsersService")
 	void testCreateUsers()
@@ -35,6 +37,7 @@ public class TestUsersService
 			users1.stream().forEach(System.out::println);
 	}
 	
+	//OK
 	@Test
 	@DisplayName("when calling findAll()")
 	void testFindAll()
@@ -42,9 +45,21 @@ public class TestUsersService
 		List<Users>users = usersService.findAll();
 		System.out.println(">>testFindAll():List of users:");
 		users.stream().forEach(System.out::println);
-		
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling to get(id) method")
+	void testGetFound()
+	{
+		Integer id = 1; 
+		Users user = usersService.findUserById(id);
+		System.out.println("testGetFound():User with id = " + id);
+		System.out.println(user); 
 		
 	}
+	
+	
 	
 	
 	

@@ -16,12 +16,27 @@ import org.nir.bookstore.entities.Users;
 
 public class UsersService 
 {
-	
-	/*
-	 * private SessionFactory sessionFactory; private Session session;
-	 */
 	private static UsersDAO usersDAO; 
 	
+	private HttpServletRequest request ; 
+	private HttpServletResponse response;
+	
+	public UsersService(HttpServletRequest request, HttpServletResponse response)
+	{
+		usersDAO = new UsersDAO();
+		this.request = request;
+		this.response = response;
+	}
+	
+	public void getAllUsers() throws ServletException, IOException
+	{
+		usersDAO.openCurrentSession();
+		List<Users> users = usersDAO.listAll();
+		usersDAO.closeCurrentSession();
+		
+		request.setAttribute("users", users);
+		request.getRequestDispatcher("users_list.jsp").forward(request, response);
+	}
 	
 	public UsersService()
 	{
@@ -35,6 +50,14 @@ public class UsersService
 		List<Users> users = this.usersDAO.listAll();
 		usersDAO.closeCurrentSession();
 		return users; 
+	}
+	
+	public Users findUserById(Object id)
+	{
+		usersDAO.openCurrentSession();
+		Users user =  usersDAO.get(id);
+		usersDAO.closeCurrentSession();
+		return user ; 
 	}
 
 
