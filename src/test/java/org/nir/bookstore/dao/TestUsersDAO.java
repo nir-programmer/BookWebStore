@@ -60,13 +60,15 @@ public class TestUsersDAO
 	@DisplayName("when calling get(id)")
 	void testGet()
 	{
-		Integer id = 2; 
+		Integer id = 4; 
 		
 		usersDAO.openCurrentSession();
 		Users user = usersDAO.get(id);
 		System.out.println("User with id = " + user);
 		usersDAO.closeCurrentSession();
-	
+		
+		assertNull(user);
+		
 	}
 	
 	@Test

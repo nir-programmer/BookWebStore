@@ -106,7 +106,8 @@ public class HibernateDAO<E>
 	{
 		Session session = getCurrentSession();
 		E e = session.find(entity, id);
-		session.refresh(e);
+		if(e != null)
+			session.refresh(e);
 		return e; 
 	}
 	
