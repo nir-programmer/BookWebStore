@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.hibernate.PropertyValueException;
@@ -25,7 +27,7 @@ import org.nir.bookstore.entities.Users;
 public class TestUsersDAO 
 {
 	
-	private static UsersDAO usersDAO; 
+	private  static  UsersDAO usersDAO = null;
 	
 	
 	@BeforeAll
@@ -75,12 +77,24 @@ public class TestUsersDAO
 	@DisplayName("when calling delete(id)")
 	void testDelete()
 	{
-		Integer id = 3; 
+		Integer id = 4; 
+		
+		usersDAO.openCurrentSession();
+		Users user = usersDAO.get(4);
+		System.out.println("testDelete():User with id = " + id +" BEFORE delete:");
+		System.out.println(user);
+		usersDAO.closeCurrentSession();
 		
 		usersDAO.openCurrentSessionWithTransaction();
-		usersDAO.delete(id);
+		assertThrows(EntityNotFoundException.class , () ->usersDAO.delete(4));
 		usersDAO.closeCurrentSessionWithTransaction();
 		
+		/*
+		 * usersDAO.openCurrentSession(); user = usersDAO.get(4);
+		 * System.out.println("testDelete():User with id = " + id +" AFTER delete:");
+		 * System.out.println(user); usersDAO.closeCurrentSession();
+		 * 
+		 */
 	}
 	
 	@Test

@@ -117,6 +117,10 @@ public class HibernateDAO<E>
 	{
 		Session session = getCurrentSession();
 		Object reference = session.getReference(entity, id);
+		/*
+		 * Have to invoke inside a transaction, else will not work
+		 * it will not throw exception -just does not effect the db
+		 */
 		session.remove(reference);
 		
 	}
