@@ -35,8 +35,9 @@ public class UsersService
 
 	public List<Users> listUsers() 
 	{
+		usersDAO.openCurrentSession();
 		List<Users> users = this.usersDAO.listAll();
-		
+		usersDAO.closeCurrentSession();
 		return users; 
 	}
 
