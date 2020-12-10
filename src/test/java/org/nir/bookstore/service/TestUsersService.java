@@ -34,5 +34,7 @@ public class TestUsersService
 		System.out.println("Users Persisted are "); 
 			users1.stream().forEach(System.out::println);
 	}
+	
+	@Test
 
 }
