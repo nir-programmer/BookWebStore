@@ -75,7 +75,7 @@ public class TestUsersDAO
 	@DisplayName("when calling delete(id)")
 	void testDelete()
 	{
-		Integer id = 1; 
+		Integer id = 3; 
 		
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.delete(id);
