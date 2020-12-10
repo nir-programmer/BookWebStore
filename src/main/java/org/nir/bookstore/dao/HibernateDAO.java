@@ -19,71 +19,9 @@ public class HibernateDAO<E>
 	private  Session currentSession;  ;
 	private Transaction currentTransaction; 
 	
-	public HibernateDAO()
-	{
-		
-	}
-	
-	public Session openCurrentSession()
-	{
-		currentSession = getSessionFactory().openSession();
-		return currentSession;
-	}
-	
-	public void openCurrentSessionWithTransaction() 
-	{
-		currentSession = getSessionFactory().openSession();
-		currentTransaction = currentSession.beginTransaction();
-	}
+	public HibernateDAO() {}
 	
 	
-	public void closeCurrentSession()
-	{
-		currentSession.close();
-	}
-	
-	public void closeCurrentSessionWithTransaction()
-	{
-		currentTransaction.commit();
-		currentSession.close();
-	}
-	
-	private static SessionFactory getSessionFactory()
-	{
-		
-		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class)
-				.buildSessionFactory();
-		return sessionFactory;
-		/*
-		 * Configuration configuration = new Configuration().configure();
-		 * StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-		 * .applySettings(configuration.getProperties());
-		 * 
-		 * SessionFactory sessionFactory =
-		 * configuration.buildSessionFactory(builder.build()); return sessionFactory;
-		 */
-	}
-	
-	/*
-	 * **************************Getters and setters***********************************************
-	 */
-	public Session getCurrentSession()
-	{
-		return currentSession;
-	}
-	
-	public void setCurrentSession(Session currentSession) {
-		this.currentSession = currentSession;
-	}
-	
-	public Transaction getCurrentTransaction() {
-		return currentTransaction;
-	}
-
-	public void setCurrentTransaction(Transaction currentTransaction) {
-		this.currentTransaction = currentTransaction;
-	}
 
 /*************************************Interface********************************************** */
 
@@ -154,59 +92,69 @@ public class HibernateDAO<E>
 		return n;
 	}
 
+	public List<E> findWithNamedQuery(String queryName, String paramName , Object id)
+	{	
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		query.setParameter(paramName, id);
+		return query.getResultList();
+	}
+	
+	/******************************************************
+	 * METHODS FOR SESSIONS AND TRANSACTIONS HANDLINGS
+	 ***************************************************/
+	public Session openCurrentSession()
+	{
+		currentSession = getSessionFactory().openSession();
+		return currentSession;
+	}
+	
+	public void openCurrentSessionWithTransaction() 
+	{
+		currentSession = getSessionFactory().openSession();
+		currentTransaction = currentSession.beginTransaction();
+	}
 	
 	
+	public void closeCurrentSession()
+	{
+		currentSession.close();
+	}
+	
+	public void closeCurrentSessionWithTransaction()
+	{
+		currentTransaction.commit();
+		currentSession.close();
+	}
+	
+	private static SessionFactory getSessionFactory()
+	{
+		
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				.addAnnotatedClass(Users.class)
+				.buildSessionFactory();
+		return sessionFactory;
+	}
 	
 	/*
-	 * public E update(E entity) { getCurrentSession().update(entity);
-	 * 
-	 * return entity; }
-	 * 
-	 * public E find(Class<E> e , Object id) {
-	 * 
-	 * //E entity = getCurrentSession().get(e, id); Session session =
-	 * getCurrentSession(); E entity = session.find(e, id); if(entity != null)
-	 * session.refresh(entity);
-	 * 
-	 * return entity ;
-	 * 
-	 * }
-	 * 
-	 * public void delete(Class<E> e , Object id) {
-	 * session.getTransaction().begin(); Object reference = session.getReference(e,
-	 * id);
-	 * 
-	 * session.delete(reference); session.getTransaction().commit();
-	 * 
-	 * }
-	 * 
-	 * public List<E> findWithNamedQuery(String queryName) {
-	 * session.getTransaction().begin(); Query<E> query =
-	 * session.createNamedQuery(queryName);
-	 * 
-	 * List<E> elements = query.getResultList();
-	 * 
-	 * session.getTransaction().commit(); return elements;
-	 * 
-	 * }
-	 * 
-	 * public long countWithNamedQuery(String queryName) {
-	 * session.getTransaction().begin(); Query<E> query =
-	 * session.createNamedQuery(queryName); long count =
-	 * (long)query.getSingleResult();
-	 * 
-	 * session.getTransaction().commit();
-	 * 
-	 * return count; }
-	 * 
-	 * public List<E> findWithNamedQuery(String hql, String paramName, Object
-	 * paramValue) { session.getTransaction().begin(); Query<E> query =
-	 * session.createNamedQuery(hql); query.setParameter(paramName, paramValue);
-	 * return query.getResultList();
-	 * 
-	 * }
+	 * **************************Getters and setters***********************************************
 	 */
+	public Session getCurrentSession()
+	{
+		return currentSession;
+	}
+	
+	public void setCurrentSession(Session currentSession) {
+		this.currentSession = currentSession;
+	}
+	
+	public Transaction getCurrentTransaction() {
+		return currentTransaction;
+	}
 
+	public void setCurrentTransaction(Transaction currentTransaction) {
+		this.currentTransaction = currentTransaction;
+	}
 	
 	
 }

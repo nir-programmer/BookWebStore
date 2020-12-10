@@ -38,7 +38,6 @@ public class TestUsersDAO
 	}
 	
 	
-	
 	/*************************************************************/
 	
 	
@@ -144,6 +143,19 @@ public class TestUsersDAO
 		
 		usersDAO.closeCurrentSession();
 		
+	}
+	
+	@Test 
+	@DisplayName("when calling findByEmail()")
+	void testFindByEmail()
+	{
+		String email = "YYY"; 
+		usersDAO.openCurrentSessionWithTransaction();
+		Users user = usersDAO.findByEmail(email);
+		System.out.println("testFindByEmail():The user with email = " + email); 
+		System.out.println(user);
+		
+		usersDAO.closeCurrentSessionWithTransaction();
 	}
 	
 	
