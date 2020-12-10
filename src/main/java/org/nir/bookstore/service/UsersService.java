@@ -54,10 +54,6 @@ public class UsersService
 		
 	}
 
-
-
-
-
 	public void createUser(Users user) 
 	{
 		usersDAO.openCurrentSessionWithTransaction();

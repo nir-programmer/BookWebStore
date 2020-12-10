@@ -35,6 +35,19 @@ public class TestUsersService
 			users1.stream().forEach(System.out::println);
 	}
 	
+	@Test
+	@DisplayName("when calling findAll()")
+	void testFindAll()
+	{
+		List<Users>users = usersService.findAll();
+		System.out.println(">>testFindAll():List of users:");
+		users.stream().forEach(System.out::println);
+		
+		
+	}
+	
+	
+	
 	
 
 }
