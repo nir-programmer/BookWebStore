@@ -19,18 +19,26 @@ public class UsersService {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-
+	
+	
+	/**************************CONSTRUCTORS****************************/
+	//OK: used By the Servlets
 	public UsersService(HttpServletRequest request, HttpServletResponse response) {
 		usersDAO = new UsersDAO();
 		this.request = request;
 		this.response = response;
 	}
 
-	public UsersService() {
+	public UsersService() 
+	{
 		usersDAO = new UsersDAO();
 
 	}
-
+	
+	/*
+	 *			 METODS USED BY THE SERVLETS
+	 */
+	//OK
 	public void getAllUsers(String message) throws ServletException, IOException {
 		if (message != null)
 			request.setAttribute("message", message);
@@ -43,18 +51,15 @@ public class UsersService {
 		request.getRequestDispatcher("users_list.jsp").forward(request, response);
 
 	}
-
-	public void getAllUsers() throws ServletException, IOException {
+	
+	//OK
+	public void getAllUsers() throws ServletException, IOException 
+	{
 		getAllUsers(null);
-		/*
-		 * usersDAO.openCurrentSession(); List<Users> users = usersDAO.listAll();
-		 * usersDAO.closeCurrentSession();
-		 * 
-		 * request.setAttribute("users", users);
-		 * request.getRequestDispatcher("users_list.jsp").forward(request, response);
-		 */
 	}
 
+	
+	//OK
 	public void createUser() 
 	{
 		String email = request.getParameter("email");
@@ -67,10 +72,12 @@ public class UsersService {
 		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
 
-		
 
 	}
 
+	/*
+	 * USED FOR TESTS!
+	 */
 	public List<Users> listUsers() {
 		usersDAO.openCurrentSession();
 		List<Users> users = this.usersDAO.listAll();
