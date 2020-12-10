@@ -117,7 +117,7 @@ public class HibernateDAO<E>
 	{
 		Session session = getCurrentSession();
 		Object reference = session.getReference(entity, id);
-		session.delete(reference);
+		session.remove(reference);
 		
 	}
 
