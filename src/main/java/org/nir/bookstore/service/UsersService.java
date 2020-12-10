@@ -71,9 +71,6 @@ public class UsersService
 	}
 
 
-
-
-
 	public List<Users> findAll() 
 	{
 		usersDAO.openCurrentSession();
