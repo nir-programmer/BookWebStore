@@ -34,7 +34,12 @@ public class CreateUsersServlet extends HttpServlet
 	{
 		UsersService usersService = new UsersService(request , response);
 		usersService.createUser();
-		usersService.getAllUsers("User created succssfully!");
+		
+		/*
+		 * I want to put all the flow in the service so I move this
+		 	code to the create() method of the service
+		 */
+		//usersService.getAllUsers("User created succssfully!");
 		
 		
 	}

@@ -19,26 +19,24 @@ public class UsersService {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
-	
-	/**************************CONSTRUCTORS****************************/
-	//OK: used By the Servlets
+
+	/************************** CONSTRUCTORS ****************************/
+	// OK: used By the Servlets
 	public UsersService(HttpServletRequest request, HttpServletResponse response) {
 		usersDAO = new UsersDAO();
 		this.request = request;
 		this.response = response;
 	}
 
-	public UsersService() 
-	{
+	public UsersService() {
 		usersDAO = new UsersDAO();
 
 	}
-	
-	/*
-	 *			 METODS USED BY THE SERVLETS
-	 */
-	//OK
+
+	/******************************************************
+	 * 				METODS USED BY THE SERVLETS
+	 ******************************************************/
+	// OK
 	public void getAllUsers(String message) throws ServletException, IOException {
 		if (message != null)
 			request.setAttribute("message", message);
@@ -51,33 +49,45 @@ public class UsersService {
 		request.getRequestDispatcher("users_list.jsp").forward(request, response);
 
 	}
-	
-	//OK
-	public void getAllUsers() throws ServletException, IOException 
-	{
+
+	// OK
+	public void getAllUsers() throws ServletException, IOException {
 		getAllUsers(null);
 	}
 
-	
-	//OK
-	public void createUser() 
+	// OK
+	public void createUser() throws ServletException, IOException 
 	{
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
 		String password = request.getParameter("password");
+		
+		usersDAO.openCurrentSession();
+		Users existUser = usersDAO.findByEmail(email);
+		usersDAO.closeCurrentSession();
+		
+		if (existUser != null) 
+		{
+			System.out.println(">>UsersService.createUser():The User " + existUser + " Exists!");
+			String message = "Couldn't create a user." + "A user with email " + email + " already exists!";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("message.jsp").forward(request, response);
+		} 
+		else 
+		{
+			Users newUser = new Users(email, password, fullName);
 
-		Users user = new Users(email, password, fullName);
-
-		usersDAO.openCurrentSessionWithTransaction();
-		usersDAO.create(user);
-		usersDAO.closeCurrentSessionWithTransaction();
-
+			usersDAO.openCurrentSessionWithTransaction();
+			usersDAO.create(newUser);
+			usersDAO.closeCurrentSessionWithTransaction();
+			getAllUsers("User created succssfully!");
+		}
 
 	}
 
-	/*
-	 * USED FOR TESTS!
-	 */
+	/******************************************************
+	 * 				METHODS USED FOR TESTS
+	 ******************************************************/
 	public List<Users> listUsers() {
 		usersDAO.openCurrentSession();
 		List<Users> users = this.usersDAO.listAll();

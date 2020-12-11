@@ -149,12 +149,13 @@ public class TestUsersDAO
 	@DisplayName("when calling findByEmail()")
 	void testFindByEmail()
 	{
-		String email = "YYY"; 
+		String email = "XXXX"; 
 		usersDAO.openCurrentSessionWithTransaction();
 		Users user = usersDAO.findByEmail(email);
 		System.out.println("testFindByEmail():The user with email = " + email); 
 		System.out.println(user);
 		
+		assertNotNull(user);
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 	
