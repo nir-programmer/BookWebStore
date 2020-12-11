@@ -35,13 +35,20 @@
 			</tr>
 
 			<c:forEach items="${users}" var="user" varStatus="status">
+			
+			<c:url value="edit_user" var="tempLink">
+				<c:param name="id" value="${user.userId}"></c:param>
+			
+			</c:url>
 				<tr>
 					<td>${status.index}</td>
 					<td>${user.userId}</td>
 					<td>${user.email}</td>
 					<td>${user.fullName}</td>
 					<td>
-						<a href="edit_user?id=${user.userId}">Edit</a> &nbsp;
+					<%-- Replace this <a href="edit_user?id=${user.userId}">Edit</a> 
+						by url rewriting and encoding: --%>
+						<a href="${tempLink}">Edit</a>&nbsp;
 						<a href="">Delete</a> &nbsp;
 					</td>
 				</tr>

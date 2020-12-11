@@ -96,6 +96,7 @@ public class UsersService {
 		//System.out.println("THE User is: " +  user.getFullName()); 
 		
 		request.setAttribute("user", user);
+		
 		request.getRequestDispatcher("users_form.jsp").forward(request, response);
 		
 		
