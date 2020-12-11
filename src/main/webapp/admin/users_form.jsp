@@ -20,15 +20,18 @@
 			<table>
 				<tr>
 					<td align="right">Email:</td>
-					<td align="left"><input id = "email" type="text" name="email" size="20"></td>
+					<td align="left"><input id = "email" type="text" name="email" size="20"
+						 value="${user.email}"></td>
 				</tr>
 				<tr>
 					<td align="right">Full Name:</td>
-					<td align="left"><input id = "fullname" type="text" name="fullname" size="20"></td>
+					<td align="left"><input id = "fullname" type="text" name="fullname" size="20" 
+						value="${user.fullName}"></td>
 				</tr>
 				<tr>
 					<td align="right">Password:</td>
-					<td align="left"><input id = "password" type="password" name="password" size="20"></td>
+					<td align="left"><input id = "password" type="password" name="password" size="20" 
+						value="${user.password}"></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>

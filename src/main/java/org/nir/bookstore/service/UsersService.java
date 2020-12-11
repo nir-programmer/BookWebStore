@@ -84,6 +84,22 @@ public class UsersService {
 		}
 
 	}
+	
+	public void  editUser() throws ServletException, IOException
+	{
+		int userId = Integer.parseInt(request.getParameter("id")); 
+		
+		usersDAO.openCurrentSession();
+		Users user = usersDAO.get(userId); 
+		usersDAO.closeCurrentSession();
+		
+		//System.out.println("THE User is: " +  user.getFullName()); 
+		
+		request.setAttribute("user", user);
+		request.getRequestDispatcher("users_form.jsp").forward(request, response);
+		
+		
+	}
 
 	/******************************************************
 	 * 				METHODS USED FOR TESTS
