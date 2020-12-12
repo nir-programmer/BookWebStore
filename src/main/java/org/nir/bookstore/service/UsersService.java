@@ -128,10 +128,23 @@ public class UsersService {
 			request.getRequestDispatcher("message.jsp").forward(request, response);
 		}
 			
-			
-
+	}
+	
+	public void deleteUser() throws ServletException, IOException 
+	{
+		Integer userID = Integer.parseInt(request.getParameter("id")); 
+		
+		//System.out.println(">>UserService.deleteUser(): id = " + userID); 
+		
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.delete(userID); 
+		System.out.println(">>UsersService.delteUser:User with id = " + userID + " Dleted"); 
+		usersDAO.closeCurrentSessionWithTransaction();
+		
+		getAllUsers("User Deleted Succussfully");
 		
 	}
+
 
 	/******************************************************
 	 * METHODS USED FOR TESTS
@@ -201,4 +214,5 @@ public class UsersService {
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 
+	
 }

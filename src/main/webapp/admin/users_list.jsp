@@ -54,23 +54,31 @@
 					<%-- Replace this <a href="edit_user?id=${user.userId}">Edit</a> 
 						by url rewriting and encoding: --%>
 						<a href="${tempLink}">Edit</a>&nbsp;
-						<a href="${deleteLink }" 
-							onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">
-								Delete</a> &nbsp;
+						
+						<a href="javascript:confirmDelete(${user.userId})">Delete</a>
+						
 					</td>
 				</tr>
 			</c:forEach>
 
-
 		</table>
-
-
-
 	</div>
 
 
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
+
+<script type="text/javascript">
+	function confirmDelete(userId) 
+	{
+		if(confirm('Are you sure you want to delete user with ID '+ userId + '?'))
+		{
+			window.location = 'delete_user?id='+userId; 
+		}
+		
+	}
+
+</script>
 
 
 

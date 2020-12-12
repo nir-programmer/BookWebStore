@@ -1,6 +1,8 @@
 package org.nir.bookstore.controller.admin;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,20 +17,39 @@ import org.nir.bookstore.service.UsersService;
 @WebServlet("/admin/delete_user")
 public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DeleteUserServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public DeleteUserServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
 	{
-		UsersService usersService = new UsersService(request, response); 
+		UsersService service = new UsersService(request, response); 
 		
+		service.deleteUser();
+		/*
+		 * response.setContentType("text/html"); PrintWriter out = response.getWriter();
+		 * 
+		 * out.println("<html><body>"); out.println("<h2>Test DeleteUserServlet</h2>");
+		 * out.println("</body></html>");
+		 */
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		resp.setContentType("text/html");
+		PrintWriter out = resp.getWriter();
+
+		out.println("<html><body>");
+		out.println("<h2>Test DeleteUserServlet</h2>");
+		out.println("</body></html>");
 	}
 
 }
