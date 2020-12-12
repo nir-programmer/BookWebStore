@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.service.UsersService;
+
 /**
  * Servlet implementation class DeleteUserServlet
  */
@@ -25,6 +27,7 @@ public class DeleteUserServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		UsersService usersService = new UsersService(request, response); 
 		
 	}
 
