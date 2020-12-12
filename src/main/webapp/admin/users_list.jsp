@@ -36,11 +36,13 @@
 
 			<c:forEach items="${users}" var="user" varStatus="status">
 			
+			<!--  setup a link to update a user -->
 			<c:url value="edit_user" var="tempLink">
 				<c:param name="id" value="${user.userId}"></c:param>
 			</c:url>
 			
-			<c:url value="edit_user" var="tempLink">
+			<!--  setup a link to delete a user -->
+			<c:url value="delete_user" var="deleteLink">
 				<c:param name="id" value="${user.userId}"></c:param>
 			</c:url>
 				<tr>
@@ -52,7 +54,9 @@
 					<%-- Replace this <a href="edit_user?id=${user.userId}">Edit</a> 
 						by url rewriting and encoding: --%>
 						<a href="${tempLink}">Edit</a>&nbsp;
-						<a href="">Delete</a> &nbsp;
+						<a href="${deleteLink }" 
+							onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">
+								Delete</a> &nbsp;
 					</td>
 				</tr>
 			</c:forEach>

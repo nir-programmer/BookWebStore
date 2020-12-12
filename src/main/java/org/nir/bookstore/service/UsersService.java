@@ -193,5 +193,10 @@ public class UsersService {
 
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
+	
+	public void deleteUser(Object id)
+	{
+		usersDAO.delete(id);
+	}
 
 }
