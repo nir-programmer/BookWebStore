@@ -93,6 +93,7 @@ public class TestUsersService
 		System.out.println(">>testDeleteUser():the user retrieved AFTER with id " + id); 
 		System.out.println(user); 
 		
+		
 	}
 	
 	
