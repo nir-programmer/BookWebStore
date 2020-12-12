@@ -59,6 +59,26 @@ public class TestUsersService
 		
 	}
 	
+	@Test
+	@DisplayName("when calling updateUser()")
+	void testUpdateUser()
+	{
+		
+		Users user = usersService.findUserById(1);
+		System.out.println(">>testUpdateUser():the User BEFORE update: " + user); 
+		user.setEmail("D");
+		user.setFullName("E");
+		user.setPassword("E");
+		usersService.updateUser(user); 
+		
+		user = usersService.findUserById(1);
+		usersService.updateUser(user); 
+		System.out.println(">>testUpdateUser():the User AFTER update: " + user); 
+		//System.out.println(">>testUpdateUser():the User BEFORE update: " + user); 
+		
+		
+	}
+	
 	
 	
 	

@@ -182,10 +182,26 @@ public class UsersService {
 		return users;
 	}
 	
-	public void update(Users user)
+	public void updateUser(Users user)
 	{
 		usersDAO.openCurrentSessionWithTransaction();
-		usersDAO.update(user);
+		
+		Users emailUser = usersDAO.findByEmail(user.getEmail( )); 
+		Users idUser = usersDAO.get(user.getUserId());
+		
+		/*
+		 * case 1: the email does not exists(normal case)
+		 * OR the email exists - but it belongs to the current User:
+		 * update the current user including email 
+		 */
+		if(emailUser ==  null || (emailUser != null) 
+				&& (emailUser.getUserId() == idUser.getUserId()))
+			usersDAO.update(user);
+		
+		else
+			System.out.println(">>UsersService.updateUser(User user): " +
+					"There is another user with email = " + user.getEmail()) ;
+
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 
