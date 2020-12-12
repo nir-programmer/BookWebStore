@@ -12,6 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.nir.bookstore.entities.Book;
+import org.nir.bookstore.entities.BookOrder;
+import org.nir.bookstore.entities.Category;
+import org.nir.bookstore.entities.Customer;
+import org.nir.bookstore.entities.OrderDetail;
+import org.nir.bookstore.entities.OrderDetailId;
+import org.nir.bookstore.entities.Review;
 import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
@@ -131,8 +138,17 @@ public class HibernateDAO<E>
 	{
 		
 		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Users.class)
-				.buildSessionFactory();
+				 .addAnnotatedClass(Category.class)
+				 .addAnnotatedClass(Book.class)
+				 .addAnnotatedClass(Customer.class)
+				 .addAnnotatedClass(OrderDetailId.class)
+				 .addAnnotatedClass(OrderDetail.class)
+				 .addAnnotatedClass(Review.class)
+				 .addAnnotatedClass(Users.class)
+				 .addAnnotatedClass(BookOrder.class)
+				 .buildSessionFactory();
+		
+		
 		return sessionFactory;
 	}
 	
