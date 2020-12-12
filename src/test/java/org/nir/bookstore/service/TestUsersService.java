@@ -76,6 +76,22 @@ public class TestUsersService
 		System.out.println(">>testUpdateUser():the User AFTER update: " + user); 
 		//System.out.println(">>testUpdateUser():the User BEFORE update: " + user); 
 		
+	}
+	
+	@Test
+	@DisplayName("when calling deleteUser(Objcet id)")
+	void testDeleteUser()
+	{
+		Integer id = 1; 
+		Users user = usersService.findUserById(id); 
+		System.out.println(">>testDeleteUser():the  db user retrieved BEFORE with id: " + id); 
+		System.out.println(user); 
+		
+		usersService.deleteUser(id);
+		
+		 user = usersService.findUserById(id); 
+		System.out.println(">>testDeleteUser():the user retrieved AFTER with id " + id); 
+		System.out.println(user); 
 		
 	}
 	
