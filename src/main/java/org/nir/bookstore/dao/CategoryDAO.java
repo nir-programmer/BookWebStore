@@ -6,6 +6,7 @@ import org.nir.bookstore.entities.Category;
 
 public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<Category> {
 
+	//Ok
 	@Override
 	public Category create(Category category) 
 	{
@@ -18,6 +19,7 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 		return null;
 	}
 
+	//Ok
 	@Override
 	public Category get(Object id) 
 	{
