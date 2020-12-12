@@ -38,7 +38,10 @@
 			
 			<c:url value="edit_user" var="tempLink">
 				<c:param name="id" value="${user.userId}"></c:param>
+			</c:url>
 			
+			<c:url value="edit_user" var="tempLink">
+				<c:param name="id" value="${user.userId}"></c:param>
 			</c:url>
 				<tr>
 					<td>${status.index + 1}</td>
