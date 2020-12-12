@@ -26,8 +26,11 @@ import org.nir.bookstore.entities.Users;
 public class TestCategory 
 {
 	private static SessionFactory sessionFactory; 
+	private Session session; 
+	private Transaction transaction; 
 	
 	@BeforeAll
+	@DisplayName("when try to create a SessionFactory object")
 	public static void init()
 	{
 		System.out.println(">>init():try to create SessionFactory...");
@@ -45,12 +48,44 @@ public class TestCategory
 		 System.out.println(">>init():SessionFactory Created!");
 	}
 	
+	@BeforeEach
+	@DisplayName("when try to create a session and begin transaction")
+	void createSessionBeginTransaction()
+	{
+		System.out.println(">>createSessionBeginTransaction():try to create a new Session...");
+		session = sessionFactory.openSession();
+		System.out.println(">>createSessionBeginTransaction():Session Created!");
+		
+		System.out.println(">>createSessionBeginTransaction():try to begin a new Transuction...");
+		transaction = session.beginTransaction();
+		
+		System.out.println(">>createSessionBeginTransaction():Transaction Started!");
+		 
+	}
+	
+	@AfterEach
+	@DisplayName("when trying to commit a transaction and close a session")
+	void commitTransactionCloseSession()
+	{
+		System.out.println(">>commitTransactionCloseSession():try to commit transaction...");
+		transaction.commit();
+		System.out.println(">>commitTransactionCloseSession():Transaction commited!");
+		
+		System.out.println(">>commitTransactionCloseSession():try to close the session...");
+		session.close();
+		System.out.println(">>commitTransactionCloseSession():Session Closed!");
+		 
+	}
+	
+	
 	@Test
 	@DisplayName("when create a category")
 	void testCreateCategory()
 	{ 
-		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
+		/*
+		 * Session session = sessionFactory.openSession(); Transaction transaction =
+		 * session.beginTransaction();
+		 */
 		
 		Category category = new Category("Science Fiction"); 
 		System.out.println(">>testCreateCategory():try to save the category...");
@@ -58,16 +93,29 @@ public class TestCategory
 		session.save(category);
 		
 		
-		transaction.commit();
-		session.close();
+		/*
+		 * transaction.commit(); session.close();
+		 */
 		System.out.println(">>testCreateCategory():Category Persisted!");
 		
+		
+	}
+	
+	@Test
+	@DisplayName("when try to get Category with id")
+	void testGetCategoryFound()
+	{
 		/*
-		org.hibernate.AnnotationException: 
-		@OneToOne or @ManyToOne on org.nir.bookstore.entities.OrderDetail.bookOrder references an unknown entity:
-		 org.nir.bookstore.entities.BookOrder
-		*/
+		 * Session session = sessionFactory.openSession(); Transaction transaction =
+		 * session.beginTransaction();
+		 */
 		
-		
+		Integer id = 1; 
+		System.out.println(">>testCreateCategory():try to read a category with id = " + id);
+		Category category =  session.get(Category.class, id);
+		System.out.println(">>testCreateCategory(): The Category is: " + category);
+		/*
+		 * transaction.commit(); session.close();
+		 */
 	}
 }
