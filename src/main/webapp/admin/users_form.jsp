@@ -25,12 +25,11 @@
 
 	<div align="center">
 		<c:if test="${user == null }"> 
-			<form action="create_users" method="post"
-			onsubmit="return validateFormInput()">
+			<form action="create_users" method="post" onsubmit="return validateFormInput()">
 		</c:if>
 		<c:if test="${user != null}"> 
-			<form action="update_user" method="post"
-			onsubmit="return validateFormInput()">
+			<form action="update_user" method="post" onsubmit="return validateFormInput()">
+			<input type="hidden" name="userId" value="${user.userId}">
 		</c:if>
 			<table>
 				<tr>

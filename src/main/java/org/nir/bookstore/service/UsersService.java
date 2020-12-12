@@ -101,6 +101,44 @@ public class UsersService {
 		
 		
 	}
+	
+	public void updateUser() throws ServletException, IOException 
+	{
+		int id = Integer.parseInt(request.getParameter("userId")); 
+		String email = request.getParameter("email"); 
+		String fullName = request.getParameter("fullname"); 
+		String password = request.getParameter("password"); 
+		
+		System.out.println(">>UsersService.update()" + "\n"  + 
+				id + " , "+ email + " , " + fullName  + " , " + password); 
+		
+		usersDAO.openCurrentSession();
+		Users user =  usersDAO.findByEmail(email); 
+		usersDAO.closeCurrentSession();
+		
+		/*
+		 * check if there is a user with this email:
+		 * if there isn't: update for the request email 
+		 */
+		String message = null; 
+		if(user == null)
+		{
+			user.setEmail(email);
+			
+			usersDAO.openCurrentSessionWithTransaction();
+			usersDAO.update(user);
+			usersDAO.closeCurrentSessionWithTransaction();
+			
+			message = "User updated Successfully!"; 
+		}
+		else
+		{
+			message = "Update failed - there is a user with email = " + email; 
+		}
+		
+		request.setAttribute("message" , message); 
+		getAllUsers();
+	}
 
 	/******************************************************
 	 * 				METHODS USED FOR TESTS
@@ -124,12 +162,7 @@ public class UsersService {
 		Users user = new Users(email, password, fullName);
 		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
-
-		/*
-		 * usersDAO.openCurrentSessionWithTransaction(); Users users = new Users(email,
-		 * password, fullName); this.usersDAO.create(users);
-		 * usersDAO.closeCurrentSessionWithTransaction();
-		 */
+	
 
 	}
 
@@ -147,7 +180,15 @@ public class UsersService {
 		usersDAO.closeCurrentSession();
 
 		return users;
-
 	}
+	
+	public void update(Users user)
+	{
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.update(user);
+		usersDAO.closeCurrentSessionWithTransaction();
+	}
+
+	
 
 }
