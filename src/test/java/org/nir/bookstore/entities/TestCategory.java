@@ -46,12 +46,16 @@ public class TestCategory
 				 .buildSessionFactory();
 		 
 		 System.out.println(">>init():SessionFactory Created!");
+		 
+		 System.out.println("\n\n"); 
 	}
 	
 	@BeforeEach
 	@DisplayName("when try to create a session and begin transaction")
 	void createSessionBeginTransaction()
 	{
+		System.out.println("\n\n"); 
+		
 		System.out.println(">>createSessionBeginTransaction():try to create a new Session...");
 		session = sessionFactory.openSession();
 		System.out.println(">>createSessionBeginTransaction():Session Created!");
@@ -61,12 +65,14 @@ public class TestCategory
 		
 		System.out.println(">>createSessionBeginTransaction():Transaction Started!");
 		 
+		System.out.println("\n\n"); 
 	}
 	
 	@AfterEach
 	@DisplayName("when trying to commit a transaction and close a session")
 	void commitTransactionCloseSession()
 	{
+		System.out.println("\n\n"); 
 		System.out.println(">>commitTransactionCloseSession():try to commit transaction...");
 		transaction.commit();
 		System.out.println(">>commitTransactionCloseSession():Transaction commited!");
@@ -75,6 +81,7 @@ public class TestCategory
 		session.close();
 		System.out.println(">>commitTransactionCloseSession():Session Closed!");
 		 
+		System.out.println("\n\n"); 
 	}
 	
 	
@@ -105,17 +112,50 @@ public class TestCategory
 	@DisplayName("when try to get Category with id")
 	void testGetCategoryFound()
 	{
-		/*
-		 * Session session = sessionFactory.openSession(); Transaction transaction =
-		 * session.beginTransaction();
-		 */
-		
 		Integer id = 1; 
 		System.out.println(">>testCreateCategory():try to read a category with id = " + id);
 		Category category =  session.get(Category.class, id);
 		System.out.println(">>testCreateCategory(): The Category is: " + category);
-		/*
-		 * transaction.commit(); session.close();
-		 */
+		
+	}
+	
+	@Test
+	@DisplayName("when try to update a Category ")
+	void testUpdateCategory()
+	{
+		
+		Integer id = 1; 
+		System.out.println(">>testUpdateCategory():Category with id = " + id +" BEFORE update:"); 
+		Category category = session.get(Category.class, id);
+		System.out.println(category); 
+		
+		
+		category.setName("Comix");
+		
+		System.out.println(">>testUpdateCategory():Category with id = " + id +" AFTER update:"); 
+		
+		category = session.get(Category.class, id);
+		System.out.println(category); 
+		
+	}
+	
+	@Test
+	@DisplayName("when trying to delete Category")
+	void testDeleteCategory()
+	{
+		Integer id = 1; 
+		System.out.println(">>testDeleteCategory():Category with id = " + id +" BEFORE update:"); 
+		Category category = session.get(Category.class, id);
+		System.out.println(category); 
+		
+		session.delete(category); 
+		
+		System.out.println(">>testUpdateCategory():Category with id = " + id +" AFTER update:"); 
+		
+		category = session.get(Category.class, id);
+		System.out.println(category); 
+		
+		
+		
 	}
 }
