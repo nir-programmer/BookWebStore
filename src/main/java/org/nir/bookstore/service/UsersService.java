@@ -34,7 +34,7 @@ public class UsersService {
 	}
 
 	/******************************************************
-	 * 				METODS USED BY THE SERVLETS
+	 * METODS USED BY THE SERVLETS
 	 ******************************************************/
 	// OK
 	public void getAllUsers(String message) throws ServletException, IOException {
@@ -56,25 +56,21 @@ public class UsersService {
 	}
 
 	// OK
-	public void createUser() throws ServletException, IOException 
-	{
+	public void createUser() throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
 		String password = request.getParameter("password");
-		
+
 		usersDAO.openCurrentSession();
 		Users existUser = usersDAO.findByEmail(email);
 		usersDAO.closeCurrentSession();
-		
-		if (existUser != null) 
-		{
+
+		if (existUser != null) {
 			System.out.println(">>UsersService.createUser():The User " + existUser + " Exists!");
-			String message = "Couldn't create a user." + "A user with email " + email + " already exists!";
+			String message = "Couldn't create a user. " + "A user with email " + email + " already exists!";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("message.jsp").forward(request, response);
-		} 
-		else 
-		{
+		} else {
 			Users newUser = new Users(email, password, fullName);
 
 			usersDAO.openCurrentSessionWithTransaction();
@@ -84,64 +80,61 @@ public class UsersService {
 		}
 
 	}
-	
-	public void  editUser() throws ServletException, IOException
-	{
-		int userId = Integer.parseInt(request.getParameter("id")); 
-		
+
+	public void editUser() throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("id"));
+
 		usersDAO.openCurrentSession();
-		Users user = usersDAO.get(userId); 
+		Users user = usersDAO.get(userId);
 		usersDAO.closeCurrentSession();
-		
-		//System.out.println("THE User is: " +  user.getFullName()); 
-		
+
+		// System.out.println("THE User is: " + user.getFullName());
+
 		request.setAttribute("user", user);
-		
+
 		request.getRequestDispatcher("users_form.jsp").forward(request, response);
-		
-		
+
 	}
-	
-	public void updateUser() throws ServletException, IOException 
-	{
-		int id = Integer.parseInt(request.getParameter("userId")); 
-		String email = request.getParameter("email"); 
-		String fullName = request.getParameter("fullname"); 
-		String password = request.getParameter("password"); 
-		
-		System.out.println(">>UsersService.update()" + "\n"  + 
-				id + " , "+ email + " , " + fullName  + " , " + password); 
-		
-		usersDAO.openCurrentSession();
-		Users user =  usersDAO.findByEmail(email); 
-		usersDAO.closeCurrentSession();
-		
+
+	public void updateUser() throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("userId"));
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullname");
+		String password = request.getParameter("password");
+
+		System.out.println(">>UsersService.update()" + "\n" + id + " , " + email + " , " + fullName + " , " + password);
+
+		Users user = new Users(id, email, password, fullName);
+
+		usersDAO.openCurrentSessionWithTransaction();
+		Users emailUser = usersDAO.findByEmail(user.getEmail());
+		Users idUser = usersDAO.get(user.getUserId());
+
 		/*
-		 * check if there is a user with this email:
-		 * if there isn't: update for the request email 
+		 * case 1: the email does not exists(normal case) OR the email exists - but it
+		 * belongs to the current User: update the current user including email
 		 */
-		String message = null; 
-		if(user == null)
+		if (emailUser == null || (emailUser != null) && (emailUser.getUserId() == idUser.getUserId()))
 		{
-			user.setEmail(email);
-			
-			usersDAO.openCurrentSessionWithTransaction();
 			usersDAO.update(user);
 			usersDAO.closeCurrentSessionWithTransaction();
-			
-			message = "User updated Successfully!"; 
+			getAllUsers("User updated successfully");
 		}
 		else
 		{
-			message = "Update failed - there is a user with email = " + email; 
+			usersDAO.closeCurrentSessionWithTransaction();
+			String message = "Could not update user. User with email " + user.getEmail() + " already exists"; 
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("message.jsp").forward(request, response);
 		}
+			
+			
+
 		
-		request.setAttribute("message" , message); 
-		getAllUsers();
 	}
 
 	/******************************************************
-	 * 				METHODS USED FOR TESTS
+	 * METHODS USED FOR TESTS
 	 ******************************************************/
 	public List<Users> listUsers() {
 		usersDAO.openCurrentSession();
@@ -162,7 +155,6 @@ public class UsersService {
 		Users user = new Users(email, password, fullName);
 		usersDAO.create(user);
 		usersDAO.closeCurrentSessionWithTransaction();
-	
 
 	}
 
@@ -181,30 +173,25 @@ public class UsersService {
 
 		return users;
 	}
-	
-	public void updateUser(Users user)
-	{
+
+	public void updateUser(Users user) {
 		usersDAO.openCurrentSessionWithTransaction();
-		
-		Users emailUser = usersDAO.findByEmail(user.getEmail( )); 
+
+		Users emailUser = usersDAO.findByEmail(user.getEmail());
 		Users idUser = usersDAO.get(user.getUserId());
 		
 		/*
-		 * case 1: the email does not exists(normal case)
-		 * OR the email exists - but it belongs to the current User:
-		 * update the current user including email 
+		 * case 1: the email does not exists(normal case) OR the email exists - but it
+		 * belongs to the current User: update the current user including email
 		 */
-		if(emailUser ==  null || (emailUser != null) 
-				&& (emailUser.getUserId() == idUser.getUserId()))
+		if (emailUser == null || (emailUser != null) && (emailUser.getUserId() == idUser.getUserId()))
 			usersDAO.update(user);
-		
+
 		else
-			System.out.println(">>UsersService.updateUser(User user): " +
-					"There is another user with email = " + user.getEmail()) ;
+			System.out.println(">>UsersService.updateUser(User user): "
+					+ "There is another user with email = " + user.getEmail());
 
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
-
-	
 
 }

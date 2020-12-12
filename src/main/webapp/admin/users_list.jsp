@@ -41,7 +41,7 @@
 			
 			</c:url>
 				<tr>
-					<td>${status.index}</td>
+					<td>${status.index + 1}</td>
 					<td>${user.userId}</td>
 					<td>${user.email}</td>
 					<td>${user.fullName}</td>
