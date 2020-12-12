@@ -18,7 +18,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.*;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,30 +36,48 @@ public class TestCategoryDAO {
 	public static void init() {
 		categoryDAO = new CategoryDAO();
 	}
+	
+	@BeforeEach
+	@DisplayName("when calling openCurrentSessionWithTransaction()")
+	void testOpenCurrentSessionWithTransaction()
+	{
+		categoryDAO.openCurrentSessionWithTransaction();
+	}
+	
+	@AfterEach
+	@DisplayName("when calling closeCurrentSessionWithTransaction()")
+	void testcloseCurrentSessionWithTransaction()
+	{
+		categoryDAO.closeCurrentSessionWithTransaction();
+	}
 
 	/*************************************************************/
 
 	@Test
 	@DisplayName("when creating a new Category by the CategoryDAO")
-	void testCreateCategoryWithCategoryDAO() {
+	void testCreateCategoryWithCategoryDAO() 
+	{
 		Category category = new Category("Cookings");
-		categoryDAO.openCurrentSessionWithTransaction();
-
+		
 		System.out.println(">>testCreateCategoryWithCategoryDAO():try to create a new Category named Cookings");
 		categoryDAO.create(category);
-		categoryDAO.closeCurrentSessionWithTransaction();
+		
 		System.out.println(">>testCreateCategoryWithCategoryDAO():Category persisted!");
 
-		/*
-		 * Users user1 = new Users("YYY", "YYY", "YYY"); Users user2 = new Users("AAA",
-		 * "AAA", "AAA"); Users user3 = new Users("BBB", "BBB", "BBB");
-		 * 
-		 * usersDAO.openCurrentSessionWithTransaction(); usersDAO.create(user1);
-		 * usersDAO.create(user2); usersDAO.create(user3);
-		 * usersDAO.closeCurrentSessionWithTransaction();
-		 */
+		
+	}
+	@Test
+	@DisplayName("when calling get() method")
+	void testGetCategoryDao()
+	{
+		Integer id = 3 ; 
+		Category category = categoryDAO.get(id);
+		assertNotNull(category);
+		System.out.println(">>testGetCategoryDao():Category with id = " + id); 
+		System.out.println(category); 
 	}
 
+	
 	/*
 	 * @Test
 	 * 

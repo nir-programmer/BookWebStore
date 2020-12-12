@@ -100,9 +100,7 @@ public class TestCategory
 		session.save(category);
 		
 		
-		/*
-		 * transaction.commit(); session.close();
-		 */
+		
 		System.out.println(">>testCreateCategory():Category Persisted!");
 		
 		
