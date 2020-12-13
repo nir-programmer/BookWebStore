@@ -35,7 +35,7 @@
 				<tr>
 					<td align="right">Category Name:</td>
 					<td align="left"><input id="categoryName" type="text" name="categoryName"
-						size="20" value="${category.email}"></td>
+						size="20" value="${category.name}"></td>
 				</tr>
 				
 				<tr>

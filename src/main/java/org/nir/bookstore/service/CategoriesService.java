@@ -88,6 +88,19 @@ public class CategoriesService extends BaseService
 		
 		
 	}
+	
+	public void editCategory() throws ServletException, IOException 
+	{
+		Integer id = Integer.parseInt(request.getParameter("id")); 
+		
+		categoryDAO.openCurrentSessionWithTransaction();
+		Category category = categoryDAO.get(id);
+		categoryDAO.closeCurrentSessionWithTransaction();
+		
+		request.setAttribute("category", category);
+		request.getRequestDispatcher("categories_form.jsp").forward(request, response);
+		
+	}
 	/*
 	 * // OK public void getAllUsers(String message) throws ServletException,
 	 * IOException { if (message != null) request.setAttribute("message", message);
@@ -182,6 +195,8 @@ public class CategoriesService extends BaseService
 	 * 
 	 * }
 	 */
+
+	
 
 	
 
