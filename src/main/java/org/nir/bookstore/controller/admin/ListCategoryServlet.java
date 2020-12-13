@@ -12,7 +12,7 @@ import org.nir.bookstore.service.CategoryService;
 /**
  * Servlet implementation class ListCategoryServlet
  */
-@WebServlet("/admin/list_category")
+@WebServlet("/admin/list_categories")
 public class ListCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,6 +29,7 @@ public class ListCategoryServlet extends HttpServlet {
 	{
 		CategoryService categoryService = new CategoryService(request , response); 
 		
+		categoryService.listCategory();
 		
 	}
 

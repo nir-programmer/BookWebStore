@@ -27,8 +27,15 @@ public class CategoryService
 	
 	public void listCategory() throws ServletException, IOException
 	{
+		categoryDAO.openCurrentSessionWithTransaction();
 		List<Category> categories = categoryDAO.listAll();
 		
+		
+		System.out.println("CategoryService.listCategory(): categories:");
+		
+		categories.forEach(c -> System.out.println(c.getName()));
+		
+		categoryDAO.closeCurrentSessionWithTransaction();
 		request.setAttribute("categories", categories);
 		
 		request.getRequestDispatcher("categories_list.jsp").forward(request, response);
