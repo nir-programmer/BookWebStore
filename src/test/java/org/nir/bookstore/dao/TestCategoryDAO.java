@@ -132,7 +132,32 @@ public class TestCategoryDAO {
 		System.out.println("Number of categories = " + n) ;
 		
 		assertEquals(4, n);
-		
 	}
+	
+	@Test
+	@DisplayName("when calling findByName()")
+	void testFindByNameFound()
+	{
+		String name = "Cookings";
+		Category category = categoryDAO.findByName(name); 
+		
+		assertNotNull(category);
+		System.out.println(">>testFindByName(): Category with name = " + name); 
+		System.out.println(category); 
+	}
+	
+	@Test
+	@DisplayName("when calling findByName() with non existing category")
+	void testFindByNameNotFound()
+	{
+		String name = "Cookin";
+		Category category = categoryDAO.findByName(name); 
+		
+		assertNull(category);
+		System.out.println(">>testFindByName(): Category with name = " + name); 
+		System.out.println(category); 
+	}
+	
+	
 
 }

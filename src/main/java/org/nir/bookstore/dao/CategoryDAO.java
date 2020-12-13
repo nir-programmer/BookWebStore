@@ -47,5 +47,15 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 		
 		return super.countWithNamedQuery("Category.countAll"); 
 	}
+	
+	public Category findByName(String categoryName)
+	{
+		List<Category> categories  = super.findWithNamedQuery("Category.findByName", "name", categoryName); 
+		
+		if(categories.size() > 0)
+			return categories.get(0); 
+		
+		return null ;
+	}
 
 }
