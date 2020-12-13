@@ -113,11 +113,15 @@ public class TestCategoryDAO {
 		System.out.println(">>testDeleteCategory():category with id = " + id); 
 		System.out.println(category);
 		
-		
-		
-		
-		
-		
+	}
+	
+	@Test
+	@DisplayName("when calling listAll()")
+	void testListAll()
+	{
+		List<Category> categories = categoryDAO.listAll();
+		System.out.println(">>testListAll():List of categories:"); 
+		categories.forEach(c -> System.out.println(c.getName()));
 	}
 
 }

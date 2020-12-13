@@ -12,7 +12,7 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 	{
 		return super.create(category);
 	}
-
+	//OK
 	@Override
 	public Category update(Category category) 
 	{
@@ -26,18 +26,19 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 		return super.find(Category.class, id);
 	}
 
+	//OK
 	@Override
 	public void delete(Object id) 
 	{
 		super.delete(Category.class, id);
-		
-		
+	
 	}
 
 	@Override
-	public List<Category> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Category> listAll() 
+	{
+		
+		return super.findWithNamedQuery("Category.findAll"); 
 	}
 
 	@Override
