@@ -36,75 +36,81 @@ public class TestCategoryDAO {
 	public static void init() {
 		categoryDAO = new CategoryDAO();
 	}
-	
-	
-	@BeforeEach
-	@DisplayName("when calling openCurrentSessionWithTransaction()")
-	void testOpenCurrentSessionWithTransaction()
-	{
-		categoryDAO.openCurrentSessionWithTransaction();
+
+	/*
+	 * @BeforeEach
+	 * 
+	 * @DisplayName("when calling openCurrentSessionWithTransaction()") void
+	 * testOpenCurrentSessionWithTransaction() {
+	 * categoryDAO.openCurrentSessionWithTransaction(); }
+	 * 
+	 * @AfterEach
+	 * 
+	 * @DisplayName("when calling closeCurrentSessionWithTransaction()") void
+	 * testcloseCurrentSessionWithTransaction() {
+	 * categoryDAO.closeCurrentSessionWithTransaction(); }
+	 */
+	/*************************************************************/
+
+	// OK
+	@Test
+	@DisplayName("when creating a new Category by the CategoryDAO")
+	void testCreateCategoryWithCategoryDAO() {
+		Category category = new Category("Cookings");
+
+		System.out.println(">>testCreateCategoryWithCategoryDAO():try to create a new Category named Cookings");
+		categoryDAO.create(category);
+
+		System.out.println(">>testCreateCategoryWithCategoryDAO():Category persisted!");
+
 	}
-	
-	@AfterEach
-	@DisplayName("when calling closeCurrentSessionWithTransaction()")
-	void testcloseCurrentSessionWithTransaction()
-	{
+
+	// OK
+	@Test
+	@DisplayName("when calling get() method")
+	void testGetCategoryDao() {
+		categoryDAO.openCurrentSessionWithTransaction();
+		Integer id = 3;
+		Category category = categoryDAO.get(id);
+		assertNotNull(category);
+		System.out.println(">>testGetCategoryDao():Category with id = " + id);
+		System.out.println(category);
 		categoryDAO.closeCurrentSessionWithTransaction();
 	}
 
-	/*************************************************************/
-
-	//OK
-	@Test
-	@DisplayName("when creating a new Category by the CategoryDAO")
-	void testCreateCategoryWithCategoryDAO() 
-	{
-		Category category = new Category("Cookings");
-		
-		System.out.println(">>testCreateCategoryWithCategoryDAO():try to create a new Category named Cookings");
-		categoryDAO.create(category);
-		
-		System.out.println(">>testCreateCategoryWithCategoryDAO():Category persisted!");
-
-		
-	}
-	
-	//OK
-	@Test
-	@DisplayName("when calling get() method")
-	void testGetCategoryDao()
-	{
-		Integer id = 3 ; 
-		Category category = categoryDAO.get(id);
-		assertNotNull(category);
-		System.out.println(">>testGetCategoryDao():Category with id = " + id); 
-		System.out.println(category); 
-	}
-	
 	@Test
 	@DisplayName("when calling update() method")
-	void testUpdateCategoryDao()
+	void testUpdateCategoryDao() 
 	{
+		categoryDAO.openCurrentSession();
 		Integer id = 4; 
-		
-		System.out.println(">>testUpdateCategoryDao(): try to get Category with id = " + id); 
 		Category category = categoryDAO.get(id);
-		
-		System.out.println(">>testUpdateCategoryDao(): Category BEFORE update:"); 
+		System.out.println(">>testUpdateCategoryDao():category BEFORE UDPATE:");
 		System.out.println(category); 
+		categoryDAO.closeCurrentSession();
 		
-		category.setName("JAVA");
-		categoryDAO.update(category) ;
+		categoryDAO.openCurrentSessionWithTransaction();
+		category.setName("ZZZZZ");
 		
-		 category = categoryDAO.get(id);
-		
-		 System.out.println(">>testUpdateCategoryDao(): Category AFTER update:"); 
-		System.out.println(category); 
-		
-		
+		category = categoryDAO.update(category);
+		System.out.println(">>testUpdate():Category with id = " + id +" AFTER update:");
+		System.out.println(category);
+		categoryDAO.closeCurrentSessionWithTransaction();
+
+		/*
+		 * usersDAO.openCurrentSession(); Integer id = 3; Users user = usersDAO.get(id);
+		 * System.out.println(">>testUpdate():User with id = " + id +
+		 * " Before update:"); System.out.println(user); usersDAO.closeCurrentSession();
+		 * 
+		 * usersDAO.openCurrentSessionWithTransaction(); user.setEmail("NNN");
+		 * user.setFullName("NNN"); user.setPassword("NNN"); user =
+		 * usersDAO.update(user); System.out.println(">>testUpdate():User with id = " +
+		 * id + " AFTER update:"); System.out.println(user);
+		 * usersDAO.closeCurrentSessionWithTransaction();
+		 */
+
 	}
 
-	
 	/*
 	 * @Test
 	 * 

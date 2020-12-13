@@ -19,6 +19,7 @@ import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,9 +39,11 @@ public class TestUsersDAO
 	}
 	
 	
-	/*************************************************************/
+	/**********************************************************
+	 * 					TESTS
+	 * ************************************************************/
 	
-	
+	//OK
 	@Test
 	@DisplayName("when creating a new user by the userDao")
 	void testCreateUsers()
@@ -56,7 +59,7 @@ public class TestUsersDAO
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 	
-	
+	//OK
 	@Test
 	@DisplayName("when calling get(id)")
 	void testGet()
@@ -108,7 +111,7 @@ public class TestUsersDAO
 		usersDAO.closeCurrentSession();
 		
 		usersDAO.openCurrentSessionWithTransaction();
-		user.setEmail("NNN");
+		user.setEmail("ZZZZZ");
 		user.setFullName("NNN");
 		user.setPassword("NNN");
 		user = usersDAO.update(user);

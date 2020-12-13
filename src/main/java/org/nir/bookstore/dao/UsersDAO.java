@@ -41,8 +41,6 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 	public Users update(Users user) 
 	{
 		return super.update(user); 
-		// TODO Auto-generated method stub
-		//return null;
 	}
 	
 	@Override
