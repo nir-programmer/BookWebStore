@@ -6,7 +6,7 @@ import org.nir.bookstore.entities.Category;
 
 public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<Category> {
 
-	//Ok
+	
 	@Override
 	public Category create(Category category) 
 	{
