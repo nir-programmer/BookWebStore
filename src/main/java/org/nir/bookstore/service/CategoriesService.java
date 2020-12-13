@@ -60,9 +60,21 @@ public class CategoriesService {
 		request.getRequestDispatcher("categories_list.jsp").forward(request, response);
 	}
 	
-	public void createCategory()
+	public void createCategory() throws ServletException, IOException
 	{
-		String name = request.getParameter("name"); 
+		categoryDAO.openCurrentSessionWithTransaction();
+		String name = request.getParameter("categoryName"); 
+		
+		Category category =new Category(name); 
+		
+		categoryDAO.create(category);
+		
+		categoryDAO.closeCurrentSessionWithTransaction();
+		
+		listAll("Category Created Seccussfully!");
+		
+		
+		
 	}
 	/*
 	 * // OK public void getAllUsers(String message) throws ServletException,

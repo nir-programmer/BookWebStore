@@ -35,7 +35,7 @@
 				<tr>
 					<td align="right">Category Name:</td>
 					<td align="left"><input id="categoryName" type="text" name="categoryName"
-						size="20" value="${user.email}"></td>
+						size="20" value="${category.email}"></td>
 				</tr>
 				
 				<tr>
@@ -59,26 +59,15 @@
 
 <script type="text/javascript">
 	function validateFormInput() {
-		var fieldEmail = document.getElementById("email");
-		var fieldFullName = document.getElementById("fullname");
-		var fieldPassword = document.getElementById("password");
+		var fieldCategoryName = document.getElementById("categoryName");
+		
 
-		if (fieldEmail.value.length == 0) {
-			alert("Email is required!");
-			fieldEmail.focus();
+		if (fieldCategoryName.value.length == 0) {
+			alert("Category name is required!");
+			fieldCategoryName.focus();
 			return false;
 		}
 
-		if (fieldFullName.value.length == 0) {
-			alert("full name is required!");
-			fieldFullName.focus();
-			return false;
-		}
-		if (fieldPassword.value.length == 0) {
-			alert("password is required!");
-			fieldPassword.focus();
-			return false;
-		}
 		return true;
 
 	}
