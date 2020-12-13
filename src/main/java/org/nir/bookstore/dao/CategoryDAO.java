@@ -42,9 +42,10 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 	}
 
 	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long count() 
+	{
+		
+		return super.countWithNamedQuery("Category.countAll"); 
 	}
 
 }

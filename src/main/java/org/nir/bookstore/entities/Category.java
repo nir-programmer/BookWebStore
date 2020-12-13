@@ -21,7 +21,8 @@ import javax.persistence.Table;
 //unexpected token: Category near line 1, column 10 [SELECT c Category ORDER BY c.name]
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Category.findAll" , query = "SELECT c FROM Category c ORDER BY c.name")
+	@NamedQuery(name = "Category.findAll" , query = "SELECT c FROM Category c ORDER BY c.name"),
+	@NamedQuery(name = "Category.countAll", query = "SELECT Count(*) FROM Category u"), 
 })
 @Table(name = "category", catalog = "bookstoredb")
 public class Category implements java.io.Serializable {

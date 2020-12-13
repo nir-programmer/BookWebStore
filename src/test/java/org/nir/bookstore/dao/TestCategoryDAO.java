@@ -98,7 +98,7 @@ public class TestCategoryDAO {
 	@DisplayName("when calling delete() metod")
 	void testDeleteCategory()
 	{
-		Integer id = 3; 
+		Integer id = 4; 
 		Category category = categoryDAO.get(id);
 		
 		System.out.println(">>testDeleteCategory():category with id = " + id); 
@@ -122,6 +122,17 @@ public class TestCategoryDAO {
 		List<Category> categories = categoryDAO.listAll();
 		System.out.println(">>testListAll():List of categories:"); 
 		categories.forEach(c -> System.out.println(c.getName()));
+	}
+	
+	@Test
+	@DisplayName("when calling count()")
+	void testCount()
+	{
+		long n = categoryDAO.count();
+		System.out.println("Number of categories = " + n) ;
+		
+		assertEquals(4, n);
+		
 	}
 
 }
