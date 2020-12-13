@@ -32,32 +32,37 @@ public class CategoriesService {
 
 	/******************************************************
 	 * METODS USED BY THE SERVLETS
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
 	 ******************************************************/
-	
-	
-	public void listAll() throws ServletException, IOException
+
+	//OK
+	public void listAll() throws ServletException, IOException 
 	{
 		this.listAll(null);
-		
+
 	}
 	
-	public void listAll(String message) throws ServletException, IOException
-	{
-		if(message != null)
-		{
+	//OK
+	public void listAll(String message) throws ServletException, IOException {
+		if (message != null) {
 			request.setAttribute("message", message);
 		}
-		
-		categoryDAO.openCurrentSession(); 
-		
+
+		categoryDAO.openCurrentSession();
+
 		List<Category> categories = categoryDAO.listAll();
-		
+
 		categoryDAO.closeCurrentSession();
-		
+
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("categories_list.jsp").forward(request, response);
+	}
+	
+	public void createCategory()
+	{
+		String name = request.getParameter("name"); 
 	}
 	/*
 	 * // OK public void getAllUsers(String message) throws ServletException,
@@ -154,68 +159,61 @@ public class CategoriesService {
 	 * }
 	 */
 
+	
+
 	/******************************************************
 	 * METHODS USED FOR TESTS
-	 ******************************************************//*
-															 * public List<Users> listUsers() {
-															 * usersDAO.openCurrentSession(); List<Users> users =
-															 * this.usersDAO.listAll(); usersDAO.closeCurrentSession();
-															 * return users; }
-															 * 
-															 * public Users findUserById(Object id) {
-															 * usersDAO.openCurrentSession(); Users user =
-															 * usersDAO.get(id); usersDAO.closeCurrentSession(); return
-															 * user; }
-															 * 
-															 * public void createUser(String email, String fullName,
-															 * String password) {
-															 * usersDAO.openCurrentSessionWithTransaction(); Users user
-															 * = new Users(email, password, fullName);
-															 * usersDAO.create(user);
-															 * usersDAO.closeCurrentSessionWithTransaction();
-															 * 
-															 * }
-															 * 
-															 * public void createUser(Users user) {
-															 * usersDAO.openCurrentSessionWithTransaction();
-															 * usersDAO.create(user);
-															 * usersDAO.closeCurrentSessionWithTransaction();
-															 * 
-															 * }
-															 * 
-															 * public List<Users> findAll() {
-															 * usersDAO.openCurrentSession(); List<Users> users =
-															 * usersDAO.listAll();
-															 * 
-															 * usersDAO.closeCurrentSession();
-															 * 
-															 * return users; }
-															 * 
-															 * public void updateUser(Users user) {
-															 * usersDAO.openCurrentSessionWithTransaction();
-															 * 
-															 * Users emailUser = usersDAO.findByEmail(user.getEmail());
-															 * Users idUser = usersDAO.get(user.getUserId());
-															 * 
-															 * 
-															 * case 1: the email does not exists(normal case) OR the
-															 * email exists - but it belongs to the current User: update
-															 * the current user including email
-															 * 
-															 * if (emailUser == null || (emailUser != null) &&
-															 * (emailUser.getUserId() == idUser.getUserId()))
-															 * usersDAO.update(user);
-															 * 
-															 * else System.out.
-															 * println(">>UsersService.updateUser(User user): " +
-															 * "There is another user with email = " + user.getEmail());
-															 * 
-															 * usersDAO.closeCurrentSessionWithTransaction(); }
-															 * 
-															 * public void deleteUser(Object id) {
-															 * usersDAO.openCurrentSessionWithTransaction();
-															 * usersDAO.delete(id);
-															 * usersDAO.closeCurrentSessionWithTransaction(); }
-															 */
+	 ******************************************************
+	 *
+	 **
+		 * public List<Users> listUsers() { usersDAO.openCurrentSession(); List<Users>
+		 * users = this.usersDAO.listAll(); usersDAO.closeCurrentSession(); return
+		 * users; }
+		 * 
+		 * public Users findUserById(Object id) { usersDAO.openCurrentSession(); Users
+		 * user = usersDAO.get(id); usersDAO.closeCurrentSession(); return user; }
+		 * 
+		 * public void createUser(String email, String fullName, String password) {
+		 * usersDAO.openCurrentSessionWithTransaction(); Users user = new Users(email,
+		 * password, fullName); usersDAO.create(user);
+		 * usersDAO.closeCurrentSessionWithTransaction();
+		 * 
+		 * }
+		 * 
+		 * public void createUser(Users user) {
+		 * usersDAO.openCurrentSessionWithTransaction(); usersDAO.create(user);
+		 * usersDAO.closeCurrentSessionWithTransaction();
+		 * 
+		 * }
+		 * 
+		 * public List<Users> findAll() { usersDAO.openCurrentSession(); List<Users>
+		 * users = usersDAO.listAll();
+		 * 
+		 * usersDAO.closeCurrentSession();
+		 * 
+		 * return users; }
+		 * 
+		 * public void updateUser(Users user) {
+		 * usersDAO.openCurrentSessionWithTransaction();
+		 * 
+		 * Users emailUser = usersDAO.findByEmail(user.getEmail()); Users idUser =
+		 * usersDAO.get(user.getUserId());
+		 * 
+		 * 
+		 * case 1: the email does not exists(normal case) OR the email exists - but it
+		 * belongs to the current User: update the current user including email
+		 * 
+		 * if (emailUser == null || (emailUser != null) && (emailUser.getUserId() ==
+		 * idUser.getUserId())) usersDAO.update(user);
+		 * 
+		 * else System.out. println(">>UsersService.updateUser(User user): " +
+		 * "There is another user with email = " + user.getEmail());
+		 * 
+		 * usersDAO.closeCurrentSessionWithTransaction(); }
+		 * 
+		 * public void deleteUser(Object id) {
+		 * usersDAO.openCurrentSessionWithTransaction(); usersDAO.delete(id);
+		 * usersDAO.closeCurrentSessionWithTransaction(); }
+		 */
 
 }

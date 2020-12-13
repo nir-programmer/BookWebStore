@@ -24,29 +24,20 @@
 	</div>
 
 	<div align="center">
-		<c:if test="${user == null }"> 
-			<form action="create_users" method="post" onsubmit="return validateFormInput()">
+		<c:if test="${category == null }"> 
+			<form action="create_categories" method="post" onsubmit="return validateFormInput()">
 		</c:if>
-		<c:if test="${user != null}"> 
-			<form action="update_user" method="post" onsubmit="return validateFormInput()">
-			<input type="hidden" name="userId" value="${user.userId}">
+		<c:if test="${category != null}"> 
+			<form action="update_categories" method="post" onsubmit="return validateFormInput()">
+			<input type="hidden" name="categoryId" value="${category.categoryId}">
 		</c:if>
 			<table>
 				<tr>
-					<td align="right">Email:</td>
-					<td align="left"><input id="email" type="text" name="email"
+					<td align="right">Category Name:</td>
+					<td align="left"><input id="categoryName" type="text" name="categoryName"
 						size="20" value="${user.email}"></td>
 				</tr>
-				<tr>
-					<td align="right">Full Name:</td>
-					<td align="left"><input id="fullname" type="text"
-						name="fullname" size="20" value="${user.fullName}"></td>
-				</tr>
-				<tr>
-					<td align="right">Password:</td>
-					<td align="left"><input id="password" type="password"
-						name="password" size="20" value="${user.password}"></td>
-				</tr>
+				
 				<tr>
 					<td>&nbsp;</td>
 				</tr>
