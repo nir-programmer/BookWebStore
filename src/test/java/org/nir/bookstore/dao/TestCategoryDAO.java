@@ -37,19 +37,18 @@ public class TestCategoryDAO {
 		categoryDAO = new CategoryDAO();
 	}
 
-	/*
-	 * @BeforeEach
-	 * 
-	 * @DisplayName("when calling openCurrentSessionWithTransaction()") void
-	 * testOpenCurrentSessionWithTransaction() {
-	 * categoryDAO.openCurrentSessionWithTransaction(); }
-	 * 
-	 * @AfterEach
-	 * 
-	 * @DisplayName("when calling closeCurrentSessionWithTransaction()") void
-	 * testcloseCurrentSessionWithTransaction() {
-	 * categoryDAO.closeCurrentSessionWithTransaction(); }
-	 */
+	@BeforeEach
+	@DisplayName("when calling openCurrentSessionWithTransaction()")
+	void testOpenCurrentSessionWithTransaction() {
+		categoryDAO.openCurrentSessionWithTransaction();
+	}
+
+	@AfterEach
+	@DisplayName("when calling closeCurrentSessionWithTransaction()")
+	void testcloseCurrentSessionWithTransaction() {
+		categoryDAO.closeCurrentSessionWithTransaction();
+	}
+
 	/*************************************************************/
 
 	// OK
@@ -69,128 +68,56 @@ public class TestCategoryDAO {
 	@Test
 	@DisplayName("when calling get() method")
 	void testGetCategoryDao() {
-		categoryDAO.openCurrentSessionWithTransaction();
+		// categoryDAO.openCurrentSessionWithTransaction();
 		Integer id = 3;
 		Category category = categoryDAO.get(id);
 		assertNotNull(category);
 		System.out.println(">>testGetCategoryDao():Category with id = " + id);
 		System.out.println(category);
-		categoryDAO.closeCurrentSessionWithTransaction();
+		// categoryDAO.closeCurrentSessionWithTransaction();
 	}
 
 	@Test
 	@DisplayName("when calling update() method")
-	void testUpdateCategoryDao() 
-	{
-		categoryDAO.openCurrentSession();
-		Integer id = 4; 
+	void testUpdateCategoryDao() {
+		/* categoryDAO.openCurrentSessionWithTransaction(); */
+		Integer id = 4;
 		Category category = categoryDAO.get(id);
 		System.out.println(">>testUpdateCategoryDao():category BEFORE UDPATE:");
-		System.out.println(category); 
-		categoryDAO.closeCurrentSession();
-		
-		categoryDAO.openCurrentSessionWithTransaction();
-		category.setName("ZZZZZ");
-		
-		category = categoryDAO.update(category);
-		System.out.println(">>testUpdate():Category with id = " + id +" AFTER update:");
 		System.out.println(category);
-		categoryDAO.closeCurrentSessionWithTransaction();
+		/* categoryDAO.closeCurrentSession(); */
 
-		/*
-		 * usersDAO.openCurrentSession(); Integer id = 3; Users user = usersDAO.get(id);
-		 * System.out.println(">>testUpdate():User with id = " + id +
-		 * " Before update:"); System.out.println(user); usersDAO.closeCurrentSession();
-		 * 
-		 * usersDAO.openCurrentSessionWithTransaction(); user.setEmail("NNN");
-		 * user.setFullName("NNN"); user.setPassword("NNN"); user =
-		 * usersDAO.update(user); System.out.println(">>testUpdate():User with id = " +
-		 * id + " AFTER update:"); System.out.println(user);
-		 * usersDAO.closeCurrentSessionWithTransaction();
-		 */
+		category.setName("ZZZBBBBBB");
 
+		category = categoryDAO.update(category);
+		System.out.println(">>testUpdate():Category with id = " + id + " AFTER update:");
+		System.out.println(category);
 	}
 
-	/*
-	 * @Test
-	 * 
-	 * @DisplayName("when calling get(id)") void testGet() { Integer id = 2;
-	 * 
-	 * usersDAO.openCurrentSession(); Users user = usersDAO.get(id);
-	 * System.out.println("User with id = " + user); usersDAO.closeCurrentSession();
-	 * 
-	 * assertNotNull(user);
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * 
-	 * @DisplayName("when calling delete(id)") void testDelete() { Integer id = 4;
-	 * 
-	 * usersDAO.openCurrentSession(); Users user = usersDAO.get(4);
-	 * System.out.println("testDelete():User with id = " + id +" BEFORE delete:");
-	 * System.out.println(user); usersDAO.closeCurrentSession();
-	 * 
-	 * usersDAO.openCurrentSessionWithTransaction();
-	 * assertThrows(EntityNotFoundException.class , () ->usersDAO.delete(4));
-	 * usersDAO.closeCurrentSessionWithTransaction();
-	 * 
-	 * 
-	 * usersDAO.openCurrentSession(); user = usersDAO.get(4);
-	 * System.out.println("testDelete():User with id = " + id +" AFTER delete:");
-	 * System.out.println(user); usersDAO.closeCurrentSession();
-	 * 
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * 
-	 * @DisplayName("when calling update(user)") void testUpdate() {
-	 * usersDAO.openCurrentSession(); Integer id = 3; Users user = usersDAO.get(id);
-	 * System.out.println(">>testUpdate():User with id = " + id +" Before update:");
-	 * System.out.println(user); usersDAO.closeCurrentSession();
-	 * 
-	 * usersDAO.openCurrentSessionWithTransaction(); user.setEmail("NNN");
-	 * user.setFullName("NNN"); user.setPassword("NNN"); user =
-	 * usersDAO.update(user); System.out.println(">>testUpdate():User with id = " +
-	 * id +" AFTER update:"); System.out.println(user);
-	 * usersDAO.closeCurrentSessionWithTransaction();
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * 
-	 * @DisplayName("when calling findAll() ") void testFindAll() {
-	 * 
-	 * usersDAO.openCurrentSession(); List<Users> users = usersDAO.listAll();
-	 * System.out.println("List Of All users:");
-	 * users.stream().forEach(System.out::println);
-	 * 
-	 * usersDAO.closeCurrentSession();
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * 
-	 * @DisplayName("when calling count") void testCount() {
-	 * 
-	 * usersDAO.openCurrentSession(); long n= usersDAO.count();
-	 * System.out.println("Number of users = " + n);
-	 * 
-	 * usersDAO.closeCurrentSession();
-	 * 
-	 * }
-	 * 
-	 * @Test
-	 * 
-	 * @DisplayName("when calling findByEmail()") void testFindByEmail() { String
-	 * email = "XXXX"; usersDAO.openCurrentSessionWithTransaction(); Users user =
-	 * usersDAO.findByEmail(email);
-	 * System.out.println("testFindByEmail():The user with email = " + email);
-	 * System.out.println(user);
-	 * 
-	 * assertNotNull(user); usersDAO.closeCurrentSessionWithTransaction(); }
-	 * 
-	 * 
-	 */
+	@Test
+	@DisplayName("when calling delete() metod")
+	void testDeleteCategory()
+	{
+		Integer id = 3; 
+		Category category = categoryDAO.get(id);
+		
+		System.out.println(">>testDeleteCategory():category with id = " + id); 
+		System.out.println(category);
+		
+		categoryDAO.delete(id);
+		
+		category = categoryDAO.get(id);
+		
+		assertNull(category); 
+		
+		System.out.println(">>testDeleteCategory():category with id = " + id); 
+		System.out.println(category);
+		
+		
+		
+		
+		
+		
+	}
+
 }

@@ -27,8 +27,10 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 	}
 
 	@Override
-	public void delete(Object id) {
-		// TODO Auto-generated method stub
+	public void delete(Object id) 
+	{
+		super.delete(Category.class, id);
+		
 		
 	}
 
