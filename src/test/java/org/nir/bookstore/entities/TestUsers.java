@@ -1,5 +1,8 @@
 package org.nir.bookstore.entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.List;
 
 import org.hibernate.Session;
@@ -23,98 +26,97 @@ import org.nir.bookstore.entities.OrderDetailId;
 import org.nir.bookstore.entities.Review;
 import org.nir.bookstore.entities.Users;
 
-public class TestUsers 
+public class TestUsers extends TestBaseEntity
 {
-	private static SessionFactory sessionFactory ; 
-	private static Session session; 
 	@BeforeAll
-	@DisplayName("when create session factory")
-	static void init()
+	@DisplayName("when try to create a SessionFactory object")
+	public static void init()
 	{
-		System.out.println(">>init():try to create session factory..");
-		sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Book.class)
-				.addAnnotatedClass(BookOrder.class)
-				.addAnnotatedClass(Category.class)
-				.addAnnotatedClass(OrderDetail.class)
-				.addAnnotatedClass(OrderDetailId.class)
-				.addAnnotatedClass(Review.class)
-				.addAnnotatedClass(Users.class)
-				.addAnnotatedClass(Customer.class)
-				.buildSessionFactory();
-		
-	
+		TestBaseEntity.init();
 	}
 	
-	@AfterAll
-	@DisplayName("when try close the session factory")
-	static void tearDown()
-	{
-		if(sessionFactory != null)
-		{
-		System.out.println(">>tearDown():try to close the session factory..."); 
-		sessionFactory.close();
-		System.out.println(">>teadDown():session factory  closed!"); 
-		System.out.println("\n***************************************************");
-		}
-		
-		
-	}
 	@BeforeEach
-	@DisplayName(">>createSession():try to create a new Session")
-	void createSession()
+	@DisplayName("when try to create a session and begin transaction")
+	public void createSessionBeginTransaction()
 	{
-		System.out.println(">>createSession():try to create a new Session and transaction"); 
-		session = sessionFactory.getCurrentSession();
-		session.getTransaction();
-		
-		session.beginTransaction();
-		System.out.println(">>createSession():Session Created!");
-		
-		
-		
-		
-		System.out.println("\n***************************************************");
-
+		super.createSessionBeginTransaction();
 	}
 	
 	@AfterEach
-	@DisplayName("when try close the session")
-	void closeSession()
+	@DisplayName("when trying to commit a transaction and close a session")
+	public void commitTransactionCloseSession()
 	{
-		if(session != null)
-		{
-			System.out.println(">>closeSession():try to commit transaction..."); 
-		session.getTransaction().commit();
-		System.out.println(">>closeSession():transaction commited!"); 
-		
-		System.out.println(">>closeSession():try to close the session..."); 
-		session.close();
-		System.out.println(">>closeSession():session closed!"); 
-		System.out.println("\n***************************************************");
-
-		}
-		
-		
+		super.commitTransactionCloseSession();
 	}
 	
+	/*********************************************************************
+	 * 								TESTS
+	 *******************************************************************/
 	@Test
-	@Disabled
+	//@Disabled
 	@DisplayName("when trying to save a new Book")
 	void testAddUsers()
 	{
-		
-		//session = sessionFactory.getCurrentSession();
 		Users users = new Users("niritzha@sdf", "password", "NironXXXX");
 		System.out.println(">>testAddUsers():try to add a new Users named NironXXXX to db..");
 		session.save(users);
 		System.out.println(">>testAddUsers()):new Users named NironXXXX Persisted");
+			
+	}
+	
+	@Test
+	@DisplayName("when try to get an existing user by id") 
+	void testGetUserByIdFound()
+	{
+		Integer id = 1; 
+		Users user = session.get(Users.class, id);
 		
+		System.out.println("testGetUserByIdFound():the user with id = " + id );
+		System.out.println(user); 
+	}
+	
+	@Test
+	@DisplayName("when try to get a non existing user by id")
+	void testGetUserByIdNotFound()
+	{
+		Integer id = 2; 
+		Users user = session.get(Users.class, id);
 		
+		System.out.println("testGetUserByIdNotFound():the user with id = " + id );
+		System.out.println(user); 
+	}
+	@Test
+	@DisplayName("when try to update a user")
+	void testUpdateUser()
+	{
+		Users user = new Users(1, "niritzhak10@outlook.com", "1234", "Nir Itzhak");
+		
+		session.saveOrUpdate(user) ;
+		
+		user = session.get(Users.class, 1); 
+		assertEquals("niritzhak10@outlook.com", user.getEmail());
+	}
+	
+	@Test
+	@DisplayName("when try to delete a user")
+	void testDeleteUser()
+	{
+		Users user = session.get(Users.class, 1); 
+		
+		session.delete(user);
+		
+		user = session.get(Users.class, 1); 
+		assertNull(user); 
+		/*
+		 * javax.persistence.PersistenceException: org.hibernate.PropertyValueException:
+		 * not-null property references a null or transient value :
+		 * org.nir.bookstore.entities.Users.email
+		 */
 	}
 	
 	@Test
 	//@Disabled
+	
 	@DisplayName("when reading users")
 	void testGetAllUsers() 
 	{
@@ -122,9 +124,12 @@ public class TestUsers
 		Query<Users> query = session.createQuery("FROM Users");
 		List<Users> users = query.getResultList();
 		System.out.println(">>testGetAllUsers():users:");
-		System.out.println(users);
-		
+		System.out.println(users);	
 	}
+	
+	
+	
+	
 	
 
 }
