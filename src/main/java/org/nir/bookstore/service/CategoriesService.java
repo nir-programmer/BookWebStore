@@ -16,18 +16,17 @@ import org.nir.bookstore.dao.UsersDAO;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Users;
 
-public class CategoriesService {
+public class CategoriesService extends BaseService
+{
 	private static CategoryDAO categoryDAO;
-
-	private HttpServletRequest request;
-	private HttpServletResponse response;
 
 	/************************** CONSTRUCTORS ****************************/
 	// OK: used By the Servlets
-	public CategoriesService(HttpServletRequest request, HttpServletResponse response) {
+	public CategoriesService(HttpServletRequest request, HttpServletResponse response) 
+	{
+		super(request, response);
 		categoryDAO = new CategoryDAO();
-		this.request = request;
-		this.response = response;
+		
 	}
 
 	/******************************************************
@@ -65,6 +64,19 @@ public class CategoriesService {
 		categoryDAO.openCurrentSessionWithTransaction();
 		String name = request.getParameter("categoryName"); 
 		
+		Category existCategory = categoryDAO.findByName(name); 
+		
+		if(existCategory != null)
+		{
+			String message = "Could not create category with name : " + name +
+					" There is a category with this name already!";
+			
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("message.jsp").forward(request, response);; 
+		}
+		
+		else
+		{
 		Category category =new Category(name); 
 		
 		categoryDAO.create(category);
@@ -72,7 +84,7 @@ public class CategoriesService {
 		categoryDAO.closeCurrentSessionWithTransaction();
 		
 		listAll("Category Created Seccussfully!");
-		
+		}
 		
 		
 	}

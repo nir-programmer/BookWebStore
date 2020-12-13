@@ -81,14 +81,14 @@ public class TestCategoryDAO {
 	@DisplayName("when calling update() method")
 	void testUpdateCategoryDao() {
 		/* categoryDAO.openCurrentSessionWithTransaction(); */
-		Integer id = 5;
+		Integer id = 102;
 		Category category = categoryDAO.get(id);
 		System.out.println(">>testUpdateCategoryDao():category BEFORE UDPATE:");
 		System.out.println(category);
 		/* categoryDAO.closeCurrentSession(); */
 
 		category.setName("ZZZBBBBBB");
-
+		category.setCategoryId(1);
 		category = categoryDAO.update(category);
 		System.out.println(">>testUpdate():Category with id = " + id + " AFTER update:");
 		System.out.println(category);
@@ -139,7 +139,7 @@ public class TestCategoryDAO {
 	@DisplayName("when calling findByName()")
 	void testFindByNameFound()
 	{
-		String name = "Cookings";
+		String name = "JAVA";
 		Category category = categoryDAO.findByName(name); 
 		
 		assertNotNull(category);
@@ -157,6 +157,23 @@ public class TestCategoryDAO {
 		assertNull(category);
 		System.out.println(">>testFindByName(): Category with name = " + name); 
 		System.out.println(category); 
+	}
+	
+	@Test
+	@DisplayName("when tring to delete all categories")
+	void testDeleteAllCategories()
+	{
+		List<Category> categories = categoryDAO.listAll();
+		
+		System.out.println(">>testDeleteAllCategories():list of all categories BEFORE deleteing"); 
+		categories.forEach(c -> System.out.println(c.getName()));
+		
+		categories.forEach(c -> categoryDAO.delete(c.getCategoryId()));
+		
+		System.out.println(">>testDeleteAllCategories():list of all categories BEFORE deleteing"); 
+		
+		categories.forEach(c -> System.out.println(c.getName()));
+		
 	}
 	
 	

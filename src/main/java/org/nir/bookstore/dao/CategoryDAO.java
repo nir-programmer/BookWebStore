@@ -52,7 +52,7 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 	{
 		List<Category> categories  = super.findWithNamedQuery("Category.findByName", "name", categoryName); 
 		
-		if(categories.size() > 0)
+		if(categories != null && categories.size() > 0)
 			return categories.get(0); 
 		
 		return null ;
