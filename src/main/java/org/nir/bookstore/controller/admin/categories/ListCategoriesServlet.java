@@ -13,13 +13,13 @@ import org.nir.bookstore.service.CategoriesService;
  * Servlet implementation class LIstCategoriesServlet
  */
 @WebServlet("/admin/list_categories")
-public class LIstCategoriesServlet extends HttpServlet {
+public class ListCategoriesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LIstCategoriesServlet() {
+    public ListCategoriesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

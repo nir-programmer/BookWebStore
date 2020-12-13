@@ -50,13 +50,11 @@ public class CategoriesService {
 			request.setAttribute("message", message);
 		}
 		
-		categoryDAO.openCurrentSessionWithTransaction();
+		categoryDAO.openCurrentSession(); 
 		
 		List<Category> categories = categoryDAO.listAll();
-		System.out.println(">>CategoryService.listAll():List of categories:"); 
-		categories.forEach(c -> System.out.println(c.getName()));
 		
-		categoryDAO.closeCurrentSessionWithTransaction();
+		categoryDAO.closeCurrentSession();
 		
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("categories_list.jsp").forward(request, response);
