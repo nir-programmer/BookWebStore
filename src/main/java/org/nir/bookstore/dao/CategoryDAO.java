@@ -14,9 +14,9 @@ public class CategoryDAO extends HibernateDAO<Category> implements GenericeDAO<C
 	}
 
 	@Override
-	public Category update(Category t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category update(Category category) 
+	{
+		return super.update(category); 
 	}
 
 	//Ok

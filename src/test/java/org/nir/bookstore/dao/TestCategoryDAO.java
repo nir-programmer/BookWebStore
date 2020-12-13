@@ -37,6 +37,7 @@ public class TestCategoryDAO {
 		categoryDAO = new CategoryDAO();
 	}
 	
+	
 	@BeforeEach
 	@DisplayName("when calling openCurrentSessionWithTransaction()")
 	void testOpenCurrentSessionWithTransaction()
@@ -53,6 +54,7 @@ public class TestCategoryDAO {
 
 	/*************************************************************/
 
+	//OK
 	@Test
 	@DisplayName("when creating a new Category by the CategoryDAO")
 	void testCreateCategoryWithCategoryDAO() 
@@ -66,6 +68,8 @@ public class TestCategoryDAO {
 
 		
 	}
+	
+	//OK
 	@Test
 	@DisplayName("when calling get() method")
 	void testGetCategoryDao()
@@ -75,6 +79,29 @@ public class TestCategoryDAO {
 		assertNotNull(category);
 		System.out.println(">>testGetCategoryDao():Category with id = " + id); 
 		System.out.println(category); 
+	}
+	
+	@Test
+	@DisplayName("when calling update() method")
+	void testUpdateCategoryDao()
+	{
+		Integer id = 4; 
+		
+		System.out.println(">>testUpdateCategoryDao(): try to get Category with id = " + id); 
+		Category category = categoryDAO.get(id);
+		
+		System.out.println(">>testUpdateCategoryDao(): Category BEFORE update:"); 
+		System.out.println(category); 
+		
+		category.setName("JAVA");
+		categoryDAO.update(category) ;
+		
+		 category = categoryDAO.get(id);
+		
+		 System.out.println(">>testUpdateCategoryDao(): Category AFTER update:"); 
+		System.out.println(category); 
+		
+		
 	}
 
 	
