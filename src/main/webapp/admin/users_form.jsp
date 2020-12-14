@@ -77,13 +77,25 @@
 $(document).ready(function()
 	{
 		$("#userForm").validate({
-			rules: {
-				email: "required",
+			rules: 
+			{
+				email: 
+				{
+					required: true, 
+					email: true
+				}
+				,
 				fullname: "required",
 				password: "required"
 			},
-			messages: {
-				email: "Please enter email" ,
+			messages: 
+			{
+				email:
+				{
+					required:"Please enter email" ,
+					email:"Please enter a valid email address"
+				}
+				,
 				fullname: "Please enter full name",
 				password: "Please enter password"
 			}

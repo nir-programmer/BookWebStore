@@ -97,6 +97,8 @@ button[type=submit]
 }
 
 button:hover
+
+
 {
 	background-color: white;
 	color: green;
@@ -116,4 +118,14 @@ input
 {
 	font-style: italic;
 	
+}
+
+/****************************************************
+				Errors Classes
+******************************************************/
+
+.error
+{
+	color: red;
+	margin: 5px; 
 }
