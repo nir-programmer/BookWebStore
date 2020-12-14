@@ -27,11 +27,11 @@
 
 	<div align="center">
 		<c:if test="${user == null }"> 
-			<form action="create_users" method="post" onsubmit="return validateFormInput()">
+			<form action="create_users" method="post" id="userForm">
 		</c:if>
 		<c:if test="${user != null}"> 
-			<form action="update_user" method="post" onsubmit="return validateFormInput()">
-			<input type="hidden" name="userId" value="${user.userId}">
+			<form action="update_user" method="post"  id="userForm">
+			<input type="hidden" name="userId" value="${user.userId}" > 
 		</c:if>
 			<table class="form">
 				<tr>
@@ -68,33 +68,6 @@
 
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
-
-<script type="text/javascript">
-	function validateFormInput() {
-		var fieldEmail = document.getElementById("email");
-		var fieldFullName = document.getElementById("fullname");
-		var fieldPassword = document.getElementById("password");
-
-		if (fieldEmail.value.length == 0) {
-			alert("Email is required!");
-			fieldEmail.focus();
-			return false;
-		}
-
-		if (fieldFullName.value.length == 0) {
-			alert("full name is required!");
-			fieldFullName.focus();
-			return false;
-		}
-		if (fieldPassword.value.length == 0) {
-			alert("password is required!");
-			fieldPassword.focus();
-			return false;
-		}
-		return true;
-
-	}
-</script>
 
 
 
