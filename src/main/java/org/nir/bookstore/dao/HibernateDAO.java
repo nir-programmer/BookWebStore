@@ -28,8 +28,6 @@ public class HibernateDAO<E>
 	
 	public HibernateDAO() {}
 	
-	
-
 /*************************************Interface********************************************** */
 
 	public HibernateDAO(Session session) 
