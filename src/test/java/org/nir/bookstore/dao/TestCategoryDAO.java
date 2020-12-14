@@ -81,14 +81,14 @@ public class TestCategoryDAO {
 	@DisplayName("when calling update() method")
 	void testUpdateCategoryDao() {
 		/* categoryDAO.openCurrentSessionWithTransaction(); */
-		Integer id = 102;
+		Integer id = 117;
 		Category category = categoryDAO.get(id);
 		System.out.println(">>testUpdateCategoryDao():category BEFORE UDPATE:");
 		System.out.println(category);
 		/* categoryDAO.closeCurrentSession(); */
 
 		category.setName("ZZZBBBBBB");
-		category.setCategoryId(1);
+		category.setCategoryId(117);
 		category = categoryDAO.update(category);
 		System.out.println(">>testUpdate():Category with id = " + id + " AFTER update:");
 		System.out.println(category);
