@@ -127,15 +127,25 @@ public class CategoriesService extends BaseService
 			categoryDAO.update(category);
 			categoryDAO.closeCurrentSessionWithTransaction();
 			listAll("Category updated seccussfully");
-		}
+		}	
+	}
+
+	public void deleteCategory() throws ServletException, IOException 
+	{
+		Integer id = Integer.parseInt(request.getParameter("id")); 
 		
+		categoryDAO.openCurrentSessionWithTransaction();
+		categoryDAO.delete(id);
+		categoryDAO.closeCurrentSessionWithTransaction();
 		
+		String message = "Category deleted successfully"; 
+		listAll(message);
 		
 	}
 	
-	/******************************************************
-	 * METHODS USED FOR TESTS
-	 ******************************************************
+	/*********************************************************************************
+	 * 							METHODS USED FOR TESTS
+	 *********************************************************************************
 	 *
 	 **
 		 * public List<Users> listUsers() { usersDAO.openCurrentSession(); List<Users>

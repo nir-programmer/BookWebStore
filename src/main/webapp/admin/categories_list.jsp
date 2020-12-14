@@ -50,8 +50,8 @@
 					<td>${status.index + 1}</td>
 					<td>${category.categoryId}</td>
 					<td>${category.name}</td>
-					<td><a href="${update_Link}">Edit</a> &nbsp; <a
-						href="javascript:confirmDelete(${category.categoryId})">Delete</a>
+					<td><a href="${update_Link}">Edit</a> &nbsp; 
+					<a href="javascript:confirmDelete(${category.categoryId})">Delete</a>
 					</td>
 
 				</tr>
