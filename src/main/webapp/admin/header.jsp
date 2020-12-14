@@ -1,19 +1,43 @@
 <div align="center">
+	<div>
+		<img src="../images/logo.jpg">
+	</div>
+	<div>
+		Welcome, Admin | <a href="logout">logout</a>
+	</div>
+	<div>
 		<div>
-			<img src="../images/logo.jpg">
-		</div>
-		<div>
-			Welcome, Admin | <a href="logout">logout</a>
-		</div>
-		<div>
-			<br>
-			<a href="list_users">Users</a>
-			<a href="list_categories">Categories</a>
-			<a href="books">Books</a>
-			<a href="customers">Customers</a>
-			<a href="reviews">Reviews</a>
-			<a href="orders">Orders</a>
-			<br>
+			<a href="list_users"> <img src="../images/users.png"><br>Users
+			</a>
 		</div>
 		
+		<div>
+			<a href="list_categories"> <img src="../images/categories.png"><br>Categories
+			</a>
+		</div>
+		
+		<div>
+			<a href="books"> <img alt="" src="../images/books.png"><br>Books
+			</a>
+		</div>
+		
+		<a href="customers"> 
+			<img alt="" src="../images/customers.png"><br>Customers
+		</a> 
+		
+		<div>
+			<a href="reviews">
+				<img alt="" src="../images/reviews.png"><br>Reviews
+				</a> 
+		</div>
+		
+		<div>
+			<a href="orders">
+				<img alt="" src="../images/orders.png"><br>Orders
+				</a>
+		</div>
+		
+
+	</div>
+
 </div>
