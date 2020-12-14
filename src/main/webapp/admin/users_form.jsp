@@ -89,7 +89,7 @@ $(document).ready(function()
 		
 	}); 
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function validateFormInput() {
 		var fieldEmail = document.getElementById("email");
 		var fieldFullName = document.getElementById("fullname");
@@ -116,6 +116,6 @@ $(document).ready(function()
 	}
 </script>
 
-
+ -->
 
 </html>
