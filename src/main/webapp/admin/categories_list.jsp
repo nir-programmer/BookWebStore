@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage Categories- Evergreen Bookstore Administration</title>
-
+<link rel="stylesheet" href="../css/style.css"> 
 </head>
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
-		<h2>Users Management</h2>
+		<h2 class="pageheading">Users Management</h2>
 		<h3>
 			<a href="categories_form.jsp">Create new Category</a>
 		</h3>
@@ -21,13 +21,13 @@
 	</div>
 
 	<div align="center">
-		<h4>
-			<i>${message}</i>
+		<h4 class="message">
+			${message}
 		</h4>
 	</div>
 
 	<div align="center">
-		<table border="1" cellpadding="5">
+		<table border="1">
 			<tr>
 				<th>Index</th>
 				<th>ID</th>

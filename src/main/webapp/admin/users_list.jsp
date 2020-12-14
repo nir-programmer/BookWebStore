@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage User- Evergreen Bookstore Administration</title>
-
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
-		<h2>Users Management</h2>
+		<h2 class="pageheading">Users Management</h2>
 		<h3>
 			<a href="users_form.jsp">Create new User</a>
 		</h3>
@@ -25,7 +25,7 @@
 	</div>
 		
 	<div align="center">
-		<table border="1" cellpadding="5" >
+		<table border="1">
 			<tr>
 				<th>Index</th>
 				<th>ID</th>

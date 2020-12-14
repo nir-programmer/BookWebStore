@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Create New Category</title>
-
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
-		<h2>
+		<h2 class="pageheading">
 		<c:if test="${category != null}">
 			Edit Category
 		</c:if>
@@ -31,7 +31,7 @@
 			<form action="update_categories" method="post" onsubmit="return validateFormInput()">
 			<input type="hidden" name="categoryId" value="${category.categoryId}">
 		</c:if>
-			<table>
+			<table class="form">
 				<tr>
 					<td align="right">Category Name:</td>
 					<td align="left"><input id="categoryName" type="text" name="categoryName"

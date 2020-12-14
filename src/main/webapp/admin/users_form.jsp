@@ -6,14 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Create New User</title>
-
+<link rel="stylesheet" href="../css/style.css"> 
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script> 
+<script type="text/javascript" src=../js/jquery.validate.min.js"></script>
 </head>
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
-		<h2>
+		<h2 class="pageheading">
 		<c:if test="${user != null}">
 			Edit User
 		</c:if>
@@ -31,7 +33,7 @@
 			<form action="update_user" method="post" onsubmit="return validateFormInput()">
 			<input type="hidden" name="userId" value="${user.userId}">
 		</c:if>
-			<table>
+			<table class="form">
 				<tr>
 					<td align="right">Email:</td>
 					<td align="left"><input id="email" type="text" name="email"
@@ -51,8 +53,9 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Save"> <input type="button" value="Cancel">
+					<td colspan="2" align="center">
+					<button type="submit" value=Save">Save </button>&nbsp;&nbsp;&nbsp;
+					<button onclick="javascript:history.go(-1);" value="Cancel">Cancel </button>
 					</td>
 
 				</tr>

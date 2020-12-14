@@ -16,7 +16,6 @@
 		&nbsp;
 	</div>
 	<div>
-			
 			<c:forEach items="${categories}" var="category" varStatus="status">
 					<c:url value="view_category" var="categoryDetailsLink"> 
 						<c:param name="id" value="${category.categoryId}"></c:param>
