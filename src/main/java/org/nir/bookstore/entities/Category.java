@@ -44,6 +44,12 @@ public class Category implements java.io.Serializable {
 		this.books = books;
 	}
 
+	public Category(Integer id, String name) 
+	{
+		this.categoryId = id; 
+		this.name = name ; 
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

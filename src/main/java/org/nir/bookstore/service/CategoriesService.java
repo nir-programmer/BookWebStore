@@ -123,7 +123,7 @@ public class CategoriesService extends BaseService
 		}
 		else
 		{
-			Category category = new Category(name); 
+			Category category = new Category(id ,name); 
 			categoryDAO.update(category);
 			categoryDAO.closeCurrentSessionWithTransaction();
 			listAll("Category updated seccussfully");
