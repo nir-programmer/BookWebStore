@@ -59,6 +59,7 @@ public class CategoriesService extends BaseService
 		request.getRequestDispatcher("categories_list.jsp").forward(request, response);
 	}
 	
+	//ok
 	public void createCategory() throws ServletException, IOException
 	{
 		categoryDAO.openCurrentSessionWithTransaction();
@@ -88,7 +89,7 @@ public class CategoriesService extends BaseService
 		
 		
 	}
-	
+	//ok
 	public void editCategory() throws ServletException, IOException 
 	{
 		Integer id = Integer.parseInt(request.getParameter("id")); 
@@ -99,6 +100,36 @@ public class CategoriesService extends BaseService
 		
 		request.setAttribute("category", category);
 		request.getRequestDispatcher("categories_form.jsp").forward(request, response);
+		
+	}
+	
+	public void updateCategory() throws ServletException, IOException 
+	{
+		Integer id = Integer.parseInt(request.getParameter("categoryId")); 
+		String name = request.getParameter("categoryName") ;
+
+		categoryDAO.openCurrentSessionWithTransaction();
+		Category categoryById = categoryDAO.get(id); 
+		Category categoryByName = categoryDAO.findByName(name); 
+		
+		if(categoryByName == null || (categoryByName != null &&
+			categoryById.getCategoryId() == categoryByName.getCategoryId()))
+		{
+			Category category = new Category(name); 
+			categoryDAO.update(category);
+			categoryDAO.closeCurrentSessionWithTransaction();
+			listAll("Category updated seccussfully");
+		}
+		
+		else
+		{
+			categoryDAO.closeCurrentSessionWithTransaction();
+			String message = "could not update category. +"
+					+ "Category with name : " + name + " Exists!"; 
+			request.setAttribute("message", message);
+		}
+		
+		
 		
 	}
 	/*
@@ -195,6 +226,8 @@ public class CategoriesService extends BaseService
 	 * 
 	 * }
 	 */
+
+	
 
 	
 
