@@ -33,11 +33,16 @@ public class HomePageServlet extends HttpServlet
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		CategoryDAO categoryDAO = new CategoryDAO();
-		List<Category> categories = categoryDAO.listAll();
-		request.setAttribute("categories", categories);
+	{	
 		
+		CategoryDAO categoryDAO = new CategoryDAO();
+		categoryDAO.openCurrentSessionWithTransaction();
+
+		List<Category> categories = categoryDAO.listAll();
+
+		categoryDAO.closeCurrentSessionWithTransaction();
+
+		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("frontend/index.jsp").forward(request, response);
 	}
 
