@@ -8,7 +8,7 @@
 <title>Create New User</title>
 <link rel="stylesheet" href="../css/style.css">
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src=../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
 
@@ -27,16 +27,17 @@
 
 	<div align="center">
 		<c:if test="${user == null }">
-			<form action="create_users" method="post" onsubmit="return validateFormInput()">
+			<form action="create_users" method="post" id="userForm">
 		</c:if>
 		<c:if test="${user != null}">
-			<form action="update_user" method="post" onsubmit="return validateFormInput()">
+			<form action="update_user" method="post" id="userForm">
 				<input type="hidden" name="userId" value="${user.userId}">
 		</c:if>
 		<table class="form">
 			<tr>
 				<td align="right">Email:</td>
-				<td align="left"><input id="email" type="text" name="email"
+				<td align="left">
+				<input id="email" type="text" name="email"
 					size="20" value="${user.email}"></td>
 			</tr>
 			<tr>
@@ -71,7 +72,8 @@
 </body>
 
 
-<script>
+<script type="text/javascript">
+
 $(document).ready(function()
 	{
 		$("#userForm").validate({
@@ -79,7 +81,7 @@ $(document).ready(function()
 				email: "required",
 				fullname: "required",
 				password: "required"
-			}
+			},
 			messages: {
 				email: "Please enter email" ,
 				fullname: "Please enter full name",
