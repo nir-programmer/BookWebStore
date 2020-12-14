@@ -1,4 +1,4 @@
-package org.nir.bookstore.controller.admin.users;
+package org.nir.bookstore.controller.admin; 
 
 import java.io.IOException;
 import javax.servlet.ServletException;
