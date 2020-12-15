@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Create New Category</title>
 <link rel="stylesheet" href="../css/style.css">
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
 
@@ -25,10 +27,10 @@
 
 	<div align="center">
 		<c:if test="${category == null }"> 
-			<form action="create_categories" method="post" onsubmit="return validateFormInput()">
+			<form action="create_categories" method="post" id="categoryForm">
 		</c:if>
 		<c:if test="${category != null}"> 
-			<form action="update_categories" method="post" onsubmit="return validateFormInput()">
+			<form action="update_categories" method="post" id="categoryForm">
 			<input type="hidden" name="categoryId" value="${category.categoryId}">
 		</c:if>
 			<table class="form">
@@ -56,6 +58,25 @@
 
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+
+$(document).ready(function()
+	{
+		$("#categoryForm").validate({
+			rules: 
+			{
+				
+				categoryName: "required"
+				
+			},
+			messages: 
+			{
+				categoryName: "Please enter a category name"
+			}
+		}); 
+		
+	}); 
+</script>
 
 <script type="text/javascript">
 	function validateFormInput() {
