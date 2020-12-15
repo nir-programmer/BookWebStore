@@ -44,9 +44,11 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Save"> <input type="button" value="Cancel">
-					</td>
+					<td colspan="2" align="center">
+					<button type="submit" value=Save">Save</button>&nbsp;&nbsp;&nbsp;
+					<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+					<button id="cancelButton" value="Cancel">Cancel</button>
+				</td>
 
 				</tr>
 
@@ -76,9 +78,15 @@ $(document).ready(function()
 		}); 
 		
 	}); 
+	
+	$("#cancelButton").on("click", function()
+			{
+				history.go(-1); 
+		
+			}); 
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function validateFormInput() {
 		var fieldCategoryName = document.getElementById("categoryName");
 		
@@ -93,7 +101,7 @@ $(document).ready(function()
 
 	}
 </script>
-
+ -->
 
 
 </html>

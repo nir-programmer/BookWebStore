@@ -56,8 +56,8 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit" value=Save">Save</button>&nbsp;&nbsp;&nbsp;
-					<button onclick="javascript:history.go(-1);" value="Cancel">Cancel
-					</button>
+					<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+					<button id="buttonCancel" value="Cancel">Cancel</button>
 				</td>
 
 			</tr>
@@ -100,6 +100,12 @@ $(document).ready(function()
 				password: "Please enter password"
 			}
 		}); 
+		
+		//# refer to an id attribute
+		$("#cancelButton").click(function()
+				{
+					history.go(-1); 
+				}); 
 		
 	}); 
 </script>
