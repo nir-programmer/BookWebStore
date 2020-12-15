@@ -70,7 +70,9 @@ public class UsersService {
 			String message = "Couldn't create a user. " + "A user with email " + email + " already exists!";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("message.jsp").forward(request, response);
-		} else {
+		} 
+		else 
+		{
 			Users newUser = new Users(email, password, fullName);
 
 			usersDAO.openCurrentSessionWithTransaction();

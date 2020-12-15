@@ -2,6 +2,9 @@ package org.nir.bookstore.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
@@ -89,13 +92,6 @@ public class HibernateDAO<E>
 		return entities;
 	}
 
-	protected long countWithNamedQuery(String queryName) 
-	{
-		Session session = getCurrentSession();
-		Query<E> query = session.createNamedQuery(queryName);
-		long n = (long)query.getSingleResult(); 
-		return n;
-	}
 
 	public List<E> findWithNamedQuery(String queryName, String paramName , Object id)
 	{	
@@ -103,6 +99,29 @@ public class HibernateDAO<E>
 		Query<E> query = session.createNamedQuery(queryName);
 		query.setParameter(paramName, id);
 		return query.getResultList();
+	}
+	
+	protected List<E> findWithNamedQuery(String queryName ,Map<String , Object> parameters)
+	{
+		Query query = getCurrentSession().createNamedQuery(queryName);  
+		
+		Set<Entry<String, Object>> setParameters = parameters.entrySet();
+		
+		//Copy each (key , value) pair from the map into the (name, value) pair of the parameter name
+		for(Entry<String, Object> entry: setParameters)
+		{
+			query.setParameter(entry.getKey(), entry.getValue());
+		}
+		
+		return query.getResultList();
+	}
+	
+	protected long countWithNamedQuery(String queryName) 
+	{
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		long n = (long)query.getSingleResult(); 
+		return n;
 	}
 	
 	/******************************************************
@@ -169,6 +188,10 @@ public class HibernateDAO<E>
 	public void setCurrentTransaction(Transaction currentTransaction) {
 		this.currentTransaction = currentTransaction;
 	}
+	
+	/*******************************************************
+	 *
+	 ****************************************************/
 	
 	
 }

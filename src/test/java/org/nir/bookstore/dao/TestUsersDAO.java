@@ -23,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Users;
 
 public class TestUsersDAO 
@@ -48,10 +49,11 @@ public class TestUsersDAO
 	@DisplayName("when creating a new user by the userDao")
 	void testCreateUsers()
 	{
+		
 		Users user1 = new Users("YYY", "YYY", "YYY");
 		Users user2 = new Users("AAA", "AAA", "AAA");
 		Users user3 = new Users("BBB", "BBB", "BBB");
-		
+		//Users user4 = new Users("niritzhak10@gmail.com", "superduper100", "Niron Itzhak"); 
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.create(user1);
 		usersDAO.create(user2);
@@ -79,16 +81,17 @@ public class TestUsersDAO
 	@DisplayName("when calling delete(id)")
 	void testDelete()
 	{
-		Integer id = 4; 
+		Integer id = 21; 
 		
 		usersDAO.openCurrentSession();
-		Users user = usersDAO.get(4);
+		Users user = usersDAO.get(id);
 		System.out.println("testDelete():User with id = " + id +" BEFORE delete:");
 		System.out.println(user);
 		usersDAO.closeCurrentSession();
 		
 		usersDAO.openCurrentSessionWithTransaction();
-		assertThrows(EntityNotFoundException.class , () ->usersDAO.delete(4));
+		usersDAO.delete(id);
+		//assertThrows(EntityNotFoundException.class , () ->usersDAO.delete(id));
 		usersDAO.closeCurrentSessionWithTransaction();
 		
 		/*
@@ -161,6 +164,43 @@ public class TestUsersDAO
 		assertNotNull(user);
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
+	
+	@Test
+	//@Disabled
+	@DisplayName("when tring to delete all users")
+	void testDeleteAllUsers()
+	{
+		usersDAO.openCurrentSessionWithTransaction();
+		List<Users> users = usersDAO.listAll();
+		
+		System.out.println(">>testDeleteAllUsers():list of all users BEFORE deleteing"); 
+		users.forEach(u -> System.out.println(u.getFullName()));
+		
+		users.forEach(u -> usersDAO.delete(u.getUserId()));
+		
+		System.out.println(">>testDeleteAllUsers():list of all Users AFTER deleteing"); 
+		
+		users.forEach(u -> System.out.println(u.getFullName()));
+		
+		usersDAO.closeCurrentSessionWithTransaction();
+	}
+	
+	@Test
+	@DisplayName("when calling checkLogin() method")
+	void testCheckLogin()
+	{
+		String email = "niritzhak10@gmail.com"; 
+		String password = "superduper100"; 
+		
+		usersDAO.openCurrentSessionWithTransaction();
+		
+		boolean admin = usersDAO.checkLogin(email, password); 
+		assertTrue(admin); 
+		System.out.println("Is Admin? " + admin); 
+		
+		usersDAO.closeCurrentSessionWithTransaction();	
+	}
+	
 	
 	
 	

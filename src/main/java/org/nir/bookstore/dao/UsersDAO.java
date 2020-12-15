@@ -1,6 +1,8 @@
 package org.nir.bookstore.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -76,6 +78,27 @@ public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users>
 		
 		
 	}
+	
+	public boolean  checkLogin(String email , String password)
+	{
+		Map<String, Object> parameters = new HashMap<>(); 
+		parameters.put("email", email); 
+		parameters.put("password", password); 
+		
+		List<Users> users = super.findWithNamedQuery("Users.checkLogin", parameters); 
+		
+		//check the if there is only one user with this email and password
+		if(users.size() == 1)
+			return true;
+		
+		return false;
+	}
 
+
+	/*******************************************************
+	 TESTS
+	 ****************************************************/
 		
 }
+
+
