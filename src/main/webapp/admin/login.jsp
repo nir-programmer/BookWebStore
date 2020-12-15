@@ -5,29 +5,74 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Login</title>
-<!-- <link rel="stylesheet" href="../css/style.css"> -->
-
+<link rel="stylesheet" href="../css/style.css">
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
-	<jsp:include page="header.jsp" />
 	
 	<div align="center">
-		<h2 class="pageheading">Admin Login</h2>
-	</div>
-	
-	<div align="center">
-		<form class="table">
-			<table>
-				<tr>
-					
-				</tr>
+		<h1>Book Store Administration</h1>
+		<h2>Admin Login</h2>
+		
+		<form id="loginForm" action="login" method="post">
+		<table class="form">
+			<tr>
+				<td>Email:</td>
+				<td><input type="text" name="email" id="email" size="20">
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="password" id="password" size="20">
+			</tr>
+			<tr>
+				<td colspan="2"  align="center">
+					<button type="submit">Login</button>
+				</td>
+			<tr>
+		</table>
 			
-			</table>
 		
 		</form>
-		
 	</div>
 	
-	<jsp:include page="footer.jsp" />
+
 </body>
+
+
+<script type="text/javascript">
+	$(document).ready(function()
+		{
+			$("#loginForm").validate(
+					{
+						rules:
+							{
+								email:
+									{
+										required: true,
+										email:true
+									},
+									
+								password: "required",
+							},
+					
+						messages:
+							{
+								email: 
+									{
+										required: "Please enter email", 
+										email: "Please enter a valid email address" 
+									
+									},
+								
+								password: "Please enter a password"
+							
+							
+							}
+					});
+		}); 
+	
+	
+
+</script>
 </html>
