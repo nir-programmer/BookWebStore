@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -70,9 +71,7 @@ public class UsersService {
 			String message = "Couldn't create a user. " + "A user with email " + email + " already exists!";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("message.jsp").forward(request, response);
-		} 
-		else 
-		{
+		} else {
 			Users newUser = new Users(email, password, fullName);
 
 			usersDAO.openCurrentSessionWithTransaction();
@@ -116,37 +115,32 @@ public class UsersService {
 		 * case 1: the email does not exists(normal case) OR the email exists - but it
 		 * belongs to the current User: update the current user including email
 		 */
-		if (emailUser == null || (emailUser != null) && (emailUser.getUserId() == idUser.getUserId()))
-		{
+		if (emailUser == null || (emailUser != null) && (emailUser.getUserId() == idUser.getUserId())) {
 			usersDAO.update(user);
 			usersDAO.closeCurrentSessionWithTransaction();
 			getAllUsers("User updated successfully");
-		}
-		else
-		{
+		} else {
 			usersDAO.closeCurrentSessionWithTransaction();
-			String message = "Could not update user. User with email " + user.getEmail() + " already exists"; 
+			String message = "Could not update user. User with email " + user.getEmail() + " already exists";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("message.jsp").forward(request, response);
 		}
-			
-	}
-	
-	public void deleteUser() throws ServletException, IOException 
-	{
-		Integer userID = Integer.parseInt(request.getParameter("id")); 
-		
-		//System.out.println(">>UserService.deleteUser(): id = " + userID); 
-		
-		usersDAO.openCurrentSessionWithTransaction();
-		usersDAO.delete(userID); 
-		System.out.println(">>UsersService.delteUser:User with id = " + userID + " Dleted"); 
-		usersDAO.closeCurrentSessionWithTransaction();
-		
-		getAllUsers("User Deleted Succussfully");
-		
+
 	}
 
+	public void deleteUser() throws ServletException, IOException {
+		Integer userID = Integer.parseInt(request.getParameter("id"));
+
+		// System.out.println(">>UserService.deleteUser(): id = " + userID);
+
+		usersDAO.openCurrentSessionWithTransaction();
+		usersDAO.delete(userID);
+		System.out.println(">>UsersService.delteUser:User with id = " + userID + " Dleted");
+		usersDAO.closeCurrentSessionWithTransaction();
+
+		getAllUsers("User Deleted Succussfully");
+
+	}
 
 	/******************************************************
 	 * METHODS USED FOR TESTS
@@ -194,7 +188,7 @@ public class UsersService {
 
 		Users emailUser = usersDAO.findByEmail(user.getEmail());
 		Users idUser = usersDAO.get(user.getUserId());
-		
+
 		/*
 		 * case 1: the email does not exists(normal case) OR the email exists - but it
 		 * belongs to the current User: update the current user including email
@@ -203,18 +197,42 @@ public class UsersService {
 			usersDAO.update(user);
 
 		else
-			System.out.println(">>UsersService.updateUser(User user): "
-					+ "There is another user with email = " + user.getEmail());
+			System.out.println(
+					">>UsersService.updateUser(User user): " + "There is another user with email = " + user.getEmail());
 
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
-	
-	public void deleteUser(Object id)
-	{
+
+	public void deleteUser(Object id) {
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.delete(id);
 		usersDAO.closeCurrentSessionWithTransaction();
 	}
 
-	
+	public void login() throws ServletException, IOException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		usersDAO.openCurrentSessionWithTransaction();
+		boolean loginResult = usersDAO.checkLogin(email, password);
+		usersDAO.closeCurrentSessionWithTransaction();
+
+		if (loginResult) 
+		{
+			System.out.println("User is authenticated");
+			
+			request.getSession().setAttribute("userEmail", email);
+			
+			request.getRequestDispatcher("/admin/").forward(request, response);
+		
+		}
+		else
+		{
+			System.out.println("Login Failed"); 
+			String message = "Login Failed"; 
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+	}
+
 }

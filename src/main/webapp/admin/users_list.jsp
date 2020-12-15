@@ -23,7 +23,7 @@
 	</div>
 
 	<div align="center">
-	<h4><i>${message }</i></h4>
+	<h4 class="message">${message }</h4>
 	</div>
 		
 	<div align="center">

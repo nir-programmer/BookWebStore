@@ -1,9 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div align="center">
 	<div>
 		<img src="../images/logo.jpg">
 	</div>
 	<div>
-		Welcome, Admin | <a href="logout">logout</a>
+		Welcome,<c:out value="${sessionScope.userEmail}" />  <a href="logout">logout</a>
 	</div>
 	
 	<!--  for putting the items in the same line -->
