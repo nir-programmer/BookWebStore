@@ -1,4 +1,3 @@
-<%@ page isErrorPage="true" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,11 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Error Page Refering form web.xml</h1>
+	<%
+	int x = 9 , y  = 0 ; 
+	double z = x / y ; 
 	
-		<%= exception.getMessage() %>
+	%>
 	
-		<%= exception.getClass().getName() %>
-
+	
 </body>
 </html>
