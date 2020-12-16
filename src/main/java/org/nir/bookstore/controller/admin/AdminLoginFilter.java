@@ -1,3 +1,4 @@
+
 package org.nir.bookstore.controller.admin;
 
 import java.io.IOException;
@@ -37,18 +38,36 @@ public class AdminLoginFilter implements Filter {
 		
 		HttpSession session = httpRequest.getSession(false);
 		
-		boolean loggedInt = session != null && session.getAttribute("userEmail") != null; 
+		boolean loggedIn = session != null && session.getAttribute("userEmail") != null; 
 		
-		if(loggedInt)
+		String loginURI = httpRequest.getContextPath() + "/admin/login"; 
+		
+		boolean loginRequest = httpRequest.getRequestURI().equals(loginURI);
+		
+		boolean loginPage = httpRequest.getRequestURI().endsWith("login.jsp"); 
+		
+		/*
+		 * If logged in and wants the to login or just want login.jsp
+		 * -> forward to admin home page -
+		 */
+		if(loggedIn  && ( loginRequest ||  loginPage) )
+		{
+			request.getRequestDispatcher("/admin/").forward(httpRequest, response);
+		}
+		
+		else if(loggedIn || loginRequest)
+		{
+			System.out.println("User Logged in!"); 
 			chain.doFilter(request, response);
+		}
 		else
-			httpRequest.getRequestDispatcher("login.jsp").forward(request, response);
-		
+		{
+			System.out.println("User Not Logged in!"); 
+			httpRequest.getRequestDispatcher("login.jsp").forward(httpRequest, response);
+		}
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
+	
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
