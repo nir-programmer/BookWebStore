@@ -31,7 +31,9 @@ public class HibernateDAO<E>
 	
 	public HibernateDAO() {}
 	
-/*************************************Interface********************************************** */
+/*****************************************************************************
+ * 									Interface Methods Implementations
+ * *********************************************** ***************************/
 
 	public HibernateDAO(Session session) 
 	{
@@ -44,7 +46,7 @@ public class HibernateDAO<E>
 	{
 		getCurrentSession().save(entity);
 		
-		return null; 
+		return entity; 
 	}
 	
 	//OK
