@@ -1,5 +1,6 @@
 package org.nir.bookstore.dao;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -102,9 +103,79 @@ public class TestBookDAO
 		
 		Book createdBook = bookDAO.create(book); 
 		
+
+	}
+	
+	@Test
+	@DisplayName("when update a Book by BookDAO")
+	void testUpdateBook() throws ParseException, IOException
+	{
+		Book existBook  = new Book();
+		Integer id = 4; 
+		existBook.setBookId(id);
 		
+		//book.setLastUpdateTime(new Date());
+		//Create a new Category 
+		Category category = new Category("Java Core"); 
+		category.setCategoryId(129);
+		existBook.setCategory(category);
+		
+		/*
+		 * update the book edition to 3 nd from 2 nd. This column is a UNIQUE KEY in the data base
+		 */
+		existBook.setTitle("Effective Java (10 nd Edition)");
+		existBook.setAuthor("Shalom");
+		existBook.setDescription("New coverage of genereic , enums, annotations");
+		existBook.setPrice(159.99f);
+		existBook.setIsbn("0123456"); 
+		
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date publishDate = dateFormat.parse("05/28/2008"); 
+		existBook.setPublishDate(publishDate);
+		
+		String  imagePath = "/home/nir/Desktop/MyStudies/Udemy/Java-Servlet-JSP-Hibernate/BookStoreWebSite/src/main/webapp/images/AdvancedJava.png"; 
+		
+		
+		//This method reads all bytes and returns an array of bytes
+		byte[] imageByte = Files.readAllBytes(Paths.get(imagePath)); 
+		
+		existBook.setImage(imageByte);
+		
+		
+		Book updatedBook = bookDAO.update(existBook); 
+		
+		assertEquals(existBook.getCategory().getCategoryId(), updatedBook.getCategory().getCategoryId());
+		
+		System.out.println("The updated Book is "); 
+		System.out.println(updatedBook) ;
+
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when delete a non exists book from db")
+	void testDeleteBookFail()
+	{
+		Integer id = 80; 
+		
+		//bookDAO.delete(id);
+		
+		assertThrows(EntityNotFoundException.class, () -> bookDAO.delete(id));
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when delete an exists book")
+	void testDeleteBookPass()
+	{
+		Integer id = 3 ;
+		
+		assertDoesNotThrow(() -> bookDAO.delete(id));
+		
+		System.out.println(">>testDeleteBookPass():Sucess Delete"); 
 		
 		
 	}
+	
 	
 }

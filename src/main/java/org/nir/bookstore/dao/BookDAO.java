@@ -17,6 +17,8 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	@Override
 	public Book update(Book book)
 	{
+		//why he puts this here?
+		book.setLastUpdateTime(new Date());
 		return super.update(book);
 	}
 
@@ -27,9 +29,9 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	}
 
 	@Override
-	public void delete(Object id) 
+	public void delete(Object bookId) 
 	{
-		
+		super.delete(Book.class, bookId);
 		
 	}
 

@@ -94,16 +94,18 @@ public class TestCategoryDAO {
 		System.out.println(category);
 	}
 
+	
 	@Test
-	@Disabled
-	@DisplayName("when calling delete() metod")
+	//@Disabled
+	@DisplayName("when calling delete() metod when there are 2 books with this category!")
 	void testDeleteCategory()
 	{
-		Integer id = 4; 
+		Integer id = 131; 
 		Category category = categoryDAO.get(id);
 		
 		System.out.println(">>testDeleteCategory():category with id = " + id); 
 		System.out.println(category);
+		
 		
 		categoryDAO.delete(id);
 		
