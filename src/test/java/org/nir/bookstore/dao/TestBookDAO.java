@@ -5,42 +5,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Date;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
-import javax.print.attribute.HashAttributeSet;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.hibernate.PropertyValueException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.*;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
-import org.nir.bookstore.entities.OrderDetail;
-import org.nir.bookstore.entities.Review;
-import org.nir.bookstore.entities.Users;
 
 public class TestBookDAO 
 {
@@ -82,9 +65,9 @@ public class TestBookDAO
 		category.setCategoryId(129);
 		book.setCategory(category);
 		
-		book.setTitle("Effective Perl (2nd Edition)");
-		book.setAuthor("Nir");
-		book.setDescription("New coverage of genereic , enums, annotations");
+		book.setTitle("Thinking in Java");
+		book.setAuthor("Chad");
+		book.setDescription("complete guide to java");
 		book.setPrice(34.99f);
 		book.setIsbn("0123456"); 
 		
@@ -111,7 +94,7 @@ public class TestBookDAO
 	void testUpdateBook() throws ParseException, IOException
 	{
 		Book existBook  = new Book();
-		Integer id = 4; 
+		Integer id = 7; 
 		existBook.setBookId(id);
 		
 		//book.setLastUpdateTime(new Date());
@@ -174,8 +157,95 @@ public class TestBookDAO
 		
 		System.out.println(">>testDeleteBookPass():Sucess Delete"); 
 		
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when call get() on exist book")
+	void testGetBookFound()
+	{
+		Integer id = 1; 
+		Book book = bookDAO.get(id); 
+		
+		assertNotNull(book);
+		
+		System.out.println(">>testGetBookFound():The book title"); 
+		System.out.println(book.getTitle());
 		
 	}
 	
+	//OK
+	@Test
+	@DisplayName("when call get on non existed book")
+	void testGetBookNotFound()
+	{
+		Integer id = 4; 
+		Book book = bookDAO.get(id);
+		
+		assertNull(book); 
+		
+		System.out.println(">>testGetBookNotFound");
+		
+		
+		assertNull(book); 
+		
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling listAll() method")
+	void testListAll()
+	{
+		List<Book> books = bookDAO.listAll();
+		
+		assertEquals(2, books.size());
+		
+		System.out.println(">>testListAll():list of books in db:"); 
+		books.forEach(c -> System.out.println(c.getTitle() + ", "  + c.getAuthor()));
+			
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling findByTitle on exist title")
+	void testFindByTitleFound()
+	{
+		String title = "Thinking in Java"; 
+		Book book = bookDAO.findByTitle(title);
+		
+		
+		assertNotNull(book);
+		assertEquals("Thinking in Java", book.getTitle());
+		
+		
+		System.out.println(">>testFindByTitleFound():Seccuss!");
+		
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling findByTitle() on not existing title")
+	void testFindByTitleNonExistsTitle()
+	{
+		String title = "Thinking in Java"; 
+		
+		Book book = bookDAO.findByTitle(title);
+		
+		assertNull(book); 
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling count() ")
+	void testCount()
+	{
+		
+		long numberOfBooks = bookDAO.count();
+		
+		assertEquals(3, numberOfBooks);
+		
+		System.out.println(">>testCount():number of books: "+ numberOfBooks); 
+		
+	}
 	
 }

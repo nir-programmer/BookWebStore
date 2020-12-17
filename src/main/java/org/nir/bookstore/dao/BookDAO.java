@@ -38,16 +38,24 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	@Override
 	public List<Book> listAll() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return super.findWithNamedQuery("Book.findAll"); 
 	}
 
 	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long count() 
+	{
+		
+		return super.countWithNamedQuery("Book.countAll"); 
 	}
 	
 
+	public Book findByTitle(String title)
+	{
+		List<Book> books = super.findWithNamedQuery("Book.findByTitle", "title", title); 
+		
+		if(books.size() == 1)
+			return books.get(0); 
+		return null; 
+	}
 	
 }
