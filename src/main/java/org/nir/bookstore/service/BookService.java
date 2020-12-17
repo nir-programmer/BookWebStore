@@ -1,6 +1,7 @@
 package org.nir.bookstore.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.entities.Book;
+import org.nir.bookstore.entities.Category;
 
 public class BookService 
 {
@@ -27,6 +29,13 @@ public class BookService
 	{
 		bookDao.openCurrentSessionWithTransaction();
 		List<Book> books = this.bookDao.listAll();
+		
+		List<Category> categories  = new ArrayList<>() ;
+		for(Book book: books)
+			categories.add(book.getCategory());
+		
+		System.out.println(">>BookService.listBooks() List of all categories:");
+		categories.forEach(System.out::println);
 		bookDao.closeCurrentSessionWithTransaction();
 		
 		
@@ -35,6 +44,8 @@ public class BookService
 		request.getRequestDispatcher("books_list.jsp").forward(request, response);
 		
 	}
+	
+	
 	
 
 }

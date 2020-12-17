@@ -61,13 +61,13 @@ public class TestBookDAO
 	{
 		Book book  = new Book();
 		book.setLastUpdateTime(new Date());
-		Category category = new Category("Advanced Java"); 
-		category.setCategoryId(129);
+		Category category = new Category("C#"); 
+		category.setCategoryId(131);
 		book.setCategory(category);
 		
-		book.setTitle("Thinking in Java");
+		book.setTitle("Thinking in C# For Begginer");
 		book.setAuthor("Chad");
-		book.setDescription("complete guide to java");
+		book.setDescription("complete guide to C#");
 		book.setPrice(34.99f);
 		book.setIsbn("0123456"); 
 		

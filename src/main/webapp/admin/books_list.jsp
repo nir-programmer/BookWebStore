@@ -39,7 +39,39 @@
 				<th>Last Updated</th>
 				<th>Actions</th>
 			</tr>
-
+			
+			<c:forEach items="${books}" var="book" varStatus="status">
+			
+			<c:url value="update_book" var="updateLink">
+				<c:param name="id" value="${book.bookId}" />
+			</c:url>
+			<c:url value="delete_link" var="deleteLink"> 
+				<c:param name="id" value="book.bookId"></c:param>
+			</c:url>
+				<tr> 
+					<td>${status.index + 1} </td>
+					<td>${book.bookId}</td>
+					<!-- important -->
+					<td>
+						<img src="data:image/jpg;base64,${book.base64Image}" />
+					</td>
+					<td>${book.title}</td>
+					<td>${book.author}</td>
+					<td>${book.category.name }</td>
+					<td>${book.price }</td>
+					<td>${book.lastUpdateTime}</td>
+					<td>
+						<a href="${updateLink}">Edit</a>&nbsp;
+						
+						<a href="javascript:void(0)" class="deleteLink" id="${book.bookId}">Delete</a>
+					</td>
+					
+				
+				</tr>
+			
+				
+			
+			</c:forEach>
 			<%-- <c:forEach items="${users}" var="user" varStatus="status">
 			
 			<!--  setup a link to update a user -->
