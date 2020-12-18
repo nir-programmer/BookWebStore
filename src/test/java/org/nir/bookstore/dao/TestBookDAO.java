@@ -61,13 +61,13 @@ public class TestBookDAO
 	{
 		Book book  = new Book();
 		book.setLastUpdateTime(new Date());
-		Category category = new Category("C#"); 
-		category.setCategoryId(131);
+		Category category = new Category(); 
+		category.setCategoryId(11);
 		book.setCategory(category);
 		
-		book.setTitle("Thinking in C# For Begginer");
-		book.setAuthor("Chad");
-		book.setDescription("complete guide to C#");
+		book.setTitle("Java 8 - Lambda Exprssions");
+		book.setAuthor("Nir");
+		book.setDescription("comprehnsive guide to Java 8");
 		book.setPrice(34.99f);
 		book.setIsbn("0123456"); 
 		
@@ -75,7 +75,7 @@ public class TestBookDAO
 		Date publishDate = dateFormat.parse("05/28/2008"); 
 		book.setPublishDate(publishDate);
 		
-		String  imagePath = "/home/nir/Desktop/MyStudies/Udemy/Java-Servlet-JSP-Hibernate/BookStoreWebSite/src/main/webapp/images/AdvancedJava.png"; 
+		String  imagePath = "/home/nir/Desktop/MyStudies/Udemy/Java-Servlet-JSP-Hibernate/BookStoreWebSite/src/main/webapp/images/smaller.png"; 
 		
 		
 		//This method reads all bytes and returns an array of bytes
@@ -106,7 +106,7 @@ public class TestBookDAO
 		/*
 		 * update the book edition to 3 nd from 2 nd. This column is a UNIQUE KEY in the data base
 		 */
-		existBook.setTitle("Effective Java (10 nd Edition)");
+		existBook.setTitle(" Java  8(10 nd Edition)");
 		existBook.setAuthor("Shalom");
 		existBook.setDescription("New coverage of genereic , enums, annotations");
 		existBook.setPrice(159.99f);
@@ -116,7 +116,7 @@ public class TestBookDAO
 		Date publishDate = dateFormat.parse("05/28/2008"); 
 		existBook.setPublishDate(publishDate);
 		
-		String  imagePath = "/home/nir/Desktop/MyStudies/Udemy/Java-Servlet-JSP-Hibernate/BookStoreWebSite/src/main/webapp/images/AdvancedJava.png"; 
+		String  imagePath = "/home/nir/Desktop/MyStudies/Udemy/Java-Servlet-JSP-Hibernate/BookStoreWebSite/src/main/webapp/images/smaller.png"; 
 		
 		
 		//This method reads all bytes and returns an array of bytes
@@ -198,7 +198,7 @@ public class TestBookDAO
 	{
 		List<Book> books = bookDAO.listAll();
 		
-		assertEquals(3, books.size());
+		assertEquals(0, books.size());
 		
 		System.out.println(">>testListAll():list of books in db:"); 
 		books.forEach(c -> System.out.println(c.getTitle() + ", "  + c.getAuthor()));

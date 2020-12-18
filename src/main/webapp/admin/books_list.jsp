@@ -53,7 +53,7 @@
 					<td>${book.bookId}</td>
 					<!-- important -->
 					<td>
-						<img src="data:image/jpg;base64,${book.base64Image}" />
+						<img src="data:image/jpg;base64,${book.base64Image}"  width="84" height="110" />
 					</td>
 					<td>${book.title}</td>
 					<td>${book.author}</td>
@@ -69,8 +69,7 @@
 				
 				</tr>
 			
-				
-			
+		
 			</c:forEach>
 			<%-- <c:forEach items="${users}" var="user" varStatus="status">
 			

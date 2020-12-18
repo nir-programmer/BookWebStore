@@ -55,7 +55,7 @@ public class TestCategoryDAO {
 	@Test
 	@DisplayName("when creating a new Category by the CategoryDAO")
 	void testCreateCategoryWithCategoryDAO() {
-		Category category = new Category("Cookings");
+		Category category = new Category("Advanced Java");
 
 		System.out.println(">>testCreateCategoryWithCategoryDAO():try to create a new Category named Cookings");
 		categoryDAO.create(category);
@@ -123,8 +123,10 @@ public class TestCategoryDAO {
 	void testListAll()
 	{
 		List<Category> categories = categoryDAO.listAll();
+		assertEquals(1, categories.size());
+		
 		System.out.println(">>testListAll():List of categories:"); 
-		categories.forEach(c -> System.out.println(c.getName()));
+		categories.forEach(System.out::println);
 	}
 	
 	@Test
