@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.service.BookService;
+
+
 /**
  * Servlet implementation class NewBookServlet
  */
@@ -23,9 +26,10 @@ public class NewBookServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		BookService bookService = new BookService(request, response);
+		bookService.showBookNewForm();
 		
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 }
