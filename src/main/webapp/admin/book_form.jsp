@@ -84,7 +84,7 @@
 				<td align="right">Book Image:</td>
 				<td align="left">
 					<input id="bookImage" type="file"
-					name="bookImage" size="20" value="${book.image}">
+					name="bookImage" size="20">
 				</td>
 			</tr>
 		
