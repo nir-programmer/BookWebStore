@@ -21,8 +21,12 @@
 		</h3>
 
 	</div>
-
-	<c:if test="${message} != null"> 
+	<%-- <%
+		String message = (String)request.getAttribute("message"); 
+		out.println("MESSAGE IS : " + message); 
+	
+	%> --%>
+	<c:if test="${message != null}"> 
 		<div align="center" >
 			<h4 class ="message">${message}</h4>
 		</div>
