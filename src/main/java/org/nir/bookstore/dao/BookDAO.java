@@ -10,7 +10,7 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	@Override
 	public Book create(Book book)
 	{
-		
+		book.setLastUpdateTime(new Date());
 		return super.create(book); 
 	}
 

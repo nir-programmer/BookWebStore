@@ -12,7 +12,7 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div align="center">
-		<h3>${message }</h3>
+		<h3>${message}</h3>
 	</div>
 
 	

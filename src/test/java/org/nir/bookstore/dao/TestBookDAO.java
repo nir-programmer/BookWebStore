@@ -210,12 +210,12 @@ public class TestBookDAO
 	@DisplayName("when calling findByTitle on exist title")
 	void testFindByTitleFound()
 	{
-		String title = "Thinking in Java"; 
+		String title = "Java 8 - Lambda Exprssions"; 
 		Book book = bookDAO.findByTitle(title);
 		
 		
 		assertNotNull(book);
-		assertEquals("Thinking in Java", book.getTitle());
+		assertEquals("Java 8 - Lambda Exprssions", book.getTitle());
 		
 		
 		System.out.println(">>testFindByTitleFound():Seccuss!");

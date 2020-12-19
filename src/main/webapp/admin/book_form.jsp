@@ -7,8 +7,11 @@
 <meta charset="UTF-8">
 <title>Create New Book</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/jquery-ui.min.css" />
+
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 </head>
 <body>
 
@@ -27,7 +30,7 @@
 
 	<div align="center">
 		<c:if test="${book == null }">
-			<form action="create_book" method="post" id="bookForm">
+			<form action="create_book" method="post" id="bookForm" enctype="multipart/form-data">
 		</c:if>
 		<c:if test="${book != null}">
 			<form action="update_book" method="post" id="bookForm">
@@ -83,8 +86,8 @@
 			<tr>
 				<td align="right">Book Image:</td>
 				<td align="left">
-					<input id="bookImage" type="file"
-					name="bookImage" size="20">
+					<input id="bookImage" type="file" name="bookImage" size="20" />
+					<img id="thumbnail" alt="Image Preview" />
 				</td>
 			</tr>
 		
@@ -119,45 +122,56 @@
 
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
+
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#categoryForm").validate({
-			rules : {
 
-				categoryName : "required"
-
-			},
-			messages : {
-				categoryName : "Please enter a category name"
-			}
-		});
-
-	});
-
-	$("#cancelButton").on("click", function() {
-		history.go(-1);
-
-	});
-</script>
-
-<!-- <script type="text/javascript">
-	function validateFormInput() {
-		var fieldCategoryName = document.getElementById("categoryName");
+$(document).ready(function()
+	{
+		$("#publishDate").datepicker();
+		//does not work now!
+		$('#bookImage').change(function(){
+			showImageThumbnail(this);
+			
+		}); 
 		
-
-		if (fieldCategoryName.value.length == 0) {
-			alert("Category name is required!");
-			fieldCategoryName.focus();
-			return false;
-		}
-
-		return true;
-
-	}
+		
+		$("#bookForm").validate({
+			rules: 
+			{
+				category: "required",
+				title:"required",
+				author:"required",
+				isbn:"required",
+				publishDate:"required",
+				bookImage:"required",
+				price:"required",
+				description:"required",
+				
+			},
+			messages: 
+			{
+				category:"Please enter a book category",
+				title: "Please enter a book title", 
+				author: "Please enter a book author",
+				isbn: "Please enter a book isbn",
+				publishDate: "Please enter a book publish date",
+				bookImage: "Please enter a book image",
+				price: "Please enter a book price",
+				description: "Please enter a book description",
+				
+			}
+		}); 
+		
+		//# refer to an id attribute
+		$("#cancelButton").click(function()
+				{
+					history.go(-1); 
+				}); 
+		
+	}); 
+	
 </script>
- -->
-
 
 </html>
