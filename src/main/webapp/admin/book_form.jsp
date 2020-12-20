@@ -116,7 +116,6 @@
 					<button id="cancelButton" value="Cancel">Cancel</button>
 				</td>
 			</tr>
-
 		</table>
 		</form>
 
