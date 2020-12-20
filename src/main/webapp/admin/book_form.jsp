@@ -86,8 +86,8 @@
 			<tr>
 				<td align="right">Book Image:</td>
 				<td align="left">
-					<input id="bookImage" type="file" name="bookImage" size="20" />
-					<img id="thumbnail" alt="Image Preview" />
+					<input id="bookImage" type="file" name="bookImage" size="20" /><br/>
+					<img id="thumbnail" alt="Image Preview" style="width: 20%; margin-top: 10px;"/>
 				</td>
 			</tr>
 		
@@ -111,7 +111,8 @@
 		
 			<tr>
 				<td colspan="2" align="center">
-					<button type="submit" value=Save">Save</button>&nbsp;&nbsp;&nbsp; <!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+					<button type="submit" value=Save">Save</button>&nbsp;&nbsp;&nbsp; 
+					<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
 					<button id="cancelButton" value="Cancel">Cancel</button>
 				</td>
 			</tr>
@@ -125,53 +126,32 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 
+
 <script type="text/javascript">
 
-$(document).ready(function()
-	{
-		$("#publishDate").datepicker();
-		//does not work now!
-		$('#bookImage').change(function(){
-			showImageThumbnail(this);
-			
-		}); 
-		
-		
-		$("#bookForm").validate({
-			rules: 
-			{
-				category: "required",
-				title:"required",
-				author:"required",
-				isbn:"required",
-				publishDate:"required",
-				bookImage:"required",
-				price:"required",
-				description:"required",
-				
-			},
-			messages: 
-			{
-				category:"Please enter a book category",
-				title: "Please enter a book title", 
-				author: "Please enter a book author",
-				isbn: "Please enter a book isbn",
-				publishDate: "Please enter a book publish date",
-				bookImage: "Please enter a book image",
-				price: "Please enter a book price",
-				description: "Please enter a book description",
-				
-			}
-		}); 
-		
-		//# refer to an id attribute
-		$("#cancelButton").click(function()
-				{
-					history.go(-1); 
-				}); 
-		
-	}); 
+$(document).ready(function(){
 	
+	$('#publishDate').datepicker();
+	$('#bookImage').change(function(){
+		showImageThumbnail(this);
+	})
+	
+	$('#buttonCancel').click(function(){
+			history.go(-1);
+	});
+});
+
+//fileInput is the fileInput element
+function showImageThumbnail(fileInput)
+{
+	var file = fileInput.files[0]; 
+	var reader = new FileReader();
+	reader.onload = function(e){
+		$('#thumbnail').attr("src", e.target.result);
+	};
+	
+	reader.readAsDataURL(file);
+}
 </script>
 
 </html>
