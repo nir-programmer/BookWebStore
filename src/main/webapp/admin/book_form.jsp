@@ -129,16 +129,44 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+$(document).ready(function()
+{
 	
 	$('#publishDate').datepicker();
 	$('#bookImage').change(function(){
 		showImageThumbnail(this);
-	})
-	
-	$('#buttonCancel').click(function(){
-			history.go(-1);
 	});
+	
+	$("#bookForm").validate({
+		rules: 
+		{
+			category: "required", 
+			title: "required",
+			author: "required",
+			isbn: "required",
+			publishedDate: "required",
+			bookImage: "required",
+			price: "required",
+			description: "required",
+			
+		},
+		messages: 
+		{
+			category : "Please select a category for the book",
+			title: "Please enter title of the book",
+			author: "Please enter author of the book ",
+			isbn: "Please enter isbn of the book",
+			publishedDate: "Please enter publish date of the book",
+			bookImage: "Please choose an image of the book",
+			price: "Please enter price of the book",
+			description: "Please enter description of the book",
+		}
+	}); 
+	
+	$("#cancelButton").click(function(){
+		history.go(-1); 
+	});
+	
 });
 
 //fileInput is the fileInput element
