@@ -21,11 +21,7 @@
 		</h3>
 
 	</div>
-	<%-- <%
-		String message = (String)request.getAttribute("message"); 
-		out.println("MESSAGE IS : " + message); 
 	
-	%> --%>
 	<c:if test="${message != null}"> 
 		<div align="center" >
 			<h4 class ="message">${message}</h4>
@@ -47,7 +43,7 @@
 			
 			<c:forEach items="${books}" var="book" varStatus="status">
 			
-			<c:url value="update_book" var="updateLink">
+			<c:url value="edit_book" var="editLink">
 				<c:param name="id" value="${book.bookId}" />
 			</c:url>
 			<c:url value="delete_link" var="deleteLink"> 
@@ -66,43 +62,13 @@
 					<td>${book.price }</td>
 					<td>${book.lastUpdateTime}</td>
 					<td>
-						<a href="${updateLink}">Edit</a>&nbsp;
+						<a href="${editLink}">Edit</a>&nbsp;
 						
 						<a href="javascript:void(0)" class="deleteLink" id="${book.bookId}">Delete</a>
 					</td>
-					
-				
-				</tr>
-			
-		
-			</c:forEach>
-			<%-- <c:forEach items="${users}" var="user" varStatus="status">
-			
-			<!--  setup a link to update a user -->
-			<c:url value="edit_user" var="tempLink">
-				<c:param name="id" value="${user.userId}"></c:param>
-			</c:url>
-			
-			<!--  setup a link to delete a user -->
-			<c:url value="delete_user" var="deleteLink">
-				<c:param name="id" value="${user.userId}"></c:param>
-			</c:url>
-				<tr>
-					<td>${status.index + 1}</td>
-					<td>${user.userId}</td>
-					<td>${user.email}</td>
-					<td>${user.fullName}</td>
-					<td>
-					Replace this <a href="edit_user?id=${user.userId}">Edit</a> 
-						by url rewriting and encoding:
-						<a href="${tempLink}">Edit</a>&nbsp;
-						
-						<a href="javascript:void(0)" class="deleteLink" id="${user.userId}">Delete</a>
-						
-					</td>
 				</tr>
 			</c:forEach>
- --%>
+			
 		</table>
 	</div>
 
