@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,15 +30,16 @@
 	</div>
 
 	<div align="center">
-		<c:if test="${book == null }">
-			<form action="create_book" method="post" id="bookForm"
-				enctype="multipart/form-data">
-		</c:if>
+	
 		<c:if test="${book != null}">
-			<form action="update_book" method="post" id="bookForm"
-				enctype="multipart/form-data">
-				<input type="hidden" name="bookId" value="${book.bookId}">
+			<form action="update_book" method="post" id="bookForm" enctype="multipart/form-data">
+			<input type="hidden" name="bookId" value="${book.bookId}" >
 		</c:if>
+		
+		<c:if test="${book == null }">
+			<form action="create_book" method="post" id="bookForm" enctype="multipart/form-data">
+		</c:if>
+		
 
 		<table class="form">
 
@@ -77,14 +79,13 @@
 
 			<tr>
 				<td align="right">Publish Date:</td>
-				<td align="left"><input id="publishDate" type="text"
-					name="publishDate" size="20" value="${book.publishDate}"></td>
+				<td align="left">
+				<input id="publishDate" type="text"
+					name="publishDate" size="20"
+					 value="<fmt:formatDate pattern="MM/dd/yyyy"  value='${book.publishDate}' />" /></td>
 			</tr>
 
-			<!-- 
-				Use File Selector type of input 
-				No Value for the input 
-				 -->
+			
 			<tr>
 				<td align="right">Book Image:</td>
 				<td align="left"><input id="bookImage" type="file"

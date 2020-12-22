@@ -82,46 +82,40 @@ public class BookService {
 		bookDao.openCurrentSessionWithTransaction();
 		Book existBook = this.bookDao.findByTitle(title);
 		bookDao.closeCurrentSessionWithTransaction();
-
+		
 		if (existBook != null) {
 			String message = "could not create a book.A book with a title " + title
 					+ " because there is already a book with this title";
-			request.setAttribute("message", message);
-			/*
-			 * dont have to set the attirbute ...
-			 * request.getRequestDispatcher("message.jsp").forward(request, response);
-			 */
+			//request.setAttribute("message", message);
 			listBooks(message);
 			return;
 		}
 
-		
-
 		// Create a Book
 		Book newBook = new Book();
+
+		// read the forms fields into newBook
 		readBookFields(newBook);
-		
 
-		
-		
-
-		
-
-		
 		bookDao.openCurrentSessionWithTransaction();
 		Book createdBook = bookDao.create(newBook);
 		bookDao.closeCurrentSessionWithTransaction();
+		
 		if (createdBook.getBookId() > 0) {
 			String message = "A new book has been created successfully.";
-			request.setAttribute("message", message);
+			//request.setAttribute("message", message);
 			// refresh the book list
 			listBooks(message);
 		}
 	}
 
 	// read the values of the book in the form fields into a given Book
-	public void readBookFields(Book book) throws IOException, ServletException {
-
+	public void readBookFields(Book book) throws IOException, ServletException 
+	{
+		/*
+		 * Read values {author , isbn  price , description , categoryId , title , publishDate ,image} 
+		 * from the form into local variables
+		 */
 		String author = request.getParameter("author");
 		String isbn = request.getParameter("isbn");
 		float price = Float.parseFloat(request.getParameter("price"));
@@ -129,67 +123,57 @@ public class BookService {
 		Integer categoryId = Integer.parseInt(request.getParameter("category"));
 		String title = request.getParameter("title");
 
+		// Read the image from the post multi-part request
+		Part part = request.getPart("bookImage");
+		
+		// read the category
+		this.categoryDAO.openCurrentSessionWithTransaction();
+		Category category = categoryDAO.get(categoryId);
+		this.categoryDAO.closeCurrentSessionWithTransaction();
 		DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		
+		//Read publishDate
 		Date publishDate = null;
-		try {
+		try 
+		{
 			publishDate = format.parse(request.getParameter("publishDate"));
-		} catch (ParseException e) {
+		} 
+		catch (ParseException e)
+		{
 			e.printStackTrace();
 			throw new ServletException(
 					"Error Parsing the String of publishDate - the required " + "format is MM/dd/yyyy ");
 		}
-
 		
-		// Raed values into the book parameter
-		book.setTitle(title);
-		book.setAuthor(author);
-		book.setDescription(description);
-		book.setIsbn(isbn);
-		book.setPublishDate(publishDate);
 		
-		//read the category into the book
-		this.categoryDAO.openCurrentSessionWithTransaction();
-		Category category = categoryDAO.get(categoryId);
-		this.categoryDAO.closeCurrentSessionWithTransaction();
-		book.setCategory(category);
-
-		book.setPrice(price);
-		
-		bookDao.openCurrentSessionWithTransaction();
-		Book existBook = this.bookDao.findByTitle(title);
-		bookDao.closeCurrentSessionWithTransaction();
-
-		if (existBook != null) {
-			String message = "could not create a book.A book with a title " + title
-					+ " because there is already a book with this title";
-			request.setAttribute("message", message);
-			/*
-			 * dont have to set the attirbute ...
-			 * request.getRequestDispatcher("message.jsp").forward(request, response);
-			 */
-			listBooks(message);
-			return;
-		}
-
-		System.out.println("forms value except image :");
+		System.out.println("VALUES RED FROM THE FORM BEFORE SETTING TO THE LOCAL BOOK :");
 
 		System.out.println("categoryId = " + categoryId);
 		System.out.println("bookTitle = " + title);
 		System.out.println("author = " + author);
 		System.out.println("isbn = " + isbn);
 		System.out.println("price = " + price);
-		System.out.println("description =  " + description);
 		System.out.println("publishDate = " + publishDate);
+		System.out.println("description =  " + description);
+		
+		
+		
+		/*
+		 *  READ ALL LOCALES VALUES(except the id)  INTO THE BOOK PARAMATER
+		 */
+		book.setTitle(title);
+		book.setAuthor(author);
+		book.setDescription(description);
+		book.setIsbn(isbn);
+		book.setPublishDate(publishDate);
+		book.setPrice(price);
+		book.setCategory(category);
 
 		/*
-		 * Important: in order to create a Category - I need to retrieve it form db
+		 *  check if there is data and in the part variable.
+		 *  If there is . read it by using inputStream into an array of bytes.
+		 *  Read the array of bytes into the book
 		 */
-		
-
-		// Read the image from the post multi-part request
-		Part part = request.getPart("bookImage");
-
-		// check if there is a data and if there is - read it into a byte array
 		if (part != null && part.getSize() > 0) {
 			long size = part.getSize();
 			byte[] imageBytes = new byte[(int) size];
@@ -227,13 +211,40 @@ public class BookService {
 
 	}
 
-	public void updateBook() {
+	public void updateBook() throws ServletException, IOException {
+		System.out.println(">>BookService.updateBook():Book ID: " + request.getParameter("bookId"));
 		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-		bookDao.openCurrentSessionWithTransaction();
-		Book existBook = bookDao.get(bookId);
-		Book bookByTitle = bookDao.get(bookId);
+		String title = request.getParameter("title");
 
+		bookDao.openCurrentSessionWithTransaction();
+		// get the book from the db
+		Book existBook = bookDao.get(bookId);
+		Book bookByTitle = bookDao.findByTitle(title);
 		bookDao.closeCurrentSessionWithTransaction();
+		
+		System.out.println("BookService.update(): bookByTitle = " + bookByTitle); 
+		// if the title of the book title belongs to the edited book - save the edited
+		// book
+		if (bookByTitle != null && !bookByTitle.equals(existBook)) 
+		{
+			System.out.println("Books are equals");
+			String message = "Could not update the book becuase there's another book having "
+					+ "the title: '" + title + "' already!";
+			System.out.println("BookService.update(): " + message);
+			listBooks(message);
+			return;
+		}
+
+		System.out.println("Books are equals");
+		// read the form values into the existing book - it's ok there is only one
+		readBookFields(existBook);
+
+		bookDao.openCurrentSessionWithTransaction();
+		bookDao.update(existBook);
+		bookDao.closeCurrentSessionWithTransaction();
+
+		String message = "Book updated successfully";
+		listBooks(message);
 
 	}
 
