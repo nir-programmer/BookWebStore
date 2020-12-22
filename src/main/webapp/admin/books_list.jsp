@@ -82,27 +82,19 @@
 			{
 			$(this).on("click", function()
 				{
-				userId = $(this).attr("id");
-				if(confirm('Are you sure you want to delete user with ID '+ userId + '?'))
+				bookId = $(this).attr("id");
+				if(confirm('Are you sure you want to delete book with ID '+ bookId + '?'))
 				{
-					window.location = 'delete_user?id=' +  userId;
+					window.location = 'delete_book?id=' +  bookId;
 				} 
 			});
 		});
 	}); 
 	
 </script>
-<!-- <script type="text/javascript">
-	function confirmDelete(userId) 
-	{
-		if(confirm('Are you sure you want to delete user with ID '+ userId + '?'))
-		{
-			window.location = 'delete_user?id='+userId; 
-		}
-		
-	}
 
-</script> -->
+
+
 
 
 

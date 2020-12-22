@@ -248,4 +248,19 @@ public class BookService {
 
 	}
 
+	public void deleteBook() throws ServletException, IOException 
+	{
+		Integer id = Integer.parseInt(request.getParameter("id")); 
+		System.out.println("BookService.deleteBook(): id = " + id); 
+		
+		this.bookDao.openCurrentSessionWithTransaction();
+		bookDao.delete(id);
+		this.bookDao.closeCurrentSessionWithTransaction();
+		
+		String message = "Book has been delted successfully from data base."; 
+		listBooks(message); 
+		
+		
+	}
+
 }
