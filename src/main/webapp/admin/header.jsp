@@ -41,6 +41,5 @@
 				<img alt="" src="../images/orders.png"><br>Orders
 				</a>
 		</div>
-		
-
+</div>
 </div>

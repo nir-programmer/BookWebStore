@@ -263,4 +263,30 @@ public class BookService {
 		
 	}
 
+	public void listBooksByCategory() throws ServletException, IOException
+	{
+		
+		Integer categoryId = Integer.parseInt(request.getParameter("id"));
+		System.out.println(">>BookService.listBooksByCategory():category id  = " + categoryId); 
+		
+		bookDao.openCurrentSession();
+		List<Book> books = bookDao.listByCategory(categoryId);
+		bookDao.closeCurrentSession();
+		
+		categoryDAO.openCurrentSession();
+		Category category = categoryDAO.get(categoryId); 
+		List<Category> categories = categoryDAO.listAll();
+		//String categoryName = category.getName(); 
+		categoryDAO.closeCurrentSession();
+				
+		System.out.println(">>BookService.listBooksByCategory():books with categoryId = " + categoryId);
+		books.forEach(c -> System.out.println(c.getTitle()));
+		
+		request.setAttribute("category", category);
+		request.setAttribute("categories", categories);
+		request.setAttribute("books", books);
+		
+		request.getRequestDispatcher("frontend/books_list_by_category.jsp").forward(request, response);
+	}
+
 }

@@ -58,4 +58,10 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 		return null; 
 	}
 	
+	public List<Book> listByCategory(int categoryId)
+	{
+		return super.findWithNamedQuery("Book.findByCategory", "catId", categoryId); 
+		
+	}
+	
 }

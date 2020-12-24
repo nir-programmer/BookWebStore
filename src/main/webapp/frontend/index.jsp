@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Evergreen Books - Online Books Store</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	
 	<jsp:include page="header.jsp"></jsp:include>
 
 	

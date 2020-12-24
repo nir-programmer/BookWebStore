@@ -248,4 +248,16 @@ public class TestBookDAO
 		
 	}
 	
+	@Test
+	@DisplayName("when calling listByCategory()")
+	void testListByCategory()
+	{
+		List<Book> books = bookDAO.listByCategory(12); 
+		assertNotNull(books); 
+		assertEquals(2, books.size());
+		
+		books.forEach(c -> System.out.println(c.getTitle())); 
+			
+	}
+	
 }

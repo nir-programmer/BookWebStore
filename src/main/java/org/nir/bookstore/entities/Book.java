@@ -28,7 +28,10 @@ import javax.persistence.UniqueConstraint;
 @Entity
  @NamedQueries({@NamedQuery(name = "Book.findAll", query = "FROM Book b ORDER BY b.title") ,
 		 @NamedQuery(name = "Book.findByTitle", query = "FROM Book b WHERE b.title =:title"),
-		 @NamedQuery(name="Book.countAll", query = "SELECT COUNT(*) FROM Book b")
+		 @NamedQuery(name="Book.countAll", query = "SELECT COUNT(*) FROM Book b"), 
+		 @NamedQuery(name="Book.findByCategory" , 
+		 query = "SELECT b FROM Book b "
+		 		+ "JOIN Category c ON b.category.categoryId = c.categoryId AND c.categoryId =: catId")
  
  })
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
