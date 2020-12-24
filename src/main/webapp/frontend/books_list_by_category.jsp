@@ -16,9 +16,9 @@
 		<h2>${category.name}</h2>
 	</div>
 
-	<div align="center" style="width:80%; margin: 0 auto;">
+	<div align="center" style="width: 80%; margin: 0 auto;">
 		<c:forEach var="book" items="${books}">
-		<div style="float: left; display:inline-block; margin: 20px;" >
+		<div style="float: left; display:inline-block; margin: 0 auto;" >
 		<c:url var="bookDetailsLink" value="view_book">
 			<param value="${book.bookId}" var="id" /> 
 		</c:url>
