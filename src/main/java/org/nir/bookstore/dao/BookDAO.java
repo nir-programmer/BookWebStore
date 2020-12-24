@@ -3,10 +3,14 @@ package org.nir.bookstore.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Book;
 
 public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book> 
 {
+	
 	@Override
 	public Book create(Book book)
 	{
@@ -64,4 +68,12 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 		
 	}
 	
+	public List<Book> listNewBooks()
+	{
+		Session session = getCurrentSession();
+		Query query = session.createNamedQuery("Book.listNew"); 
+		query.setFirstResult(0);
+		query.setMaxResults(4); 
+		return query.getResultList();
+	}
 }

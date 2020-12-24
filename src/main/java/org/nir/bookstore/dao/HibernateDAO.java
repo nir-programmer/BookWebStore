@@ -26,7 +26,7 @@ import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
 {
-	private  Session currentSession;  ;
+	private  Session currentSession;  
 	private Transaction currentTransaction; 
 	
 	public HibernateDAO() {}
@@ -153,7 +153,7 @@ public class HibernateDAO<E>
 		currentSession.close();
 	}
 	
-	private static SessionFactory getSessionFactory()
+	protected static SessionFactory getSessionFactory()
 	{
 		
 		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")

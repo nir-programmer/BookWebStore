@@ -18,7 +18,7 @@
 
 	<div align="center" style="width: 80%; margin: 0 auto;">
 		<c:forEach var="book" items="${books}">
-		<div style="float: left; display:inline-block; margin: 0 auto;" >
+		<div style="float: left; display: inline-block; margin: 0 auto;" >
 		<c:url var="bookDetailsLink" value="view_book">
 			<param value="${book.bookId}" var="id" /> 
 		</c:url>
@@ -29,20 +29,14 @@
 				</a>
 			</div>
 			<div>
-			<a href="bookDetailsLink">
-				<b>${book.title} </b>
+				<a href="bookDetailsLink"><b>${book.title} </b>
 			</a>
 			</div>
-			<div>
-				<b>***** </b>
-			</div>
-			<div>
-				<b>${book.author} </b>
-			</div>
+			<div><b>***** </b></div>
 			
-			<div>
-				<b>${book.price} </b>
-			</div>
+			<div><b>${book.author} </b></div>
+			
+			<div><b>${book.price} </b></div>
 
 		</div>
 		</c:forEach>

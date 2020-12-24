@@ -252,12 +252,26 @@ public class TestBookDAO
 	@DisplayName("when calling listByCategory()")
 	void testListByCategory()
 	{
-		List<Book> books = bookDAO.listByCategory(12); 
+		List<Book> books = bookDAO.listByCategory(14); 
 		assertNotNull(books); 
-		assertEquals(2, books.size());
+		assertEquals(7, books.size());
 		
 		books.forEach(c -> System.out.println(c.getTitle())); 
 			
+	}
+	
+	@Test
+	@DisplayName("when calling listNewBooks()")
+	void testListNewBooks()
+	{
+		
+		List<Book> books = bookDAO.listNewBooks();
+		assertEquals(4, books.size());
+		
+		books.forEach( c -> System.out.println("Book Title: " + c.getTitle() +
+				"Book Publish Date: " + c.getPublishDate() ));
+		
+		
 	}
 	
 }

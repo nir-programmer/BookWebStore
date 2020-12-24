@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.dao.CategoryDAO;
+import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.service.CategoriesService;
 
@@ -37,12 +39,21 @@ public class HomePageServlet extends HttpServlet
 		
 		CategoryDAO categoryDAO = new CategoryDAO();
 		categoryDAO.openCurrentSessionWithTransaction();
-
 		List<Category> categories = categoryDAO.listAll();
-
 		categoryDAO.closeCurrentSessionWithTransaction();
 
+		
+		BookDAO bookDAO = new BookDAO();
+		
+		bookDAO.openCurrentSession(); 
+		List<Book> newBooks = bookDAO.listNewBooks();
+		bookDAO.closeCurrentSession();
+		
+		request.setAttribute("newBooks", newBooks);
 		request.setAttribute("categories", categories);
+		
+		newBooks.forEach(c -> System.out.println(c.getTitle()));
+		
 		request.getRequestDispatcher("frontend/index.jsp").forward(request, response);
 	}
 
