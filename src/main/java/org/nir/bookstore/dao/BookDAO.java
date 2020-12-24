@@ -76,4 +76,6 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 		query.setMaxResults(4); 
 		return query.getResultList();
 	}
+	
+	
 }

@@ -288,5 +288,24 @@ public class BookService {
 		
 		request.getRequestDispatcher("frontend/books_list_by_category.jsp").forward(request, response);
 	}
+	
+	public Book viewBookDetails()
+	{
+		Integer id = Integer.parseInt(request.getParameter("id")); 
+		bookDao.openCurrentSession();
+		Book book = bookDao.get(id);
+		bookDao.closeCurrentSession();
+		
+		categoryDAO.openCurrentSession();
+		Category category = categoryDAO.get(categoryId); 
+		List<Category> categories = categoryDAO.listAll();
+		//String categoryName = category.getName(); 
+		categoryDAO.closeCurrentSession();
+		
+		
+		request.setAttribute("book", book);
+		request.setAttribute("category", categories);
+		request.getRequestDispatcher("frontend/book_detail.jsp"); 
+	}
 
 }
