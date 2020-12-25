@@ -4,7 +4,10 @@
 		<img src="images/logo.jpg">
 	</div>
 	<div>
-		<input type="text" placeholder="Search" size="50" >
+		<form action="search" method="get">
+			<input type="text" placeholder="Search" size="50" name="keyword" />
+			<input type="button" value="Search" />
+		</form>
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="Search" > |
