@@ -33,7 +33,12 @@ import javax.persistence.UniqueConstraint;
 		 query = "SELECT b FROM Book b "
 		 		+ "JOIN Category c ON b.category.categoryId = c.categoryId AND c.categoryId =: catId"),
 		 @NamedQuery(name="Book.listNew" ,
-		 	query = "SELECT b FROM Book b ORDER BY b.publishDate DESC")
+		 	query = "SELECT b FROM Book b ORDER BY b.publishDate DESC"),
+		 @NamedQuery(name = "Book.search" , 
+		 	query = "SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%'"  + 
+		 			"OR b.author LIKE '%' || :keyword  || '%'" + 
+		 			"OR b.description LIKE '%' || :keyword || '%'"
+				 )
  
  })
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))

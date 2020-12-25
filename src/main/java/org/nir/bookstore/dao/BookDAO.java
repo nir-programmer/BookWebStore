@@ -77,5 +77,10 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 		return query.getResultList();
 	}
 	
+	public List<Book> search(String keyword)
+	{
+		return super.findWithNamedQuery("Book.search", "keyword", keyword); 
+	}
+	
 	
 }

@@ -18,6 +18,9 @@
 		<h2>New Books:</h2>
 		<div align="center" style="width: 80%; margin: 0 auto;">
 			<c:forEach var="book" items="${newBooks}">
+				<%-- <c:url value="${view_book}" var="viewBookLink">
+					<c:param name="${id}" var="id"></c:param>
+				 </c:url> --%>
 				<div style="display: inline-block; margin: 0 auto;">
 					<div>
 						<a href="bookDetailsLink"> <img

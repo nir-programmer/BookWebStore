@@ -18,19 +18,16 @@
 
 	<div align="center" style="width: 80%; margin: 0 auto;">
 		<c:forEach var="book" items="${books}">
-		<div style="float: left; display: inline-block; margin: 0 auto;" >
-		<c:url var="bookDetailsLink" value="view_book">
-			<param value="${book.bookId}" var="id" /> 
-		</c:url>
-		
+		<div style="float: left; display: inline-block; margin: 0 auto;" >	
 			<div>
-				<a href="bookDetailsLink">
+				<a href="view_book?id=${book.bookId}">
 					<img src="data:image/jpg;base64,${book.base64Image}" width="128" height="164" />
 				</a>
 			</div>
 			<div>
-				<a href="bookDetailsLink"><b>${book.title} </b>
-			</a>
+				<a href="view_book?id=${book.bookId}">
+					<b>${book.title}</b>
+				</a>
 			</div>
 			<div><b>***** </b></div>
 			

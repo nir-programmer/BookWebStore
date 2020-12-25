@@ -270,8 +270,26 @@ public class TestBookDAO
 		
 		books.forEach( c -> System.out.println("Book Title: " + c.getTitle() +
 				"Book Publish Date: " + c.getPublishDate() ));
+	
+	}
+	
+	@Test
+	@DisplayName("when calling search() method on existinb title")
+	void testSearchInTitle()
+	{
+		List<Book> books = bookDAO.search("Java") ;
+		assertEquals(3, books.size());
 		
+		books.forEach(c -> System.out.println(c.getTitle()));
 		
 	}
 	
+	@Test
+	@DisplayName("when caling serach method on exiting author")
+	void testSearchInAuthor()
+	{
+		List<Book> books = bookDAO.search("Spring basics"); 
+		assertEquals(1, books.size());
+		books.forEach(c -> System.out.println(c.getTitle() + " , " + c.getAuthor()));
+	}
 }
