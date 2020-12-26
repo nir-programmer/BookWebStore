@@ -82,11 +82,11 @@ public class BookService {
 		bookDao.openCurrentSessionWithTransaction();
 		Book existBook = this.bookDao.findByTitle(title);
 		bookDao.closeCurrentSessionWithTransaction();
-		
+
 		if (existBook != null) {
 			String message = "could not create a book.A book with a title " + title
 					+ " because there is already a book with this title";
-			//request.setAttribute("message", message);
+			// request.setAttribute("message", message);
 			listBooks(message);
 			return;
 		}
@@ -100,21 +100,20 @@ public class BookService {
 		bookDao.openCurrentSessionWithTransaction();
 		Book createdBook = bookDao.create(newBook);
 		bookDao.closeCurrentSessionWithTransaction();
-		
+
 		if (createdBook.getBookId() > 0) {
 			String message = "A new book has been created successfully.";
-			//request.setAttribute("message", message);
+			// request.setAttribute("message", message);
 			// refresh the book list
 			listBooks(message);
 		}
 	}
 
 	// read the values of the book in the form fields into a given Book
-	public void readBookFields(Book book) throws IOException, ServletException 
-	{
+	public void readBookFields(Book book) throws IOException, ServletException {
 		/*
-		 * Read values {author , isbn  price , description , categoryId , title , publishDate ,image} 
-		 * from the form into local variables
+		 * Read values {author , isbn price , description , categoryId , title ,
+		 * publishDate ,image} from the form into local variables
 		 */
 		String author = request.getParameter("author");
 		String isbn = request.getParameter("isbn");
@@ -125,27 +124,23 @@ public class BookService {
 
 		// Read the image from the post multi-part request
 		Part part = request.getPart("bookImage");
-		
+
 		// read the category
 		this.categoryDAO.openCurrentSessionWithTransaction();
 		Category category = categoryDAO.get(categoryId);
 		this.categoryDAO.closeCurrentSessionWithTransaction();
 		DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-		
-		//Read publishDate
+
+		// Read publishDate
 		Date publishDate = null;
-		try 
-		{
+		try {
 			publishDate = format.parse(request.getParameter("publishDate"));
-		} 
-		catch (ParseException e)
-		{
+		} catch (ParseException e) {
 			e.printStackTrace();
 			throw new ServletException(
 					"Error Parsing the String of publishDate - the required " + "format is MM/dd/yyyy ");
 		}
-		
-		
+
 		System.out.println("VALUES RED FROM THE FORM BEFORE SETTING TO THE LOCAL BOOK :");
 
 		System.out.println("categoryId = " + categoryId);
@@ -155,11 +150,9 @@ public class BookService {
 		System.out.println("price = " + price);
 		System.out.println("publishDate = " + publishDate);
 		System.out.println("description =  " + description);
-		
-		
-		
+
 		/*
-		 *  READ ALL LOCALES VALUES(except the id)  INTO THE BOOK PARAMATER
+		 * READ ALL LOCALES VALUES(except the id) INTO THE BOOK PARAMATER
 		 */
 		book.setTitle(title);
 		book.setAuthor(author);
@@ -170,9 +163,9 @@ public class BookService {
 		book.setCategory(category);
 
 		/*
-		 *  check if there is data and in the part variable.
-		 *  If there is . read it by using inputStream into an array of bytes.
-		 *  Read the array of bytes into the book
+		 * check if there is data and in the part variable. If there is . read it by
+		 * using inputStream into an array of bytes. Read the array of bytes into the
+		 * book
 		 */
 		if (part != null && part.getSize() > 0) {
 			long size = part.getSize();
@@ -221,15 +214,14 @@ public class BookService {
 		Book existBook = bookDao.get(bookId);
 		Book bookByTitle = bookDao.findByTitle(title);
 		bookDao.closeCurrentSessionWithTransaction();
-		
-		System.out.println("BookService.update(): bookByTitle = " + bookByTitle); 
+
+		System.out.println("BookService.update(): bookByTitle = " + bookByTitle);
 		// if the title of the book title belongs to the edited book - save the edited
 		// book
-		if (bookByTitle != null && !bookByTitle.equals(existBook)) 
-		{
+		if (bookByTitle != null && !bookByTitle.equals(existBook)) {
 			System.out.println("Books are equals");
-			String message = "Could not update the book becuase there's another book having "
-					+ "the title: '" + title + "' already!";
+			String message = "Could not update the book becuase there's another book having " + "the title: '" + title
+					+ "' already!";
 			System.out.println("BookService.update(): " + message);
 			listBooks(message);
 			return;
@@ -248,70 +240,88 @@ public class BookService {
 
 	}
 
-	public void deleteBook() throws ServletException, IOException 
-	{
-		Integer id = Integer.parseInt(request.getParameter("id")); 
-		System.out.println("BookService.deleteBook(): id = " + id); 
-		
+	public void deleteBook() throws ServletException, IOException {
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		System.out.println("BookService.deleteBook(): id = " + id);
+
 		this.bookDao.openCurrentSessionWithTransaction();
 		bookDao.delete(id);
 		this.bookDao.closeCurrentSessionWithTransaction();
-		
-		String message = "Book has been delted successfully from data base."; 
-		listBooks(message); 
-		
-		
+
+		String message = "Book has been delted successfully from data base.";
+		listBooks(message);
+
 	}
 
-	public void listBooksByCategory() throws ServletException, IOException
-	{
-		
+	public void listBooksByCategory() throws ServletException, IOException {
+
 		Integer categoryId = Integer.parseInt(request.getParameter("id"));
-		System.out.println(">>BookService.listBooksByCategory():category id  = " + categoryId); 
-		
+		System.out.println(">>BookService.listBooksByCategory():category id  = " + categoryId);
+
 		bookDao.openCurrentSession();
 		List<Book> books = bookDao.listByCategory(categoryId);
 		bookDao.closeCurrentSession();
-		
+
 		categoryDAO.openCurrentSession();
-		Category category = categoryDAO.get(categoryId); 
+		Category category = categoryDAO.get(categoryId);
 		List<Category> categories = categoryDAO.listAll();
-		//String categoryName = category.getName(); 
+		// String categoryName = category.getName();
 		categoryDAO.closeCurrentSession();
-				
+
 		System.out.println(">>BookService.listBooksByCategory():books with categoryId = " + categoryId);
 		books.forEach(c -> System.out.println(c.getTitle()));
-		
+
 		request.setAttribute("category", category);
 		request.setAttribute("categories", categories);
 		request.setAttribute("books", books);
-		
+
 		request.getRequestDispatcher("frontend/books_list_by_category.jsp").forward(request, response);
 	}
-	
-	public void viewBookDetails() throws ServletException, IOException
-	{
-		Integer id = Integer.parseInt(request.getParameter("id")); 
+
+	public void viewBookDetails() throws ServletException, IOException {
+		Integer id = Integer.parseInt(request.getParameter("id"));
 		bookDao.openCurrentSession();
 		Book book = bookDao.get(id);
 		bookDao.closeCurrentSession();
-		
+
 		categoryDAO.openCurrentSession();
 		List<Category> categories = categoryDAO.listAll();
-		//String categoryName = category.getName(); 
+		// String categoryName = category.getName();
 		categoryDAO.closeCurrentSession();
-		
+
 		if (book != null) {
 			request.setAttribute("book", book);
-		} 
-		else 
-		{
+		} else {
 			String message = "Sorry, the book with ID " + id + " is not available.";
-			request.setAttribute("message", message);			
+			request.setAttribute("message", message);
 		}
-		//request.setAttribute("book", book);
+		// request.setAttribute("book", book);
 		request.setAttribute("categories", categories);
-		request.getRequestDispatcher("frontend/book_details.jsp").forward(request, response);; 
+		request.getRequestDispatcher("frontend/book_details.jsp").forward(request, response);
+		;
+	}
+
+	public void search() throws ServletException, IOException 
+	{
+		
+		String keyword = request.getParameter("keyword");
+		List<Book> result = null; 
+		
+		bookDao.openCurrentSession();
+		
+		if (keyword.equals(""))
+			result = bookDao.listAll();
+		else
+			result = bookDao.search(keyword);
+			
+		bookDao.closeCurrentSession();
+
+			System.out.println("BookService.search() - Results:");
+			result.forEach(c -> System.out.println(c.getTitle()));
+
+			request.setAttribute("result", result);
+			request.setAttribute("keyword", keyword);
+			request.getRequestDispatcher("frontend/results.jsp").forward(request, response);
 	}
 
 }

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.service.BookService;
+
 /**
  * Servlet implementation class SearchBookServlet
  */
@@ -28,6 +30,8 @@ public class SearchBookServlet extends HttpServlet {
 		 * method stub response.getWriter().print(keyword);
 		 */
 		
+		BookService bookService = new BookService(request, response); 
+		bookService.search(); 
 	}
 
 }
