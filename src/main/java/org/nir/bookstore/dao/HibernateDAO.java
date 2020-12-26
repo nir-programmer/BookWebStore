@@ -174,12 +174,16 @@ public class HibernateDAO<E>
 	
 	public void closeCurrentSession()
 	{
-		currentSession.close();
+		if(currentSession != null)
+			currentSession.close();
 	}
 	
 	public void closeCurrentSessionWithTransaction()
 	{
-		currentTransaction.commit();
+		if(currentTransaction != null)
+			currentTransaction.commit();
+		
+		if(currentSession != null)
 		currentSession.close();
 	}
 	

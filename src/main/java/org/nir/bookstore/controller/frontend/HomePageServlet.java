@@ -13,7 +13,6 @@ import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.dao.CategoryDAO;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
-import org.nir.bookstore.service.CategoriesService;
 
 /**
  * Servlet implementation class HomePageServlet

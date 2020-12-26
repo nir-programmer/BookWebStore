@@ -31,7 +31,6 @@ public class TestUsersDAO
 	
 	private  static  UsersDAO usersDAO = null;
 	
-	
 	@BeforeAll
 	@DisplayName("when create UsersDAO object")
 	public static void init()

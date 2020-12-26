@@ -198,7 +198,7 @@ public class TestBookDAO
 	{
 		List<Book> books = bookDAO.listAll();
 		
-		assertEquals(0, books.size());
+		assertEquals(8, books.size());
 		
 		System.out.println(">>testListAll():list of books in db:"); 
 		books.forEach(c -> System.out.println(c.getTitle() + ", "  + c.getAuthor()));
