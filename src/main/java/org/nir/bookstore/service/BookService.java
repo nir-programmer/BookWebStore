@@ -321,7 +321,7 @@ public class BookService {
 
 			request.setAttribute("result", result);
 			request.setAttribute("keyword", keyword);
-			request.getRequestDispatcher("frontend/results.jsp").forward(request, response);
+			request.getRequestDispatcher("frontend/search_result.jsp").forward(request, response);
 	}
 
 }
