@@ -16,15 +16,17 @@ import org.nir.bookstore.dao.UsersDAO;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Users;
 
-public class CategoriesService extends BaseService
+public class CategoriesService 
 {
 	private static CategoryDAO categoryDAO;
-
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 	/************************** CONSTRUCTORS ****************************/
 	// OK: used By the Servlets
 	public CategoriesService(HttpServletRequest request, HttpServletResponse response) 
 	{
-		super(request, response);
+		this.request = request;
+		this.response = response;
 		categoryDAO = new CategoryDAO();
 		
 	}
