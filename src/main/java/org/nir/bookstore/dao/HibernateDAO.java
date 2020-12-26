@@ -25,10 +25,28 @@ import org.nir.bookstore.entities.Review;
 import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
-{
-	private  Session currentSession;  
-	private Transaction currentTransaction; 
+{	
+	protected  Session currentSession;  
+	protected Transaction currentTransaction; 
 	
+	//new code
+	private static SessionFactory sessionFactory; 
+	
+	static 
+	{
+		sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				 .addAnnotatedClass(Category.class)
+				 .addAnnotatedClass(Book.class)
+				 .addAnnotatedClass(Customer.class)
+				 .addAnnotatedClass(OrderDetailId.class)
+				 .addAnnotatedClass(OrderDetail.class)
+				 .addAnnotatedClass(Review.class)
+				 .addAnnotatedClass(Users.class)
+				 .addAnnotatedClass(BookOrder.class)
+				 .buildSessionFactory();
+		
+	}
+	///////////////////////////////////////////////////////
 	public HibernateDAO() {}
 	
 /*****************************************************************************
@@ -117,6 +135,18 @@ public class HibernateDAO<E>
 		
 		return query.getResultList();
 	}
+	
+	protected List<E> findWithNamedQuery(String queryName , int firstResult , int maxResult) 
+	{
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResult); 
+		
+		List<E> entities = query.getResultList();
+		return entities;
+	}
+
 	
 	protected long countWithNamedQuery(String queryName) 
 	{

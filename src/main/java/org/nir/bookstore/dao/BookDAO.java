@@ -68,13 +68,15 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 		
 	}
 	
+	/*
+	 * public List<Book> listNewBooks() { Session session = getCurrentSession();
+	 * Query query = session.createNamedQuery("Book.listNew");
+	 * query.setFirstResult(0); query.setMaxResults(4); return
+	 * query.getResultList(); }
+	 */
 	public List<Book> listNewBooks()
 	{
-		Session session = getCurrentSession();
-		Query query = session.createNamedQuery("Book.listNew"); 
-		query.setFirstResult(0);
-		query.setMaxResults(4); 
-		return query.getResultList();
+		return super.findWithNamedQuery("Book.listNew" , 0 , 4); 
 	}
 	
 	public List<Book> search(String keyword)
