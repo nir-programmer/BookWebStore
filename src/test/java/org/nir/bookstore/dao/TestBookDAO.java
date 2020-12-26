@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
 
-public class TestBookDAO 
+public class TestBookDAO extends TestBaseDAO
 {
 	
 	private static BookDAO bookDAO = null;
