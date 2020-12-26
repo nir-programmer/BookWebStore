@@ -38,16 +38,16 @@ public class HomePageServlet extends HttpServlet
 	{	
 		
 		CategoryDAO categoryDAO = new CategoryDAO();
-		categoryDAO.openCurrentSessionWithTransaction();
+		//categoryDAO.openCurrentSessionWithTransaction();
 		List<Category> categories = categoryDAO.listAll();
-		categoryDAO.closeCurrentSessionWithTransaction();
+		//categoryDAO.closeCurrentSessionWithTransaction();
 
 		
 		BookDAO bookDAO = new BookDAO();
 		
-		bookDAO.openCurrentSession(); 
+		//bookDAO.openCurrentSession(); 
 		List<Book> newBooks = bookDAO.listNewBooks();
-		bookDAO.closeCurrentSession();
+		//bookDAO.closeCurrentSession();
 		
 		request.setAttribute("newBooks", newBooks);
 		request.setAttribute("categories", categories);

@@ -12,11 +12,10 @@ import org.nir.bookstore.entities.Users;
 public class UsersDAO extends HibernateDAO<Users> implements GenericeDAO<Users> 
 {
 	
-	public UsersDAO(Session session) 
-	{
-		super(session);
-		// TODO Auto-generated constructor stub
-	}
+	/*First version
+	 * public UsersDAO(Session session) { super(session); // TODO Auto-generated
+	 * constructor stub }
+	 */
 
 	public UsersDAO() {
 		// TODO Auto-generated constructor stub

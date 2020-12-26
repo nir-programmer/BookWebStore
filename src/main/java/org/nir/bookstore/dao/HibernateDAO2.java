@@ -1,0 +1,204 @@
+package org.nir.bookstore.dao;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import org.nir.bookstore.entities.Book;
+import org.nir.bookstore.entities.BookOrder;
+import org.nir.bookstore.entities.Category;
+import org.nir.bookstore.entities.Customer;
+import org.nir.bookstore.entities.OrderDetail;
+import org.nir.bookstore.entities.OrderDetailId;
+import org.nir.bookstore.entities.Review;
+import org.nir.bookstore.entities.Users;
+
+public class HibernateDAO2<E>
+{
+	//new 
+	private static SessionFactory sessionFactory; 
+	
+	protected  Session currentSession;  
+	protected Transaction currentTransaction; 
+	
+	public HibernateDAO2() {}
+	
+	
+	
+/*****************************************************************************
+ * 									Interface Methods Implementations
+ * *********************************************** ***************************/
+
+	public HibernateDAO2(Session session) 
+	{
+		super();
+		this.currentSession = session;
+	} 
+	
+	//OK
+	protected E create(E entity)
+	{
+		getCurrentSession().save(entity);
+		
+		return entity; 
+	}
+	
+	//OK
+	protected E find (Class<E> entity ,Object id)
+	{
+		Session session = getCurrentSession();
+		
+		//find method can return null but get doesn't
+		E e = session.find(entity, id);
+		if(e != null)
+			session.refresh(e);
+		return e; 
+	}
+	
+	protected void delete(Class<E> entity, Object id) 
+	{
+		Session session = getCurrentSession();
+		Object reference = session.getReference(entity, id);
+		/*
+		 * Have to invoke inside a transaction, else will not work
+		 * it will not throw exception -just does not effect the db
+		 */
+		session.remove(reference);
+		
+	}
+
+	protected E update(E entity) 
+	{
+		Session session = getCurrentSession();
+		/*
+		 * The merge method will create an entity if 
+		 * there isn't
+		 */
+		
+		E e = (E)session.merge(entity);
+		return entity;
+		
+	}
+
+	protected List<E> findWithNamedQuery(String queryName) 
+	{
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		List<E> entities = query.getResultList();
+		return entities;
+	}
+
+
+	public List<E> findWithNamedQuery(String queryName, String paramName , Object id)
+	{	
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		query.setParameter(paramName, id);
+		return query.getResultList();
+	}
+	
+	protected List<E> findWithNamedQuery(String queryName ,Map<String , Object> parameters)
+	{
+		Query query = getCurrentSession().createNamedQuery(queryName);  
+		
+		Set<Entry<String, Object>> setParameters = parameters.entrySet();
+		
+		//Copy each (key , value) pair from the map into the (name, value) pair of the parameter name
+		for(Entry<String, Object> entry: setParameters)
+		{
+			query.setParameter(entry.getKey(), entry.getValue());
+		}
+		
+		return query.getResultList();
+	}
+	
+	protected long countWithNamedQuery(String queryName) 
+	{
+		Session session = getCurrentSession();
+		Query<E> query = session.createNamedQuery(queryName);
+		long n = (long)query.getSingleResult(); 
+		return n;
+	}
+	
+	/******************************************************
+	 * METHODS FOR SESSIONS AND TRANSACTIONS HANDLINGS
+	 ***************************************************/
+	public Session openCurrentSession()
+	{
+		currentSession = getSessionFactory().openSession();
+		return currentSession;
+	}
+	
+	public void openCurrentSessionWithTransaction() 
+	{
+		currentSession = getSessionFactory().openSession();
+		currentTransaction = currentSession.beginTransaction();
+	}
+	
+	
+	public void closeCurrentSession()
+	{
+		currentSession.close();
+	}
+	
+	public void closeCurrentSessionWithTransaction()
+	{
+		currentTransaction.commit();
+		currentSession.close();
+	}
+	
+	protected static SessionFactory getSessionFactory()
+	{
+		
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				 .addAnnotatedClass(Category.class)
+				 .addAnnotatedClass(Book.class)
+				 .addAnnotatedClass(Customer.class)
+				 .addAnnotatedClass(OrderDetailId.class)
+				 .addAnnotatedClass(OrderDetail.class)
+				 .addAnnotatedClass(Review.class)
+				 .addAnnotatedClass(Users.class)
+				 .addAnnotatedClass(BookOrder.class)
+				 .buildSessionFactory();
+		
+		
+		return sessionFactory;
+	}
+	
+	/*
+	 * **************************Getters and setters***********************************************
+	 */
+	public Session getCurrentSession()
+	{
+		return currentSession;
+	}
+	
+	public void setCurrentSession(Session currentSession) {
+		this.currentSession = currentSession;
+	}
+	
+	public Transaction getCurrentTransaction() {
+		return currentTransaction;
+	}
+
+	public void setCurrentTransaction(Transaction currentTransaction) {
+		this.currentTransaction = currentTransaction;
+	}
+	
+	/*******************************************************
+	 *
+	 ****************************************************/
+	
+	
+}
