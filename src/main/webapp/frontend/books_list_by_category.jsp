@@ -12,7 +12,8 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 
-	<div align="center">
+	<!-- <div align="center"> -->
+	<div class="center">
 		<h2>${category.name}</h2>
 	</div>
 

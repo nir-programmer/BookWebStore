@@ -15,8 +15,8 @@
 		<h2 align="center"> ${message} </h2>
 	</c:if >
 	<c:if test= "${message eq null }"> 
-	<div align="center">
-		<table style="border: 0;width: 80%;">
+	<div class="center">
+		<table style="border: 0;width: 80%;text-align: center;display: inline-block;" >
 			<tr>  
 				<td colspan="3" align="left" > 
 					<h2>${book.title}</h2> by ${book.author}

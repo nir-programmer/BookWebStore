@@ -130,3 +130,24 @@ input
 	color: red;
 	margin: 5px; 
 }
+
+/****************************************************
+						REFACTORINGs
+******************************************************/
+
+div.center
+{
+	text-align: center;
+
+}
+
+
+div.book
+{
+	border: 0; 
+	display: inline-block;
+	margin: 20px;
+	text-align: center;
+	width: 80%;
+	
+}
