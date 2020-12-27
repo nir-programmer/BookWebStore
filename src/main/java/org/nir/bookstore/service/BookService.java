@@ -32,7 +32,7 @@ public class BookService {
 		bookDao = new BookDAO();
 		this.request = request;
 		this.response = response;
-		//this.categoryDAO = new CategoryDAO();
+		this.categoryDAO = new CategoryDAO();
 	}
 
 	private void listBooks(String message) throws ServletException, IOException {
@@ -63,10 +63,10 @@ public class BookService {
 
 	public void showBookNewForm() throws ServletException, IOException
 	{
-		CategoryDAO categoryDAO = new CategoryDAO(); 
-		categoryDAO.openCurrentSessionWithTransaction();
+		 
+		this.categoryDAO.openCurrentSessionWithTransaction();
 		List<Category> categories = categoryDAO.listAll();
-		categoryDAO.closeCurrentSessionWithTransaction();
+		this.categoryDAO.closeCurrentSessionWithTransaction();
 		
 		System.out.println(">>BookService.showBookNewForm(): list of categoires: ") ; 
 		categories.forEach(c -> System.out.println(c.getName()));
@@ -191,15 +191,22 @@ public class BookService {
 	public void editBook() throws ServletException, IOException 
 	{
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
-
+		
+		this.categoryDAO.openCurrentSessionWithTransaction();
+		List<Category> categories = categoryDAO.listAll();
+		this.categoryDAO.closeCurrentSessionWithTransaction();
+		
+		System.out.println(">>BookService.showBookNewForm(): list of categoires: ") ; 
+		categories.forEach(c -> System.out.println(c.getName()));
+		
 		bookDao.openCurrentSessionWithTransaction();
 		Book book = bookDao.get(bookId);
 		System.out.println(">>BookService.editBook(): the id of the book = " + bookId);
 		bookDao.closeCurrentSessionWithTransaction();
-
+		
 		// This is the name of the paramater I test in the book_form.jsp
 		request.setAttribute("book", book);
-		
+		request.setAttribute("categories", categories);
 		// forward to the form
 		request.getRequestDispatcher("book_form.jsp").forward(request, response);
 
