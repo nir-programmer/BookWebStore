@@ -9,10 +9,13 @@
 <title>Create New Book</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/richtext.min.css">
+
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 </head>
 <body>
 
@@ -136,6 +139,8 @@
 	$(document).ready(function() {
 
 		$('#publishDate').datepicker();
+		/* $('.content').richText(); */
+		$('#description').richText();
 		$('#bookImage').change(function() {
 			showImageThumbnail(this);
 		});
