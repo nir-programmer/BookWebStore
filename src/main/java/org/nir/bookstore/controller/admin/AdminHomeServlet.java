@@ -1,11 +1,15 @@
 package org.nir.bookstore.controller.admin; 
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.nir.bookstore.entities.Category;
 
 /**
  * Servlet implementation class AdminHomeServlet
@@ -25,6 +29,8 @@ public class AdminHomeServlet extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		System.out.println("HELLO HOME PAGE");
+		System.out.println(">>AdminHomeServlet: list of categories = " + request.getAttribute("categories"));
+			
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}

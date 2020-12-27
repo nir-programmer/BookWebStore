@@ -32,7 +32,7 @@ public class BookService {
 		bookDao = new BookDAO();
 		this.request = request;
 		this.response = response;
-		this.categoryDAO = new CategoryDAO();
+		//this.categoryDAO = new CategoryDAO();
 	}
 
 	private void listBooks(String message) throws ServletException, IOException {
@@ -61,21 +61,15 @@ public class BookService {
 
 	}
 
-	public void showBookNewForm() throws ServletException, IOException {
-		categoryDAO.openCurrentSessionWithTransaction();
-		List<Category> categories = this.categoryDAO.listAll();
-
-		System.out.println(">>BookService.showBookNewForm():categores:");
-		categories.forEach(System.out::println);
-		categoryDAO.closeCurrentSessionWithTransaction();
-
-		this.request.setAttribute("categories", categories);
-
+	public void showBookNewForm() throws ServletException, IOException
+	{
+		
 		request.getRequestDispatcher("book_form.jsp").forward(request, response);
 
 	}
 
-	public void createBook() throws ServletException, IOException {
+	public void createBook() throws ServletException, IOException 
+	{
 		Integer categoryId = Integer.parseInt(request.getParameter("category"));
 		String title = request.getParameter("title");
 
@@ -184,12 +178,9 @@ public class BookService {
 
 	}
 
-	public void editBook() throws ServletException, IOException {
+	public void editBook() throws ServletException, IOException 
+	{
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
-
-		this.categoryDAO.openCurrentSessionWithTransaction();
-		List<Category> categories = this.categoryDAO.listAll();
-		this.categoryDAO.closeCurrentSessionWithTransaction();
 
 		bookDao.openCurrentSessionWithTransaction();
 		Book book = bookDao.get(bookId);
@@ -198,13 +189,14 @@ public class BookService {
 
 		// This is the name of the paramater I test in the book_form.jsp
 		request.setAttribute("book", book);
-		request.setAttribute("categories", categories);
+		
 		// forward to the form
 		request.getRequestDispatcher("book_form.jsp").forward(request, response);
 
 	}
 
-	public void updateBook() throws ServletException, IOException {
+	public void updateBook() throws ServletException, IOException 
+	{
 		System.out.println(">>BookService.updateBook():Book ID: " + request.getParameter("bookId"));
 		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
 		String title = request.getParameter("title");
@@ -262,17 +254,13 @@ public class BookService {
 		List<Book> books = bookDao.listByCategory(categoryId);
 		bookDao.closeCurrentSession();
 
-		categoryDAO.openCurrentSession();
-		Category category = categoryDAO.get(categoryId);
-		List<Category> categories = categoryDAO.listAll();
-		// String categoryName = category.getName();
-		categoryDAO.closeCurrentSession();
-
-		System.out.println(">>BookService.listBooksByCategory():books with categoryId = " + categoryId);
-		books.forEach(c -> System.out.println(c.getTitle()));
-
-		request.setAttribute("category", category);
-		request.setAttribute("categories", categories);
+		
+		/*
+		 * System.out.
+		 * println(">>BookService.listBooksByCategory():books with categoryId = " +
+		 * categoryId); books.forEach(c -> System.out.println(c.getTitle()));
+		 */
+		
 		request.setAttribute("books", books);
 
 		request.getRequestDispatcher("frontend/books_list_by_category.jsp").forward(request, response);
@@ -284,10 +272,11 @@ public class BookService {
 		Book book = bookDao.get(id);
 		bookDao.closeCurrentSession();
 
-		categoryDAO.openCurrentSession();
-		List<Category> categories = categoryDAO.listAll();
-		// String categoryName = category.getName();
-		categoryDAO.closeCurrentSession();
+		/*
+		 * categoryDAO.openCurrentSession(); List<Category> categories =
+		 * categoryDAO.listAll(); // String categoryName = category.getName();
+		 * categoryDAO.closeCurrentSession();
+		 */
 
 		if (book != null) {
 			request.setAttribute("book", book);
@@ -296,7 +285,7 @@ public class BookService {
 			request.setAttribute("message", message);
 		}
 		// request.setAttribute("book", book);
-		request.setAttribute("categories", categories);
+		//request.setAttribute("categories", categories);
 		request.getRequestDispatcher("frontend/book_details.jsp").forward(request, response);
 		;
 	}
