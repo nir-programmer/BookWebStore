@@ -63,7 +63,15 @@ public class BookService {
 
 	public void showBookNewForm() throws ServletException, IOException
 	{
+		CategoryDAO categoryDAO = new CategoryDAO(); 
+		categoryDAO.openCurrentSessionWithTransaction();
+		List<Category> categories = categoryDAO.listAll();
+		categoryDAO.closeCurrentSessionWithTransaction();
 		
+		System.out.println(">>BookService.showBookNewForm(): list of categoires: ") ; 
+		categories.forEach(c -> System.out.println(c.getName()));
+		
+		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("book_form.jsp").forward(request, response);
 
 	}
@@ -95,7 +103,9 @@ public class BookService {
 		Book createdBook = bookDao.create(newBook);
 		bookDao.closeCurrentSessionWithTransaction();
 
-		if (createdBook.getBookId() > 0) {
+		if (createdBook.getBookId() > 0) 
+		{
+			
 			String message = "A new book has been created successfully.";
 			// request.setAttribute("message", message);
 			// refresh the book list
