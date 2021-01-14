@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.service.ReviewService;
+
 /**
  * Servlet implementation class WriteReviewServlet
  */
@@ -20,9 +22,11 @@ public class WriteReviewServlet extends HttpServlet {
     }
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		ReviewService  reviewService = new ReviewService(request, response);
+		reviewService.showReviewForm() ;
+		
 	}
 
 }
