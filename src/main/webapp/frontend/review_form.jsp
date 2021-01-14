@@ -13,40 +13,20 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div align="center">
-		<h2>Wirte a Review</h2>
-
-		<c:if test="${message != null }">
-			<div align="center">
-				<h4 class="message">${message }</h4>
-			</div>
-		</c:if>
-
-		<%-- <c:if test="${message != null }">
-				<h4><i><c:out value="${message}" /></i></h4>
-		  </c:if> --%>
-		<form id="loginForm" action="login" method="post">
-			<table class="form">
-				<tr>
-					<td>Email:</td>
-					<td><input type="text" name="email" id="email" size="20">
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type="password" name="password" id="password"
-						size="20">
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<button type="submit">Login</button>
-					</td>
-				<tr>
+		<form>
+			<table class="normal">
+			<tr> 
+				<td><h2>Your Reviews</h2></td>
+				<td><h2>${loggedCustomer.fullname}</h2></td>
+			</tr>
+				
+			
+			
 			</table>
-
-
+		
 		</form>
-
 	</div>
-	
+
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
