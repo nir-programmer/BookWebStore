@@ -66,7 +66,7 @@
 			<tr>  
 				<td><h2><a id="reviews">Customer Reviews</a></h2></td>
 				<td align="center" colspan="2">
-					<button>Write a customer review</button>
+					<button id="buttonWriteReview">Write a customer review</button>
 				</td>
 			</tr>
 		
