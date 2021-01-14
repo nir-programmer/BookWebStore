@@ -139,8 +139,11 @@ public class ReviewService {
 
 	}
 
-	public void showReviewForm()
+	public void showReviewForm() throws ServletException, IOException
 	{
+		String targetPage = "frontend/review_form.jsp";
+		
+		request.getRequestDispatcher(targetPage).forward(request, response);
 		
 		
 	}
