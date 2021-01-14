@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<input type="file" id="file-selector" multiple />
+</body>
+
+<script type="text/javascript">
+
+	const fileSelector = document.getElementById('file-selector');
+	fileSelector.addEventListener('change' ,(event) => {
+		const fileList = event.target.files;
+		console.log(fileList);
+	}
+
+</script>
+</html>

@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+/*************************************************
+						Links
+************************************************/
+
+
+a:link
+{
+	color: cornflowerBlue;
+	text-decoration: none;
+}
+
+a:visited 
+{
+	color: indigo;
+}
+
+a:hover 
+{
+	color:blue;
+	text-decoration: underline;
+}
+
+a:active 
+{
+	color: red;
+}
+
+#headermenu a:link
+{
+	font-size: larger;
+}
+
+/*************************************************
+				Headings
+************************************************/
+.pageheading
+{
+	color: darkblue;
+}
+
+#headermenu 
+{
+	display: table;
+}
+
+#headermenu div 
+{
+	display: table-cell;
+	padding-right: 20px;
+}
+
+/*************************************************
+				Tables
+************************************************/
+
+	table
+	{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+
+th , td 
+{
+	padding: 10px;
+}
+
+th
+{
+	background: darkblue;
+	color: cornsilk;
+	font-size: larger;
+	
+}
+
+table.form 
+{
+	border: 0px;
+	padding:4px;
+	width: 40%;
+	
+}
+
+table.customer
+{
+	align: center;
+	width: 50%;
+	border: 0;
+	margin: 0 auto;
+}
+
+table.normal
+{
+	border: 0; 
+}
+/*************************************************
+				Form- Buttons - Fields
+************************************************/
+
+button
+{
+		padding: 6px;
+		border-radius: 5px;
+}
+
+button[type=submit]
+{
+	font-weight: bold;
+}
+
+button:hover
+
+
+{
+	background-color: white;
+	color: green;
+}
+
+input
+{
+	border: 2px solid;
+	border-radius: 4px;
+	border-color: green;
+	height: 20px; 
+	
+}
+
+
+.message
+{
+	font-style: italic;
+	color: blue;
+	
+}
+
+/****************************************************
+				Errors Classes
+******************************************************/
+
+.error
+{
+	color: red;
+	margin: 5px; 
+}
+
+/****************************************************
+						REFACTORINGs
+******************************************************/
+
+div.center
+{
+	text-align: center;
+
+}
+
+
+div.book
+{
+	border: 0; 
+	display: inline-block;
+	margin: 20px;
+	text-align: center;
+	width: 80%;
+	
+}
