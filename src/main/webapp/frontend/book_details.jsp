@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>${book.title}- Online Books Store</title>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
