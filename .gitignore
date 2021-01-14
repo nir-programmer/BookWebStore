@@ -1,0 +1,6 @@
+target/
+/Summary/
+.classpath
+.project
+pom.properties
+.settings/
