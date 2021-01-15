@@ -164,3 +164,8 @@ div.book
 	width: 80%;
 	
 }
+
+#book-title{
+	font-size: x-large;
+	font-weight: bold;
+}
