@@ -243,19 +243,34 @@ public class CustomerService {
 		this.customerDAO.closeCurrentSession();
 		System.out.println(">>CustomerService.doLogin():the URI is: \n" + request.getRequestURI());
 
-		/*
-		 * if there is a customer with these email and password : 1.add this customer to
-		 * the session 2.forward the request to "forntend/customer_profile.jsp" page
-		 */
-		if (customer != null) {
-			// OK
-			System.out.println(">>CustomerService.login():The Customer " + customer.getFullname() + " is Login!");
-			request.getSession().setAttribute("loggedCustomer", customer);
+		//STEP 3
+		if (customer != null) 
+		{
+			HttpSession session = request.getSession();
+			session.setAttribute("loggedCustomer", customer);
+			//The "redirectURL stores the original request URL of the customer
+			Object objRedirectURL = session.getAttribute("redirectURL"); 
+			
 			/*
-			 * message = "Welcome customer: " + email; request.setAttribute("message",
-			 * message);
+			 * If the  URI is in the session as an attribute value 
+			 * then REDIRECT the request with the response object 
+			 * then remove this from the session and REDIRECT the customer to the login page
 			 */
-			showCustomerProfile();
+			if(objRedirectURL != null)
+			{
+				String redirectURL = (String) objRedirectURL;
+				session.removeAttribute("redirectURL");
+				response.sendRedirect(redirectURL);
+			}
+			//Show the customer profile page
+			else
+			{
+				System.out.println(">>CustomerService.login():The Customer " + customer.getFullname() + " is Login!");
+				//request.getSession().setAttribute("loggedCustomer", customer);
+					
+				showCustomerProfile();
+			}
+			
 
 		}
 		// if isLogin == false forword to login.jsp page
