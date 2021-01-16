@@ -177,7 +177,6 @@ public class ReviewService
 
 	public void submitReview() throws ServletException, IOException
 	{
-		
 		  ReviewDAO reviewDAO;
 		  Review review; 
 		  Book book; 
@@ -212,7 +211,28 @@ public class ReviewService
 		  //Refer to the customer in the session
 		  customer = (Customer)request.getSession().getAttribute("loggedCustomer");
 		  
+		  /*
+		   * Check if the customer has already posted on this book and implemnet the 2 
+		   * branched in the activity diagram accordingly 
+		   */
+		  Integer customerId = customer.getCustomerId();
 		  
+		  
+		  reviewDAO = new ReviewDAO();
+		  reviewDAO.openCurrentSession();
+		  Review exitsReview = reviewDAO.findByCustomerAndBook(customerId, bookId);
+		  reviewDAO.closeCurrentSession();
+		  
+		  //if there is a review for this book by this customer: forward to info_review.jsp
+		  if(exitsReview != null)
+		  {
+			  messagePage = "frontend/review_info.jsp";
+			 request.getRequestDispatcher(messagePage).forward(request, response);;
+		  }
+		  
+		  //The customer has not posted to this book yet -save review and forward to review_done.jsp
+		  else
+		  {
 		  //Create a new Review object
 		  review = new Review();
 		  review.setBook(book);
@@ -223,14 +243,15 @@ public class ReviewService
 		  
 		  
 		  //Save the Review in the database
-		  reviewDAO = new ReviewDAO();
+		 reviewDAO = new ReviewDAO();
 		 reviewDAO.openCurrentSessionWithTransaction();
 		 reviewDAO.create(review);
 		 reviewDAO.closeCurrentSessionWithTransaction();
 		 
 		 //forward the request to the review_done.jsp page
 		 messagePage = "frontend/review_done.jsp";
-		request.getRequestDispatcher(messagePage).forward(request, response);
+		 request.getRequestDispatcher(messagePage).forward(request, response);
+		  }
 	}
 
 }
