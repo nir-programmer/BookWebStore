@@ -167,8 +167,11 @@ public class ReviewService
 		bookDAO.closeCurrentSession();
 
 		// set the book as an attribute in the request
-		request.setAttribute("book", book);
+		//request.setAttribute("book", book);
 		
+		//add the book to the session
+		session = request.getSession();
+		session.setAttribute("book", book);
 		
 		// forward the request to the review_form.jsp page
 		request.getRequestDispatcher(targetPage).forward(request, response);
