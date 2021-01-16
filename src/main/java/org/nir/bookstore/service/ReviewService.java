@@ -181,7 +181,7 @@ public class ReviewService
 		  Review review; 
 		  Book book; 
 		  Customer customer; 
-		  String  messagePage;
+		  String  targetPage;
 		 
 		  //form fields
 		  Integer bookId ; 
@@ -220,19 +220,24 @@ public class ReviewService
 		  
 		  reviewDAO = new ReviewDAO();
 		  reviewDAO.openCurrentSession();
-		  Review exitsReview = reviewDAO.findByCustomerAndBook(customerId, bookId);
+		  Review existReview = reviewDAO.findByCustomerAndBook(customerId, bookId);
 		  reviewDAO.closeCurrentSession();
 		  
+		  targetPage = "frontend/review_form.jsp"; 
 		  //if there is a review for this book by this customer: forward to info_review.jsp
-		  if(exitsReview != null)
+		  if(existReview != null)
 		  {
-			  messagePage = "frontend/review_info.jsp";
-			 request.getRequestDispatcher(messagePage).forward(request, response);;
+			  System.out.println(">>ReviewService.showReviewForm(): there is a review with bookId = "+ bookId
+					  +" and customerId =  "  + customerId);
+			  request.setAttribute("review", existReview);
+			  targetPage = "frontend/review_info.jsp";
 		  }
 		  
 		  //The customer has not posted to this book yet -save review and forward to review_done.jsp
 		  else
 		  {
+			  System.out.println(">>ReviewService.showReviewForm(): there is no review with bookId = "+ bookId
+					  +" and customerId =  "  + customerId);
 		  //Create a new Review object
 		  review = new Review();
 		  review.setBook(book);
@@ -249,9 +254,9 @@ public class ReviewService
 		 reviewDAO.closeCurrentSessionWithTransaction();
 		 
 		 //forward the request to the review_done.jsp page
-		 messagePage = "frontend/review_done.jsp";
-		 request.getRequestDispatcher(messagePage).forward(request, response);
+		 targetPage = "frontend/review_done.jsp";
 		  }
+		  request.getRequestDispatcher(targetPage).forward(request, response);
 	}
 
 }
