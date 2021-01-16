@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.dao.ReviewDAO;
@@ -147,11 +148,11 @@ public class ReviewService
 
 	public void showReviewForm() throws ServletException, IOException
 	{
-		// fetch the "book_id" from the request
 		Integer bookId;
 		BookDAO bookDAO;
 		String targetPage;
 		Book book;
+		HttpSession session; 
 
 		// target page - review_form.jsp
 		targetPage = "frontend/review_form.jsp";
@@ -167,7 +168,8 @@ public class ReviewService
 
 		// set the book as an attribute in the request
 		request.setAttribute("book", book);
-
+		
+		
 		// forward the request to the review_form.jsp page
 		request.getRequestDispatcher(targetPage).forward(request, response);
 
