@@ -93,6 +93,11 @@ public class Book implements java.io.Serializable {
 		this.orderDetails = orderDetails;
 	}
 
+	public Book(int bookId)
+	{
+		this.bookId = this.bookId;
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
@@ -289,32 +294,6 @@ public class Book implements java.io.Serializable {
 
 	public void setOrderDetails(Set<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
-	}
-
-	@Override
-	public int hashCode() 
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Book other = (Book) obj;
-		if (bookId == null) {
-			if (other.bookId != null)
-				return false;
-		} else if (!bookId.equals(other.bookId))
-			return false;
-		return true;
 	}
 
 	

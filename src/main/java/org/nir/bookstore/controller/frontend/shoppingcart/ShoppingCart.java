@@ -1,7 +1,9 @@
 package org.nir.bookstore.controller.frontend.shoppingcart;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.nir.bookstore.entities.Book;
 
@@ -16,12 +18,16 @@ public class ShoppingCart
 		//if the book already in the cart - increase the value by one
 		if(cart.containsKey(book))
 		{
+			System.out.println(">>ShoppingCart.addItem(): the book is in the cart already");
 			int quantity = cart.get(book) + 1;
 			cart.put(book, quantity); 
 		}
 		//if the book is not the in the cart - add the book with value of 1
 		else
+		{
+			System.out.println(">>ShoppingCart.addItem(): the book is not in the cart!");
 			cart.put(book, 1);
+		}
 			
 	}
 
@@ -29,6 +35,54 @@ public class ShoppingCart
 	{
 		return this.cart;
 	}
+	
+	public void removeItem(Book book)
+	{
+		this.cart.remove(book);
+	}
+	
+	
+	public int getTotalQuantity()
+	{
+		int total = 0; 
+		
+		Iterator<Book> iterator = cart.keySet().iterator();
+		
+		while(iterator.hasNext())
+		{
+			//fetch the book(the key ) from the iterator and store in next variable
+			Book next = iterator.next();
+			Integer quantity = cart.get(next);
+			total += quantity;
+		}
+		
+		return total; 
+
+	}
+	
+	public double getTotalAmount()
+	{
+		float total = 0.0f; 
+		
+		Iterator<Book> iterator = this.cart.keySet().iterator();
+		
+		
+		while(iterator.hasNext())
+		{
+			Book book = iterator.next();
+			Integer quantity = this.cart.get(book); 
+			float price = book.getPrice();
+			total += price * quantity;
+		}
+		
+		return total ;
+	}
+	
+	public int getTotalItems()
+	{
+		return this.cart.size();
+	}
+	
 	
 	
 }

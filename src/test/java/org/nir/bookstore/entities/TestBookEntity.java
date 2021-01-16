@@ -60,5 +60,18 @@ public class TestBookEntity {
 		System.out.println("actual = " + actual); 
 
 	}
+	
+	@Test
+	@DisplayName("when calling equals()")
+	void testEquals()
+	{
+		Book b1 =new Book(1);
+		Book b2 = new Book(2); 
+		
+		
+		boolean equal = b1.equals(b2);
+		System.out.println(">>testEquals():equals = " + equal);
+		
+	}
 
 }
