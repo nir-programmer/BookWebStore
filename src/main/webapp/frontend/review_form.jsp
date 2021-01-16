@@ -43,11 +43,12 @@
 						height="300" /></td>
 
 					<td>
-						<!-- rateYo plugin -->
-						<div id="rateYo">
-							<input type="hidden" id="rating" name="rating" /> <input
-								type="hidden" id="bookId" value="${book.bookId}" />
-						</div> <br /> <input type="text" name="headline" size="60"
+						<!-- rateYo plugin - DONT PUT THE HIDDEN FILEDS IN THIS DIV! -->
+						<div id="rateYo"></div>
+							<input type="hidden"  name="rating" id="rating" />
+							 <input type="hidden" name="bookId"  value="${book.bookId}" />
+						 <br/> 
+						<input type="text" name="headline" size="60"
 						placeholder="Headline or summary for the review (required)" /> <br />
 						<br /> <textarea name="comment" rows="10" cols="70"
 							placeholder="Write your review details..."></textarea>

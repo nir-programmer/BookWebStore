@@ -13,23 +13,27 @@ import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.Review;
 
-public class ReviewService {
+public class ReviewService
+{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private ReviewDAO reviewDAO;
 
-	public ReviewService(HttpServletRequest request, HttpServletResponse response) {
+	public ReviewService(HttpServletRequest request, HttpServletResponse response)
+	{
 		this.request = request;
 		this.response = response;
 		this.reviewDAO = new ReviewDAO();
 	}
 
-	public void listAllReviews() throws ServletException, IOException {
+	public void listAllReviews() throws ServletException, IOException
+	{
 		listAllReviews(null);
 
 	}
 
-	public void listAllReviews(String message) throws ServletException, IOException {
+	public void listAllReviews(String message) throws ServletException, IOException
+	{
 		if (message != null)
 			request.setAttribute("message", message);
 
@@ -44,7 +48,8 @@ public class ReviewService {
 		request.getRequestDispatcher("reviews_list.jsp").forward(request, response);
 	}
 
-	public void editReview() throws ServletException, IOException {
+	public void editReview() throws ServletException, IOException
+	{
 
 		// Fetch the review id from the request -OK
 		Integer reviewId = Integer.parseInt(request.getParameter("id"));
@@ -75,7 +80,8 @@ public class ReviewService {
 
 	}
 
-	public void updateReview() throws ServletException, IOException {
+	public void updateReview() throws ServletException, IOException
+	{
 		String message = "";
 		Integer reviewId;
 		String headline;
@@ -107,7 +113,8 @@ public class ReviewService {
 		this.listAllReviews(message);
 	}
 
-	public void deleteReview() throws ServletException, IOException {
+	public void deleteReview() throws ServletException, IOException
+	{
 
 		// fetch the reviewId from the hidden field of the form -> OK
 		Integer reviewId = Integer.parseInt(request.getParameter("id"));
@@ -116,11 +123,10 @@ public class ReviewService {
 
 		this.reviewDAO.openCurrentSessionWithTransaction();
 		Review review = this.reviewDAO.get(reviewId);
-		
+
 		// Assignment 16: check if there is reviewId . if not invoke the
 		// showMessageBackend()
-		if (review == null)
-		{
+		if (review == null) {
 			this.reviewDAO.closeCurrentSessionWithTransaction();
 			message = "Could not find a review with ID " + reviewId + ",\n"
 					+ "	 or it might have been deleted by another admin";
@@ -129,11 +135,10 @@ public class ReviewService {
 			CommonUtitlity.showMessageBackend(message, request, response);
 			return;
 		}
-		
-		
+
 		message = "Review has been deleted";
 		this.reviewDAO.delete(reviewId);
-		
+
 		this.reviewDAO.closeCurrentSessionWithTransaction();
 		request.setAttribute("message", message);
 		this.listAllReviews(message);
@@ -142,32 +147,88 @@ public class ReviewService {
 
 	public void showReviewForm() throws ServletException, IOException
 	{
-		//fetch the "book_id"  from the request
-		Integer bookId ;
-		BookDAO bookDAO; 
-		String targetPage; 
-		Book book ; 
-		
-		//target page - review_form.jsp
+		// fetch the "book_id" from the request
+		Integer bookId;
+		BookDAO bookDAO;
+		String targetPage;
+		Book book;
+
+		// target page - review_form.jsp
 		targetPage = "frontend/review_form.jsp";
-		
-		//fetch the id of the book from the request
+
+		// fetch the id of the book from the request
 		bookId = Integer.parseInt(request.getParameter("book_id"));
-		 
-		 //fetch the Book from the data base
-		 bookDAO = new BookDAO();
-		 bookDAO.openCurrentSession();
-		 book = bookDAO.get(bookId);
-		 bookDAO.closeCurrentSession();
-		 
-		 
-		 //set the book as an attribute in the request
-		 request.setAttribute("book", book);
-		 
-		 //forward the request to the review_form.jsp page
+
+		// fetch the Book from the data base
+		bookDAO = new BookDAO();
+		bookDAO.openCurrentSession();
+		book = bookDAO.get(bookId);
+		bookDAO.closeCurrentSession();
+
+		// set the book as an attribute in the request
+		request.setAttribute("book", book);
+
+		// forward the request to the review_form.jsp page
 		request.getRequestDispatcher(targetPage).forward(request, response);
+
+	}
+
+	public void submitReview() throws ServletException, IOException
+	{
 		
-		
+		  ReviewDAO reviewDAO;
+		  Review review; 
+		  Book book; 
+		  Customer customer; 
+		  String  messagePage;
+		 
+		  //form fields
+		  Integer bookId ; 
+		  String headline ;
+		  Integer rating ; 
+		  String comment; 
+		  
+		  //Ok
+		  headline = request.getParameter("headline");
+		  System.out.println(">>ReviewService.submitReview():headline = " + headline); 
+		   //OK
+		  comment = request.getParameter("comment");
+		  System.out.println(">>ReviewService.submitReview():comment = " + comment); 
+		  
+		  //OK
+		  bookId = Integer.parseInt(request.getParameter("bookId")); 
+		  System.out.println(">>ReviewService.submitReview():bookId = " + bookId); 
+			
+		  //OK
+		  rating = Integer.parseInt(request.getParameter("rating"));
+		  System.out.println(">>ReviewService.submitReview():rating = " + rating);
+			 
+		 //Create a new Book with the bookId value
+		  book = new Book();
+		  book.setBookId(bookId);
+		  
+		  //Refer to the customer in the session
+		  customer = (Customer)request.getSession().getAttribute("loggedCustomer");
+		  
+		  
+		  //Create a new Review object
+		  review = new Review();
+		  review.setBook(book);
+		  review.setCustomer(customer);
+		  review.setHeadline(headline);
+		  review.setComment(comment);
+		  review.setRating(rating);
+		  
+		  
+		  //Save the Review in the database
+		  reviewDAO = new ReviewDAO();
+		 reviewDAO.openCurrentSessionWithTransaction();
+		 reviewDAO.create(review);
+		 reviewDAO.closeCurrentSessionWithTransaction();
+		 
+		 //forward the request to the review_done.jsp page
+		 messagePage = "frontend/review_done.jsp";
+		request.getRequestDispatcher(messagePage).forward(request, response);
 	}
 
 }
