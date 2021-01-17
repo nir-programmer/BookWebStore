@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Customer Login</title>
+<title>Shopping Cart</title>
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.min.js"></script>
@@ -13,8 +13,8 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div align="center">
-		<h1>Book Store Customers</h1>
-		<h2>Customer Login</h2>
+		
+		<h2>Shopping Cart</h2>
 
 		<c:if test="${message != null }">
 			<div align="center">
@@ -25,26 +25,7 @@
 		<%-- <c:if test="${message != null }">
 				<h4><i><c:out value="${message}" /></i></h4>
 		  </c:if> --%>
-		<form id="loginForm" action="login" method="post">
-			<table class="form">
-				<tr>
-					<td>Email:</td>
-					<td><input type="text" name="email" id="email" size="20">
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type="password" name="password" id="password"
-						size="20">
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<button type="submit">Login</button>
-					</td>
-				<tr>
-			</table>
-
-
-		</form>
+		
 
 	</div>
 	

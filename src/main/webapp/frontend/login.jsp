@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Shopping Cart</title>
+<title>Customer Login</title>
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.min.js"></script>
@@ -13,8 +13,8 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div align="center">
-		
-		<h2>Shopping Cart</h2>
+		<h1>Book Store Customers</h1>
+		<h2>Customer Login</h2>
 
 		<c:if test="${message != null }">
 			<div align="center">
