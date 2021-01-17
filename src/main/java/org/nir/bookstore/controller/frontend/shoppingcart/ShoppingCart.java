@@ -18,14 +18,14 @@ public class ShoppingCart
 		//if the book already in the cart - increase the value by one
 		if(cart.containsKey(book))
 		{
-			System.out.println(">>ShoppingCart.addItem(): the book is in the cart already");
+			
 			int quantity = cart.get(book) + 1;
 			cart.put(book, quantity); 
 		}
 		//if the book is not the in the cart - add the book with value of 1
 		else
 		{
-			System.out.println(">>ShoppingCart.addItem(): the book is not in the cart!");
+			
 			cart.put(book, 1);
 		}
 			
@@ -60,6 +60,7 @@ public class ShoppingCart
 
 	}
 	
+	// OK
 	public double getTotalAmount()
 	{
 		float total = 0.0f; 
@@ -71,16 +72,22 @@ public class ShoppingCart
 		{
 			Book book = iterator.next();
 			Integer quantity = this.cart.get(book); 
-			float price = book.getPrice();
+			double price = book.getPrice();
 			total += price * quantity;
 		}
 		
 		return total ;
 	}
 	
+	//OK
 	public int getTotalItems()
 	{
 		return this.cart.size();
+	}
+	
+	public void clear()
+	{
+		this.cart.clear();
 	}
 	
 	

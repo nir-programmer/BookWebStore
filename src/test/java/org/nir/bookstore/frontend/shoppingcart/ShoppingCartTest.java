@@ -17,173 +17,257 @@ import org.nir.bookstore.entities.Book;
 
 public class ShoppingCartTest
 {
-	private static ShoppingCart cart ; 
-	
+	private static ShoppingCart cart;
+
 	@BeforeAll
 	@DisplayName("when creating the shopping cart")
 	static void init()
 	{
-		
+
 		cart = new ShoppingCart();
-		Book book1 = new Book(1); 
+		Book book1 = new Book(1);
 		Book book2 = new Book(2);
-		Book book3 = new Book(3); 
+
+		book1.setTitle("Title of Book1");
+		book2.setTitle("Title of Book2");
 		
-		book1.setTitle("AAA");
-		book2.setTitle("BBB");
-		book3.setTitle("CCC");
+		book1.setPrice(30);
+		book2.setPrice(50f);
 		
-		book1.setPrice(20);
-		book2.setPrice(50);
-		book3.setPrice(40);
-		
-		cart.addItem(book1);
-		cart.addItem(book2);
-		cart.addItem(book2);
-		cart.addItem(book3); 
+		  cart.addItem(book1);
+		  cart.addItem(book1);
+		  
+		  cart.addItem(book2);
+		  cart.addItem(book1);
+		  cart.addItem(book2);
+		 
+		//System.out.println("init():#Books = " + cart.getItems().keySet().size());
+		/*
+		 * Book book1 = new Book(1); Book book2 = new Book(2); Book book3 = new Book(3);
+		 * 
+		 * book1.setTitle("AAA"); book2.setTitle("BBB"); book3.setTitle("CCC");
+		 * 
+		 * book1.setPrice(20); book2.setPrice(50); book3.setPrice(40);
+		 * 
+		 * cart.addItem(book1); cart.addItem(book2); cart.addItem(book2);
+		 * cart.addItem(book3);
+		 */
+
 	}
+
+	// OK
+	@Test
+	@DisplayName("when calling addItem() ")
+	void testAddNewItem()
+	{
+		Map<Book, Integer> items = cart.getItems();
+		System.out.println(">>testAddItem():books id and quantitis BEFORE adding a new book:");
+		// System.out.println(">>testAddItem():number of books: " +
+		// items.keySet().size());
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
+
+		Integer bookId = 3;
+		cart.addItem(new Book(bookId));
+		System.out.println(">>testAddItem():books id and quantitis AFTER adding a new book with id = " + bookId);
+		
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
+	}
+	
 	
 	//OK
 	@Test
 	@DisplayName("when calling addItem() ")
-	void testAddItem()
+	void testAddExistItem()
 	{
-		Map<Book , Integer> items = cart.getItems(); 
+		Map<Book, Integer> items = cart.getItems();
+		System.out.println(">>testAddItem():books id and quantitis BEFORE adding a new book:");
+		// System.out.println(">>testAddItem():number of books: " +
+		// items.keySet().size());
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
+
+		Integer bookId = 2 ;
+		cart.addItem(new Book(bookId));
+		System.out.println(">>testAddItem():books id and quantitis AFTER adding a new book with id :" + bookId);
 		
-		int quantity = items.get(new Book(1)); 
-		assertEquals(2, quantity);
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
 		
-		//System.out.println(">>testAddItem(): quantity of a book with id " + bookId + " in the cart is " + items.get(book) );
 		
+	}
+	
+	
+
+	// OK
+	@Test
+	@DisplayName("when calling removeItem() on exists item")
+	void testRemoveExistItem()
+	{
+		Map<Book, Integer> items = cart.getItems();
+		
+		Integer bookId = 1; 
+		System.out.println(">>testAddItem():books id and quantitis BEFORE removing a book with id :" + bookId);
+		
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
+		
+		
+		cart.removeItem(new Book(bookId)); 
+		System.out.println(">>testAddItem():books id and quantitis AFTER remofing a book with id :" + bookId);
+		
+		assertTrue(cart.getItems().isEmpty());
+		items.entrySet().forEach(
+				e -> System.out.println("Book id = " + e.getKey().getBookId() + " quantity = " + e.getValue()));
+		
+	
 	}
 	
 	//OK
 	@Test
-	@DisplayName("when calling removeItem()")
-	void testRemoveItem()
+	@DisplayName("when adding an item and remove it")
+	public void testAddRemoveNewItem()
 	{
-		Book book2 = new Book(2); 
+		Book book2 = new Book(2);
 		cart.addItem(book2);
 		
 		cart.removeItem(book2);
-		assertNull(cart.getItems().get(book2));	
+		
+		assertNull(cart.getItems().get(book2)); 
+		
 	}
 	
-	//OK
+	
+
+	// OK
 	@Test
 	@DisplayName("when calling getTotalQuantity")
 	void testGetTotalQuantity()
 	{
-		Book book3 = new Book(3); 
+		Book book3 = new Book(3);
 		cart.addItem(book3);
 		cart.addItem(book3);
 		cart.addItem(book3);
-		
+
 		int total = cart.getTotalQuantity();
-		
-		assertEquals(5, total); 
-		
-		System.out.println(">>testGetTotalQuantity(): total = " + total); 
-		
+
+		assertEquals(8, total);
+
+		System.out.println(">>testGetTotalQuantity(): total = " + total);
+
 	}
-	
+
 	@Test
 	@DisplayName("when printing titles of books in the cart")
-	void testPrintAllBooksTitles()
+	void testPrintAllBooksPrices()
 	{
-		Set<Book> books = cart.getItems().keySet();
-		
-		int numberOfBooksInCart = books.size();
-		
-		//assertEquals(2, numberOfBooksInCart);
-		
-		books.forEach(b -> System.out.println(b.getTitle()));
-		
-		System.out.println(cart.getTotalQuantity());
+		Map<Book, Integer> map = cart.getItems();
+
+		for (Map.Entry m : map.entrySet())
+			;
+
+		map.entrySet().forEach(e -> System.out.println(e.getKey().getPrice()));
+
 	}
-	
+
 	@Test
 	@DisplayName("when calling getTotalAmount()")
-	void testGetTotalAmount1()
+	void testGetTotalAmountEmptyCart()
 	{
-		
+
 		double total = cart.getTotalAmount();
-		
-		assertEquals(20.15f, total );
-		
+
+		assertEquals(0.0f, total);
+
 		System.out.println(">>testTotalAmount():total = " + total);
-		
-		
-		
+
 	}
-	
+	@Test
+	@DisplayName("when calling getTotalAmount()")
+	void testGetTotalAmountNonEmptyCart()
+	{
+
+		double total = cart.getTotalAmount();
+
+		assertEquals(190.0f, total);
+
+		System.out.println(">>testTotalAmount():total = " + total);
+
+	}
+
 	@Test
 	@DisplayName("when calling getTotalAmount()")
 	void testGetTotalAmount2()
 	{
-		Book book =new Book(3); 
+		Book book = new Book(3);
 		book.setPrice(30);
-		
+
 		double total = cart.getTotalAmount();
-		
-		//System.out.println(total);
-		//assertEquals(50, total );
-		
+
+		// System.out.println(total);
+		// assertEquals(50, total );
+
 		System.out.println(">>testTotalAmount():total = " + total);
-		
+
 	}
-	
-	//OK
+
+	// OK
 	@Test
 	@DisplayName("when calling getTotalItems()")
 	void testGetTotalItems()
 	{
-		Book book4 = new Book();
-		cart.addItem(book4);
 		
+		//cart.addItem(new Book(2));
+
 		int totalItems = cart.getTotalItems();
-		assertEquals(4, totalItems);
+		assertEquals(2, totalItems);
+
+		System.out.println("totalItems  " + totalItems);
 		
-		System.out.println("totalItems  " + totalItems); 
-		/*
-		 * for(Map.Entry m: cart.getItems().entrySet()) {
-		 * //System.out.println(m.getKey() + " " + m.getValue()); Book book =
-		 * (Book)m.getKey(); Integer quantity = (Integer)m.getValue();
-		 * System.out.println("Book Title: " + book.getTitle());
-		 * System.out.println("Book copies: " +quantity);
-		 * 
-		 * }
-		 */
-		/*
-		 * int totalItems = cart.getTotalItems(); int quantity =
-		 * cart.getTotalQuantity();
-		 * 
-		 * 
-		 * System.out.println("Number of different books in the cart:" + totalItems);
-		 */
+		cart.getItems().entrySet().forEach(b -> 
+		System.out.println("Book id = " + b.getKey().getBookId() + ", quanitites = " + b.getValue()));
+
+	}
+
+	//OK
+	@Test
+	@DisplayName("when calling clear()")
+	void testClear()
+	{
+		int numberOfItems = cart.getTotalItems();
+		System.out.println(">>testClear():number of items BEFORE clear(): " + numberOfItems);
 		
+		assertEquals(2, numberOfItems);
+		
+		
+		cart.clear();
+		
+		numberOfItems = cart.getTotalItems();
+		System.out.println(">>testClear():number of items BEFORE clear(): " + numberOfItems);
+		
+		assertEquals(0, numberOfItems);
+		assertEquals(0.0, cart.getTotalAmount());
 		
 	}
-	
 	@Test
 	void testHashMap()
 	{
-		Map<Integer, String> map = new HashMap<Integer, String>(); 
-		map.put(1, "Mango"); 
-		map.put(2, "Apple"); 
-		map.put(3, "Banana"); 
-		map.put(1, "Grapes"); 
-		
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		map.put(1, "Mango");
+		map.put(2, "Apple");
+		map.put(3, "Banana");
+		map.put(1, "Grapes");
+
 		/*
 		 * for(Map.Entry m: map.entrySet()) { System.out.println(m.getKey() + " " +
 		 * m.getValue()); }
 		 */
-		
-		Map<Book , Integer> myMap  = cart.getItems();
-		
-		for(Map.Entry m : myMap.entrySet())
-		{
-			System.out.println(m.getKey() + " " + m.getValue()); 
+
+		Map<Book, Integer> myMap = cart.getItems();
+
+		for (Map.Entry m : myMap.entrySet()) {
+			System.out.println(m.getKey() + " " + m.getValue());
 		}
 	}
 }
