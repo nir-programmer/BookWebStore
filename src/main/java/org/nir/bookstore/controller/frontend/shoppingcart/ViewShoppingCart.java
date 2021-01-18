@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.entities.Book;
 
 /**
@@ -35,14 +36,28 @@ public class ViewShoppingCart extends HttpServlet {
 		}
 	
 		
-		//add books to the cart for testing!
-		Book book = new Book() ;
-		book.setTitle("Effective Java (3rd edition)");
-		book.setPrice(20);
+		//add IM MEMORY books to the cart for testing!
+		/*
+		 * Book book = new Book() ; book.setTitle("Effective Java (3rd edition)");
+		 * book.setPrice(20);
+		 */
+		
+		//add PERSISTED book from the data base to the cart for testing!
+		BookDAO bookDAO = new BookDAO();
+		bookDAO.openCurrentSession();
+		Book persistedBook1  = bookDAO.get(56);
+		Book persistedBook2  = bookDAO.get(43);
+		Book persistedBook3  = bookDAO.get(46);
+		bookDAO.closeCurrentSession();
+		
 		
 		//fetch the shopping cart attr from the session and put the add the book to the cart
 		ShoppingCart shoppingCart = (ShoppingCart)request.getSession().getAttribute("cart");
-		shoppingCart.addItem(book);
+		shoppingCart.addItem(persistedBook1);
+		shoppingCart.addItem(persistedBook2);
+		shoppingCart.addItem(persistedBook2);
+		shoppingCart.addItem(persistedBook2);
+		shoppingCart.addItem(persistedBook3);
 		
 		//forward to the cartPage
 		request.getRequestDispatcher(cartPage).forward(request, response);

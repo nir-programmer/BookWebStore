@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,8 +14,8 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div align="center">
-		
-		<h2>Shopping Cart</h2>
+
+		<h2>Your Shopping Cart</h2>
 
 		<c:if test="${message != null }">
 			<div align="center">
@@ -22,13 +23,63 @@
 			</div>
 		</c:if>
 
-		<%-- <c:if test="${message != null }">
-				<h4><i><c:out value="${message}" /></i></h4>
-		  </c:if> --%>
-		
+		<!-- IMPORTANT! -->
+		<c:set var="cart" value="${sessionScope['cart']}" />
+
+		<c:if test="${cart.totalAmount ==  0}">
+			<h2>Your Shopping cart is empty</h2>
+		</c:if>
+
+		<c:if test="${cart.totalItems > 0}">
+			<form>
+				<table border="1px" >
+					<tr>
+						<th>NO</th>
+						<th colspan="2">BOOK</th>
+						<th>QUANTITY</th>
+						<th>PRICE</th>
+						<th align="center">SUBTOTAL</th>
+						<th><a href=""><b>CLEAR CART</b></a></th>
+					</tr>
+					<c:forEach var="item" items="${cart.items}" varStatus="status">
+						<tr>
+							<td>${status.index + 1}</td>
+							<!-- IMPORTANT map.. -->
+							<td><img src="data:image/jpg;base64,${item.key.base64Image}"
+								width="84" height="110" /> 
+							</td>
+							<%-- <td id="book-title"> ${item.key.title}</td> --%>
+							<td> 
+							<span id="book-title">${item.key.title} </span>
+							</td>
+							<td>${item.value}</td>
+							<!-- IMPORTANT fmt JSTL -->
+							<td>
+							<fmt:setLocale value="en_US"/>
+							<fmt:formatNumber value="${item.key.price}"	type="currency" />
+							</td>
+							<td><fmt:formatNumber value="${item.value * item.key.price}"
+									type="currency" /></td>
+							<td><a href="">Remove</a></td>
+						</tr>
+					</c:forEach>
+					<tr>
+						<td colspan="3"></td>
+						<td>${cart.totalQuantity}&nbsp; <b>book(s)</b></td>
+						<td><b>TOTAL:</b></td>
+						<td colspan="2"><b><fmt:formatNumber
+									value="${cart.totalAmount}" type="currency" /></b></td>
+
+					</tr>
+
+
+				</table>
+			</form>
+		</c:if>
+
 
 	</div>
-	
+
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
