@@ -25,17 +25,29 @@ public class ViewShoppingCart extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String cartPage = "frontend/shopping_cart.jsp";
+		String cartPage ;
 		
-		Object cartObject = request.getSession().getAttribute("cart"); 
+		Object cartObject ;
+		
+		ShoppingCart shoppingCart;
+		
+		
+		
+		
+		cartObject = request.getSession().getAttribute("cart"); 
+		
 		
 		if(cartObject == null)
 		{
-			ShoppingCart shoppingCart = new ShoppingCart(); 
+			 shoppingCart = new ShoppingCart(); 
 			request.getSession().setAttribute("cart", shoppingCart);
 		}
-	
 		
+		 shoppingCart = (ShoppingCart)request.getSession().getAttribute("cart");
+		
+		 cartPage = "frontend/shopping_cart.jsp";
+		 
+		 request.getRequestDispatcher(cartPage).forward(request, response);
 		//add IM MEMORY books to the cart for testing!
 		/*
 		 * Book book = new Book() ; book.setTitle("Effective Java (3rd edition)");
@@ -43,24 +55,22 @@ public class ViewShoppingCart extends HttpServlet {
 		 */
 		
 		//add PERSISTED book from the data base to the cart for testing!
-		BookDAO bookDAO = new BookDAO();
-		bookDAO.openCurrentSession();
-		Book persistedBook1  = bookDAO.get(56);
-		Book persistedBook2  = bookDAO.get(43);
-		Book persistedBook3  = bookDAO.get(46);
-		bookDAO.closeCurrentSession();
-		
+		/*
+		 * BookDAO bookDAO = new BookDAO(); bookDAO.openCurrentSession(); Book
+		 * persistedBook1 = bookDAO.get(56); Book persistedBook2 = bookDAO.get(43); Book
+		 * persistedBook3 = bookDAO.get(46); bookDAO.closeCurrentSession();
+		 */
 		
 		//fetch the shopping cart attr from the session and put the add the book to the cart
-		ShoppingCart shoppingCart = (ShoppingCart)request.getSession().getAttribute("cart");
-		shoppingCart.addItem(persistedBook1);
-		shoppingCart.addItem(persistedBook2);
-		shoppingCart.addItem(persistedBook2);
-		shoppingCart.addItem(persistedBook2);
-		shoppingCart.addItem(persistedBook3);
+		
+		/*
+		 * shoppingCart.addItem(persistedBook1); shoppingCart.addItem(persistedBook2);
+		 * shoppingCart.addItem(persistedBook2); shoppingCart.addItem(persistedBook2);
+		 * shoppingCart.addItem(persistedBook3);
+		 */
 		
 		//forward to the cartPage
-		request.getRequestDispatcher(cartPage).forward(request, response);
+		
 	}
 
 }
