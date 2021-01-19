@@ -91,5 +91,16 @@ public class ShoppingCart
 	}
 	
 	
+	public void updateCart(int [] bookIds, int [] quantities)
+	{
+		for(int i = 0 ; i < bookIds.length ; i++)
+		{
+			Book key = new Book( bookIds[i]);
+			Integer value = quantities[i]; 
+			//replace the current entry by a new one
+			this.cart.put(key, value); 
+			
+		}
+	}
 	
 }
