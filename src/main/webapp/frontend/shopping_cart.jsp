@@ -31,8 +31,8 @@
 		</c:if>
 
 		<c:if test="${cart.totalItems > 0}">
-			<form>
-				<table border="1px" >
+			<form action="update_cart" method="post">
+				<table border= "1" >
 					<tr>
 						<th>NO</th>
 						<th colspan="2">BOOK</th>
