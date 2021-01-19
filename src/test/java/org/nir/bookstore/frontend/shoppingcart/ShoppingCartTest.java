@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -250,6 +251,40 @@ public class ShoppingCartTest
 		assertEquals(0.0, cart.getTotalAmount());
 		
 	}
+	
+	
+	@Test
+	@DisplayName("when calling updateCart()")
+	public void testUpdateCart()
+	{
+		ShoppingCart cart  = new ShoppingCart();
+		Set<Entry<Book, Integer>> entries = cart.getItems().entrySet();
+		
+		Book book1 = new Book(1); 
+		Book book2 = new Book(2); 
+		
+		cart.addItem(book1);
+		cart.addItem(book2);
+		cart.addItem(book2);
+		
+		System.out.println(">>testUpdateCart():cart BEFORE updste():"); 
+		cart.printIdAndQuantites(entries);
+		
+		
+		int [] bookIds = {1, 2}; 
+		int [] quantities = {3, 4}; 
+		
+		cart.updateCart(bookIds, quantities);
+		
+		assertEquals(7, cart.getTotalQuantity());
+		
+		System.out.println(">>testUpdateCart():cart AFTER updste():"); 
+		cart.printIdAndQuantites(entries);
+		
+		
+	}
+
+	
 	@Test
 	void testHashMap()
 	{

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.nir.bookstore.entities.Book;
 
@@ -99,8 +100,12 @@ public class ShoppingCart
 			Integer value = quantities[i]; 
 			//replace the current entry by a new one
 			this.cart.put(key, value); 
-			
 		}
+	}
+	
+	public void printIdAndQuantites(Set<Entry<Book, Integer>> keys)
+	{
+		keys.forEach(e -> System.out.println("book id: " + e.getKey().getBookId() + " , quantity: "+ e.getValue()));
 	}
 	
 }
