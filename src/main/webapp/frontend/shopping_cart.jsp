@@ -41,7 +41,7 @@
 							<th>QUANTITY</th>
 							<th>PRICE</th>
 							<th align="center">SUBTOTAL</th>
-							<th><a href=""><b>CLEAR CART</b></a></th>
+							<th></th>
 						</tr>
 						<c:forEach var="item" items="${cart.items}" varStatus="status">
 							<tr>
@@ -81,12 +81,30 @@
 				<!-- Button and links-->
 				<div>
 					<table class="normal">
+					<tr><td>&nbsp;</td></tr> 
 						<tr>
 							<td></td>
-							<td><button type="submit">Update</button></td>
-							<td><a href="${pageContext.request.contextPath}/">Continue
-									Shopping</a></td>
-							<td><a href="">Checkout</a></td>
+							
+							<td>
+								<button type="submit">Update</button>
+							</td>
+							
+							<!-- <td>
+								<button id="clearCart">Clear Cart</button>
+							</td> -->
+							<td> 
+								<input type="button" id="clearCart" value="Clear Cart" />
+							</td>
+							
+							<td>
+								<a href="${pageContext.request.contextPath}/">
+									Continue Shopping
+								</a>
+							</td>
+							
+							<td>
+								<a href="">Checkout</a>
+							</td>
 						</tr>
 
 					</table>
@@ -106,6 +124,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#clearCart").click(function(){
+			window.location = 'clear_cart';
+		})
 		$("#cartForm").validate({
 			rules : {
 				<c:forEach var="item" items="${cart.items}" varStatus="status">
