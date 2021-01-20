@@ -69,7 +69,7 @@
 						</c:forEach>
 						<tr>
 							<td colspan="3"></td>
-							<td>${cart.totalQuantity}&nbsp;<b>book(s)</b></td>
+							<td><b>${cart.totalQuantity}&nbsp;book(s)</b></td>
 							<td><b>TOTAL:</b></td>
 							<td colspan="2"><b><fmt:formatNumber
 										value="${cart.totalAmount}" type="currency" /></b></td>
