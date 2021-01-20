@@ -54,9 +54,12 @@
 								<%-- <td id="book-title"> ${item.key.title}</td> --%>
 								<td><span id="book-title">${item.key.title} </span></td>
 
-								<td><input type="text" name="quantity${status.index + 1}"
-									size="5" value="${item.value}" /></td>
-								<!-- IMPORTANT fmt JSTL -->
+								<td>
+									<input type="hidden" name="book_id" value="${item.key.bookId}" />
+									<input type="text" name="quantity${status.index + 1}"
+									size="5" value="${item.value}" />
+								</td>
+									<!-- IMPORTANT fmt JSTL -->
 								<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
 										value="${item.key.price}" type="currency" /></td>
 								<td><fmt:formatNumber
