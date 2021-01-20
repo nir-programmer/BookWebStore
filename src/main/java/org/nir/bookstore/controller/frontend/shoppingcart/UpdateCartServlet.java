@@ -29,10 +29,7 @@ public class UpdateCartServlet extends HttpServlet
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String[] arrayBookIds;
@@ -79,9 +76,6 @@ public class UpdateCartServlet extends HttpServlet
 		cartPage = request.getContextPath().concat("/view_cart"); 
 		response.sendRedirect(cartPage);
 		
-		
-		
-	
 	}
 
 }
