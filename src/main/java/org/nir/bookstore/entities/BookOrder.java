@@ -3,6 +3,7 @@ package org.nir.bookstore.entities;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,9 @@ public class BookOrder implements java.io.Serializable {
 	private String recipientPhone;
 	private String paymentMethod;
 	private float total;
+	
+	
+
 	private String status;
 	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
 
@@ -75,6 +79,7 @@ public class BookOrder implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
+	//refers to the foreign key customer_id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", nullable = false)
 	public Customer getCustomer() {
@@ -158,4 +163,22 @@ public class BookOrder implements java.io.Serializable {
 		this.orderDetails = orderDetails;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(orderId);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookOrder other = (BookOrder) obj;
+		return Objects.equals(orderId, other.orderId);
+	}
 }
