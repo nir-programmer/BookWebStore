@@ -23,7 +23,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "book_order", catalog = "bookstoredb")
-public class BookOrder implements java.io.Serializable {
+public class BookOrder implements java.io.Serializable
+{
 
 	private Integer orderId;
 	private Customer customer;
@@ -33,17 +34,24 @@ public class BookOrder implements java.io.Serializable {
 	private String recipientPhone;
 	private String paymentMethod;
 	private float total;
-	
-	
 
 	private String status;
 	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
 
-	public BookOrder() {
+	public BookOrder()
+	{
+	}
+
+	// I add this constructor for testing..
+	public BookOrder(Integer orderId)
+	{
+		super();
+		this.orderId = orderId;
 	}
 
 	public BookOrder(Customer customer, Date orderDate, String shippingAddress, String recipientName,
-			String recipientPhone, String paymentMethod, float total, String status) {
+			String recipientPhone, String paymentMethod, float total, String status)
+	{
 		this.customer = customer;
 		this.orderDate = orderDate;
 		this.shippingAddress = shippingAddress;
@@ -55,7 +63,8 @@ public class BookOrder implements java.io.Serializable {
 	}
 
 	public BookOrder(Customer customer, Date orderDate, String shippingAddress, String recipientName,
-			String recipientPhone, String paymentMethod, float total, String status, Set<OrderDetail> orderDetails) {
+			String recipientPhone, String paymentMethod, float total, String status, Set<OrderDetail> orderDetails)
+	{
 		this.customer = customer;
 		this.orderDate = orderDate;
 		this.shippingAddress = shippingAddress;
@@ -71,95 +80,115 @@ public class BookOrder implements java.io.Serializable {
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "order_id", unique = true, nullable = false)
-	public Integer getOrderId() {
+	public Integer getOrderId()
+	{
 		return this.orderId;
 	}
 
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(Integer orderId)
+	{
 		this.orderId = orderId;
 	}
 
-	//refers to the foreign key customer_id
+	// refers to the foreign key customer_id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", nullable = false)
-	public Customer getCustomer() {
+	public Customer getCustomer()
+	{
 		return this.customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(Customer customer)
+	{
 		this.customer = customer;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "order_date", nullable = false, length = 19)
-	public Date getOrderDate() {
+	public Date getOrderDate()
+	{
 		return this.orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(Date orderDate)
+	{
 		this.orderDate = orderDate;
 	}
 
 	@Column(name = "shipping_address", nullable = false, length = 256)
-	public String getShippingAddress() {
+	public String getShippingAddress()
+	{
 		return this.shippingAddress;
 	}
 
-	public void setShippingAddress(String shippingAddress) {
+	public void setShippingAddress(String shippingAddress)
+	{
 		this.shippingAddress = shippingAddress;
 	}
 
 	@Column(name = "recipient_name", nullable = false, length = 30)
-	public String getRecipientName() {
+	public String getRecipientName()
+	{
 		return this.recipientName;
 	}
 
-	public void setRecipientName(String recipientName) {
+	public void setRecipientName(String recipientName)
+	{
 		this.recipientName = recipientName;
 	}
 
 	@Column(name = "recipient_phone", nullable = false, length = 15)
-	public String getRecipientPhone() {
+	public String getRecipientPhone()
+	{
 		return this.recipientPhone;
 	}
 
-	public void setRecipientPhone(String recipientPhone) {
+	public void setRecipientPhone(String recipientPhone)
+	{
 		this.recipientPhone = recipientPhone;
 	}
 
 	@Column(name = "payment_method", nullable = false, length = 20)
-	public String getPaymentMethod() {
+	public String getPaymentMethod()
+	{
 		return this.paymentMethod;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
+	public void setPaymentMethod(String paymentMethod)
+	{
 		this.paymentMethod = paymentMethod;
 	}
 
 	@Column(name = "total", nullable = false, precision = 12, scale = 0)
-	public float getTotal() {
+	public float getTotal()
+	{
 		return this.total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal(float total)
+	{
 		this.total = total;
 	}
 
 	@Column(name = "status", nullable = false, length = 20)
-	public String getStatus() {
+	public String getStatus()
+	{
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(String status)
+	{
 		this.status = status;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bookOrder")
-	public Set<OrderDetail> getOrderDetails() {
+	public Set<OrderDetail> getOrderDetails()
+	{
 		return this.orderDetails;
 	}
 
-	public void setOrderDetails(Set<OrderDetail> orderDetails) {
+	public void setOrderDetails(Set<OrderDetail> orderDetails)
+	{
 		this.orderDetails = orderDetails;
 	}
 
@@ -181,4 +210,5 @@ public class BookOrder implements java.io.Serializable {
 		BookOrder other = (BookOrder) obj;
 		return Objects.equals(orderId, other.orderId);
 	}
+
 }
