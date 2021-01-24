@@ -15,22 +15,13 @@ public class OrderDetailId implements java.io.Serializable {
 	private Integer orderId;
 	private Integer bookId;
 	/*
-	 * private int quantity; private float subtotal;
+	 *REFACTORING:REMOVE: private int quantity; private float subtotal;
 	 */
 
 	public OrderDetailId() {
 	}
 
-	/*
-	 * public OrderDetailId(int quantity, float subtotal) { this.quantity =
-	 * quantity; this.subtotal = subtotal; }
-	 */
-
-	/*
-	 * public OrderDetailId(Integer orderId, Integer bookId, int quantity, float
-	 * subtotal) { this.orderId = orderId; this.bookId = bookId; this.quantity =
-	 * quantity; this.subtotal = subtotal; }
-	 */
+	
 	public OrderDetailId(Integer orderId, Integer bookId) {
 		this.orderId = orderId;
 		this.bookId = bookId;

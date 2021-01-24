@@ -87,23 +87,21 @@ public class OrderDetail implements java.io.Serializable
 		this.bookOrder = bookOrder;
 	}
 
-	public int getQuantity()
-	{
-		return quantity;
+	@Column(name = "quantity", nullable = false)
+	public int getQuantity() {
+		return this.quantity;
 	}
 
-	public void setQuantity(int quantity)
-	{
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public float getSubtotal()
-	{
-		return subtotal;
+	@Column(name = "subtotal", nullable = false, precision = 12, scale = 0)
+	public float getSubtotal() {
+		return this.subtotal;
 	}
 
-	public void setSubtotal(float subtotal)
-	{
+	public void setSubtotal(float subtotal) {
 		this.subtotal = subtotal;
 	}
 

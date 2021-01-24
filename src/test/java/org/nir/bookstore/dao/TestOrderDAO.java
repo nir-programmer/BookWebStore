@@ -78,9 +78,9 @@ public class TestOrderDAO
 		Set<OrderDetail> orderDetails;
 		Book book;
 
-		// create the customer with id = 15
+		// create the customer with id = 11
 		customer = new Customer();
-		customer.setCustomerId(15);
+		customer.setCustomerId(11);
 
 		// create the BookOrder
 		bookOrder = new BookOrder();
@@ -92,7 +92,7 @@ public class TestOrderDAO
 		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
 
 		// Create the Book with existing id
-		book = new Book(56);
+		book = new Book(32);
 
 		// Create set of orderDetails
 		orderDetails = new HashSet<OrderDetail>();
@@ -104,7 +104,7 @@ public class TestOrderDAO
 		orderDetail.setBook(book);
 		orderDetail.setBookOrder(bookOrder);
 		orderDetail.setQuantity(2);
-		orderDetail.setSubtotal(99.98f);
+		orderDetail.setSubtotal(68f);
 		
 		//add the orderDetail to the set
 		orderDetails.add(orderDetail);
