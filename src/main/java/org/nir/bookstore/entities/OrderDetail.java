@@ -16,57 +16,96 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "order_detail", catalog = "bookstoredb")
-public class OrderDetail implements java.io.Serializable {
+public class OrderDetail implements java.io.Serializable
+{
 
 	private OrderDetailId id;
 	private Book book;
 	private BookOrder bookOrder;
 
-	public OrderDetail() {
+	//These 2 properties added after refactoring hibernate tool
+	private int quantity;
+	private float subtotal;
+
+	public OrderDetail()
+	{
 	}
 
-	public OrderDetail(OrderDetailId id) {
+	public OrderDetail(OrderDetailId id)
+	{
 		this.id = id;
 	}
 
-	public OrderDetail(OrderDetailId id, Book book, BookOrder bookOrder) {
+	
+	
+	public OrderDetail(OrderDetailId id, Book book, BookOrder bookOrder, int quantity, float subtotal)
+	{
+		super();
 		this.id = id;
 		this.book = book;
 		this.bookOrder = bookOrder;
+		this.quantity = quantity;
+		this.subtotal = subtotal;
 	}
 
 	@EmbeddedId
-
-	@AttributeOverrides({ @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
-			@AttributeOverride(name = "bookId", column = @Column(name = "book_id")),
-			@AttributeOverride(name = "quantity", column = @Column(name = "quantity", nullable = false)),
-			@AttributeOverride(name = "subtotal", column = @Column(name = "subtotal", nullable = false, precision = 12, scale = 0)) })
-	public OrderDetailId getId() {
+	@AttributeOverrides({ 
+			@AttributeOverride(name = "orderId", column = @Column(name = "order_id", nullable = false)),
+			@AttributeOverride(name = "bookId", column = @Column(name = "book_id", nullable = false)),
+			})
+	public OrderDetailId getId()
+	{
 		return this.id;
 	}
 
-	public void setId(OrderDetailId id) {
+	public void setId(OrderDetailId id)
+	{
 		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", insertable = false, updatable = false)
-	public Book getBook() {
+	public Book getBook()
+	{
 		return this.book;
 	}
 
-	public void setBook(Book book) {
+	public void setBook(Book book)
+	{
 		this.book = book;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", insertable = false, updatable = false)
-	public BookOrder getBookOrder() {
+	public BookOrder getBookOrder()
+	{
 		return this.bookOrder;
 	}
 
-	public void setBookOrder(BookOrder bookOrder) {
+	public void setBookOrder(BookOrder bookOrder)
+	{
 		this.bookOrder = bookOrder;
 	}
 
+	public int getQuantity()
+	{
+		return quantity;
+	}
+
+	public void setQuantity(int quantity)
+	{
+		this.quantity = quantity;
+	}
+
+	public float getSubtotal()
+	{
+		return subtotal;
+	}
+
+	public void setSubtotal(float subtotal)
+	{
+		this.subtotal = subtotal;
+	}
+
+	
 }

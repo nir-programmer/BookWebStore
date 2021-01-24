@@ -33,113 +33,90 @@ import org.nir.bookstore.entities.OrderDetail;
 import org.nir.bookstore.entities.OrderDetailId;
 import org.nir.bookstore.entities.Review;
 
-public class TestOrderDAO 
+public class TestOrderDAO
 {
-	
+
 	private static OrderDAO orderDAO = null;
 
 	@BeforeAll
 	@DisplayName("when create OrderDAO object")
-	public static void init() {
+	public static void init()
+	{
 		orderDAO = new OrderDAO();
 	}
 
 	@BeforeEach
 	@DisplayName("when calling openCurrentSessionWithTransaction()")
-	void testOpenCurrentSessionWithTransaction() {
+	void testOpenCurrentSessionWithTransaction()
+	{
 		orderDAO.openCurrentSessionWithTransaction();
 	}
 
 	@AfterEach
 	@DisplayName("when calling closeCurrentSessionWithTransaction()")
-	void testcloseCurrentSessionWithTransaction() {
+	void testcloseCurrentSessionWithTransaction()
+	{
 		orderDAO.closeCurrentSessionWithTransaction();
 	}
-	
+
 	/**********************************************************
-	 * 					TESTS
-	 * @throws ParseException 
-	 * @throws IOException 
-	 * ************************************************************/
-	
-	//OK!!!!!!
+	 * TESTS
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 ************************************************************/
+
+	// OK!!!!!!
 	@Test
 	@DisplayName("when create a BookOrder by BookDAO")
-	public void testCreateBookOrder() 
+	public void testCreateBookOrder()
 	{
-		Book book1 ,book2 , book3 , book4; 
-		Customer customer ; 
+		Customer customer;
 		BookOrder bookOrder;
-		OrderDetail oredDetail1, orderDetail2, orderDetail3;
-		OrderDetailId orderDetailId1, orderDetailId2, orderDetailId3;
-		
-		//store information about the detail order object (such as books , quantites
-		Set<OrderDetail> details ; 
-		
-		/**************************************************************
-		 * 						INITIALIZTION
-		 *************************************************************/
-		//Create a customer with an existing id in the db
-		customer  = new Customer();
+		OrderDetail orderDetail;
+		OrderDetailId orderDetailId;
+		Set<OrderDetail> orderDetails;
+		Book book;
+
+		// create the customer with id = 15
+		customer = new Customer();
 		customer.setCustomerId(15);
-		
-		//create Books  with an existing id's in the db
-		 book1 = new Book(40); 
-		 book2 = new Book(43); 
-		 book3 = new Book(45); 
-		 book4 = new Book(46); 
-		 
-		
-		 //create the OrderDetailsId and set it's quanitity and subtotal
-		 orderDetailId1 = new OrderDetailId();
-		 orderDetailId1.setQuantity(3);
-		 //In the db the book with id 40 has a price of 111 !
-		 orderDetailId1.setSubtotal(333);
-		
-		 //Create the Set<OrderDetail> 
-		 details = new HashSet<>(); 
-		
-		 //Create the OrderDetail object and set it's values
-		OrderDetail orderDetail1 = new OrderDetail() ;
-		orderDetail1.setId(orderDetailId1);
-		
-		
-		
-		
-		details.add(orderDetail1);
-		
-		//Create the BookOrder instance with all the fields
-		bookOrder = new BookOrder(); 
+
+		// create the BookOrder
+		bookOrder = new BookOrder();
+
+		// add the customer and other fields to the bookOrder
 		bookOrder.setCustomer(customer);
-		bookOrder.setRecipientName("Nir");
-		bookOrder.setRecipientPhone("0544788017");
-		bookOrder.setShippingAddress("Hod Hasharon");
-		bookOrder.setOrderDetails(details); 
+		bookOrder.setRecipientName("Nir Ithzak");
+		bookOrder.setRecipientPhone("0544678017");
+		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
+
+		// Create the Book with existing id
+		book = new Book(56);
+
+		// Create set of orderDetails
+		orderDetails = new HashSet<OrderDetail>();
+
+		// create a new OrderDetail
+		orderDetail = new OrderDetail();
 		
+		//add the book to the orderDetail and quantity , and subTotal
+		orderDetail.setBook(book);
+		orderDetail.setBookOrder(bookOrder);
+		orderDetail.setQuantity(2);
+		orderDetail.setSubtotal(99.98f);
 		
-		//Add the BookOrder instance to the db
-		BookOrder persistBookOrder = orderDAO.create(bookOrder);
+		//add the orderDetail to the set
+		orderDetails.add(orderDetail);
 		
-		assertTrue(persistBookOrder.getOrderId() > 0); 
+		//add the Set to the BookOrder
+		bookOrder.setOrderDetails(orderDetails);
 		
+		//persist the BookOrder in db and save the returned value
 		
+		BookOrder savedOrder = orderDAO.create(bookOrder);
 		
-		
-		
-		//customer = new Customer("x@x.gmail.com","x", "x" ,"x" , "x" , "x" , "x" ,"x",  new Date());
-		
-		
-		
-		/*
-		 * bookOrder = new BookOrder(customer, new Date() ,"x", "x" , "x" ,"x" , 33 ,
-		 * "x" ,);
-		 * 
-		 * BookOrder res = orderDAO.create(bookOrder);
-		 * 
-		 * assertTrue(res.getOrderId() > 0);
-		 */
-		
+		assertNotNull(savedOrder);
 	}
-	
 
 }
