@@ -91,8 +91,8 @@ public class TestOrderDAO
 		bookOrder.setRecipientPhone("0544678017");
 		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
 
-		// Create the Book with existing id
-		book = new Book(32);
+		// Create the Book with existing id : 33(java 8)
+		book = new Book(33);
 
 		// Create set of orderDetails
 		orderDetails = new HashSet<OrderDetail>();
@@ -123,16 +123,17 @@ public class TestOrderDAO
 	}
 	
 	@Test
-	@DisplayName("when create a BookOrder With more than one OrderDetails")
+	@DisplayName("when create a single BookOrder WITH 2 OrderDetail objects")
 	public void testCreateBookOrderWithManyOrderDetails()
 	{
 		Customer customer1;
 		BookOrder bookOrder;
-		OrderDetail orderDetail;
+		OrderDetail orderDetail1;
+		OrderDetail orderDetail2; 
 		//OrderDetailId orderDetailId;
 		Set<OrderDetail> orderDetails;
-		Book book;
-
+		Book book1;
+		Book book2 ; 
 		// create the customer with id = 11
 		customer1 = new Customer();
 		customer1.setCustomerId(11);
@@ -146,31 +147,41 @@ public class TestOrderDAO
 		bookOrder.setRecipientPhone("0544678017");
 		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
 
-		// Create the Book with existing id
-		book = new Book(32);
-
+		// Create new Books with existing id's
+		book1 = new Book(32);
+		book2  = new Book(33); 
+		
 		// Create set of orderDetails
 		orderDetails = new HashSet<OrderDetail>();
 
-		// create a new OrderDetail
-		orderDetail = new OrderDetail();
+		// create The first OrderDetail with book1 and bookOrder
+		orderDetail1 = new OrderDetail();
 		
 		//MANY TO MANY: add the book and the bookOrder references to the 
 		//Join table(orderDetail) I have to do this!he got EXCEPTION
-		orderDetail.setBook(book);
-		orderDetail.setBookOrder(bookOrder);
+		orderDetail1.setBook(book1);
+		orderDetail1.setBookOrder(bookOrder);
 		//set the quantity and subtotal vlues
-		orderDetail.setQuantity(2);
-		orderDetail.setSubtotal(68f);
+		orderDetail1.setQuantity(2);
+		orderDetail1.setSubtotal(78f);
 		
-		//add the orderDetail to the set
-		orderDetails.add(orderDetail);
+		
+		//Create the second orderDetail with book2 and the bookOrder
+		orderDetail2 = new OrderDetail(); 
+		orderDetail2.setBook(book2);
+		orderDetail2.setBookOrder(bookOrder);
+		orderDetail2.setQuantity(3);
+		orderDetail2.setSubtotal(110.16f);
+		
+		//add orderDetail1 and orderDetail2  to the set
+		orderDetails.add(orderDetail1);
+		orderDetails.add(orderDetail2); 
+		
 		
 		//add the Set to the BookOrder
 		bookOrder.setOrderDetails(orderDetails);
 		
 		//persist the BookOrder in db and save the returned value
-		
 		BookOrder savedOrder = orderDAO.create(bookOrder);
 		
 		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
