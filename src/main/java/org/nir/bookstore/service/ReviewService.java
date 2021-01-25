@@ -166,16 +166,15 @@ public class ReviewService
 		book = bookDAO.get(bookId);
 		bookDAO.closeCurrentSession();
 
-<<<<<<< HEAD
+
 		// set the book as an attribute in the SESSION!!! This will be usefull in the review_done.jsp page!
 		//request.setAttribute("book", book);
 		request.getSession().setAttribute("book", book);
-=======
 		
 		// set the book as an attribute in the SESSION
 		//request.setAttribute("book", book);
 		request.getSession().setAttribute("book", book); 
->>>>>>> refs/heads/master
+
 		
 		
 		// forward the request to the review_form.jsp page
