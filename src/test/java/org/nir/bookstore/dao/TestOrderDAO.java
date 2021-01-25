@@ -20,6 +20,7 @@ import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -134,9 +135,9 @@ public class TestOrderDAO
 		Set<OrderDetail> orderDetails;
 		Book book1;
 		Book book2 ; 
-		// create the customer with id = 11
+		// create the customer with id = 12(a)
 		customer1 = new Customer();
-		customer1.setCustomerId(11);
+		customer1.setCustomerId(12);
 
 		// create the BookOrder
 		bookOrder = new BookOrder();
@@ -188,6 +189,7 @@ public class TestOrderDAO
 		
 	}
 	
+	//OK
 	@Test
 	@DisplayName("when calling get()")
 	public void testGetFound()
@@ -200,11 +202,54 @@ public class TestOrderDAO
 		orderId = 34; 
 		bookOrder = orderDAO.get(orderId); 
 		
+		
 		assertNotNull(bookOrder);
 		
 		System.out.println(">>testGetFound():bookOrder with id " + orderId + " ,has " + bookOrder.getOrderDetails().size());
-		
+		System.out.println(">>testGetFOune():order.ReciepentName: " + bookOrder.getRecipientName());
 		
 	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling listAll() method")
+	public void testListAll()
+	{
+		List<BookOrder> bookOrders = orderDAO.listAll();
+		
+		assertTrue(bookOrders.size() > 0);
+		
+		bookOrders.forEach(o -> System.out.println(o.getOrderId()));
+		
+	}
+	
+	@Test
+	@DisplayName("when calling listAll() method")
+	public void testListAllWithCustomer()
+	{
+		List<BookOrder> bookOrders = orderDAO.listAll();
+		
+		assertTrue(bookOrders.size() > 0);
+		assertTrue(bookOrders.size() == 4);
+		
+		for(BookOrder bookOrder : bookOrders)
+		{
+			System.out.println(bookOrder.getOrderId() + " - " + bookOrder.getCustomer().getFullname() 
+					+ " - " + bookOrder.getStatus() + " - " + bookOrder.getTotal());
+			
+			//loop over the OrderDetails Set
+			for(OrderDetail detail : bookOrder.getOrderDetails())
+				{
+					Book book = detail.getBook();
+					int quantity = detail.getQuantity();
+					float subTotal = detail.getSubtotal();
+					
+					System.out.println("\t" + book.getTitle() + " - " + quantity + " - " + subTotal);
+				}
+		}
+		
+	}
+	
+	
 
 }

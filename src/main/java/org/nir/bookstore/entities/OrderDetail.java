@@ -65,7 +65,7 @@ public class OrderDetail implements java.io.Serializable
 	}
 
 	//Refactoirng : add the nullable = false
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id", insertable = false, updatable = false,nullable = false )
 	public Book getBook()
 	{

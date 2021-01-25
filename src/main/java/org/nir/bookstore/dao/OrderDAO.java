@@ -8,6 +8,7 @@ import org.nir.bookstore.entities.BookOrder;
 public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<BookOrder>
 {
 
+	//OK
 	@Override
 	public BookOrder get(Object id)
 	{
@@ -26,6 +27,7 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		return super.update(bookOrder);
 	}
 	
+	//OK
 	public BookOrder create(BookOrder bookOrder)
 	{
 		//Default values
@@ -40,8 +42,7 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	@Override
 	public List<BookOrder> listAll()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return super.findWithNamedQuery("BookOrder.findAll");
 	}
 
 	@Override
