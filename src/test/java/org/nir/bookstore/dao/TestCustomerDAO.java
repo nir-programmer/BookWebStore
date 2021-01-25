@@ -65,11 +65,11 @@ public class TestCustomerDAO
 	@DisplayName("when trying to create a new Customer")
 	void testcreateCustomer()
 	{
-		Customer customer1  = new Customer("nik10@.com", "Nir Ithzak", "Hatzhanchnim", "Hod Hasharon",
+		Customer customer1  = new Customer("a@a", "a", "Hatzhanchnim", "Hod Hasharon",
 				"Israel", "0544678017", "12344", "03266900",
 				new Date(), null, null);
 		
-		Customer customer2  = new Customer("niritz@sd", "Niron Ithzak", "Hatzhanchnim", "Hod Hasharon",
+		Customer customer2  = new Customer("b@b", "b", "Hatzhanchnim", "Hod Hasharon",
 				"Israel", "0544678017", "12344", "03266900",
 				new Date(), null, null);
 				
@@ -173,7 +173,7 @@ public class TestCustomerDAO
 	{
 		List<Customer> customers = customerDAO.listAll();
 		
-		assertEquals(3, customers.size());
+		assertEquals(1, customers.size());
 		
 		customers.forEach(c -> System.out.println(c.getFullname()));
 		

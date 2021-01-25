@@ -26,9 +26,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td rowspan="2"><img
-						src="data:image/jpg;base64,${book.base64Image}" width="240"
-						height="300" /></td>
+					<td rowspan="2">
+					<img src="data:image/jpg;base64,${book.base64Image}" width="240"
+						height="300" />
+					</td>
 
 					<td valign="top" align="left">
 						<div>

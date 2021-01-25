@@ -166,8 +166,9 @@ public class ReviewService
 		book = bookDAO.get(bookId);
 		bookDAO.closeCurrentSession();
 
-		// set the book as an attribute in the request
-		request.setAttribute("book", book);
+		// set the book as an attribute in the SESSION!!! This will be usefull in the review_done.jsp page!
+		//request.setAttribute("book", book);
+		request.getSession().setAttribute("book", book);
 		
 		
 		// forward the request to the review_form.jsp page
@@ -222,6 +223,9 @@ public class ReviewService
 		  reviewDAO.openCurrentSession();
 		  Review existReview = reviewDAO.findByCustomerAndBook(customerId, bookId);
 		  reviewDAO.closeCurrentSession();
+		  
+		  //set the logged Customer and the  Book in the Review
+		  
 		  
 		  targetPage = "frontend/review_form.jsp"; 
 		  //if there is a review for this book by this customer: forward to info_review.jsp

@@ -8,8 +8,6 @@
 <meta charset="UTF-8">
 <title>Review Posted - Online Book Store</title>
 <link rel="stylesheet" href="css/style.css">
-
-
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -25,12 +23,14 @@
 				<td colspan="3"><hr /></td>
 			</tr>
 			<tr>
-				<td rowspan="2"><span id="book-title">${book.title}</span><br />
-					<img src="data:image/jpg;base64,${book.base64Image}" width="240"
-					height="300" /></td>
-
 				<td>
-				<td colspan="2"><h3>Your review has been posted.Thank you!</h3></td>
+				<span id="boot-title">${book.title}</span><br/>
+					 <img src="data:image/jpg;base64,${book.base64Image}"
+					  width="240" height="300" />
+				</td>
+				<td colspan="2">
+					<h3>Your review has been posted.Thank you!</h3>
+				</td>
 			</tr>
 		</table>
 

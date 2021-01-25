@@ -19,7 +19,8 @@ import javax.persistence.Table;
 public class OrderDetail implements java.io.Serializable
 {
 
-	private OrderDetailId id;
+	//refactoring: create this id outside of any method
+	private OrderDetailId id = new OrderDetailId(); 
 	private Book book;
 	private BookOrder bookOrder;
 
@@ -37,7 +38,7 @@ public class OrderDetail implements java.io.Serializable
 	}
 
 	
-	
+	//refactoring: add quantity and subtotal 
 	public OrderDetail(OrderDetailId id, Book book, BookOrder bookOrder, int quantity, float subtotal)
 	{
 		super();
@@ -48,11 +49,11 @@ public class OrderDetail implements java.io.Serializable
 		this.subtotal = subtotal;
 	}
 
+	//Refactoring : Remove the previousannotaions for quanitity and subtotal, and set nullable = false
 	@EmbeddedId
 	@AttributeOverrides({ 
 			@AttributeOverride(name = "orderId", column = @Column(name = "order_id", nullable = false)),
-			@AttributeOverride(name = "bookId", column = @Column(name = "book_id", nullable = false)),
-			})
+			@AttributeOverride(name = "bookId", column = @Column(name = "book_id", nullable = false))})
 	public OrderDetailId getId()
 	{
 		return this.id;
@@ -63,8 +64,9 @@ public class OrderDetail implements java.io.Serializable
 		this.id = id;
 	}
 
+	//Refactoirng : add the nullable = false
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id", insertable = false, updatable = false)
+	@JoinColumn(name = "book_id", insertable = false, updatable = false,nullable = false )
 	public Book getBook()
 	{
 		return this.book;
@@ -73,10 +75,13 @@ public class OrderDetail implements java.io.Serializable
 	public void setBook(Book book)
 	{
 		this.book = book;
+		//update refactoring:
+		this.id.setBook(book);
 	}
 
+	//Refactoring: add the nullable = false
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_id", insertable = false, updatable = false)
+	@JoinColumn(name = "order_id", insertable = false, updatable = false , nullable = false)
 	public BookOrder getBookOrder()
 	{
 		return this.bookOrder;
@@ -85,14 +90,20 @@ public class OrderDetail implements java.io.Serializable
 	public void setBookOrder(BookOrder bookOrder)
 	{
 		this.bookOrder = bookOrder;
+		//update refactoring
+		this.id.setBookOrder(bookOrder);
 	}
-
+	
+	/*
+	 * Copy and paste these getters/setters from OrderDetailId with annotatinos!
+	 */
 	@Column(name = "quantity", nullable = false)
 	public int getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(int quantity) 
+	{
 		this.quantity = quantity;
 	}
 

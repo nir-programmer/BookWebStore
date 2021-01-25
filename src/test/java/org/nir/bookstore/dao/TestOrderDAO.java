@@ -74,7 +74,7 @@ public class TestOrderDAO
 		Customer customer;
 		BookOrder bookOrder;
 		OrderDetail orderDetail;
-		OrderDetailId orderDetailId;
+		//OrderDetailId orderDetailId;
 		Set<OrderDetail> orderDetails;
 		Book book;
 
@@ -100,9 +100,11 @@ public class TestOrderDAO
 		// create a new OrderDetail
 		orderDetail = new OrderDetail();
 		
-		//add the book to the orderDetail and quantity , and subTotal
+		//MANY TO MANY: add the book and the bookOrder references to the 
+		//Join table(orderDetail) I have to do this!he got EXCEPTION
 		orderDetail.setBook(book);
 		orderDetail.setBookOrder(bookOrder);
+		//set the quantity and subtotal vlues
 		orderDetail.setQuantity(2);
 		orderDetail.setSubtotal(68f);
 		
@@ -116,7 +118,63 @@ public class TestOrderDAO
 		
 		BookOrder savedOrder = orderDAO.create(bookOrder);
 		
-		assertNotNull(savedOrder);
+		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
+		
+	}
+	
+	@Test
+	@DisplayName("when create a BookOrder With more than one OrderDetails")
+	public void testCreateBookOrderWithManyOrderDetails()
+	{
+		Customer customer1;
+		BookOrder bookOrder;
+		OrderDetail orderDetail;
+		//OrderDetailId orderDetailId;
+		Set<OrderDetail> orderDetails;
+		Book book;
+
+		// create the customer with id = 11
+		customer1 = new Customer();
+		customer1.setCustomerId(11);
+
+		// create the BookOrder
+		bookOrder = new BookOrder();
+
+		// add the customer and other fields to the bookOrder
+		bookOrder.setCustomer(customer1);
+		bookOrder.setRecipientName("Nir Ithzak");
+		bookOrder.setRecipientPhone("0544678017");
+		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
+
+		// Create the Book with existing id
+		book = new Book(32);
+
+		// Create set of orderDetails
+		orderDetails = new HashSet<OrderDetail>();
+
+		// create a new OrderDetail
+		orderDetail = new OrderDetail();
+		
+		//MANY TO MANY: add the book and the bookOrder references to the 
+		//Join table(orderDetail) I have to do this!he got EXCEPTION
+		orderDetail.setBook(book);
+		orderDetail.setBookOrder(bookOrder);
+		//set the quantity and subtotal vlues
+		orderDetail.setQuantity(2);
+		orderDetail.setSubtotal(68f);
+		
+		//add the orderDetail to the set
+		orderDetails.add(orderDetail);
+		
+		//add the Set to the BookOrder
+		bookOrder.setOrderDetails(orderDetails);
+		
+		//persist the BookOrder in db and save the returned value
+		
+		BookOrder savedOrder = orderDAO.create(bookOrder);
+		
+		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
+		
 	}
 
 }
