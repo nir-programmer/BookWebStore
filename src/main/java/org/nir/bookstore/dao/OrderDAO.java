@@ -11,8 +11,7 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	@Override
 	public BookOrder get(Object id)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return super.find(BookOrder.class, id);
 	}
 
 	@Override

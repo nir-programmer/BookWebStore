@@ -187,5 +187,24 @@ public class TestOrderDAO
 		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
 		
 	}
+	
+	@Test
+	@DisplayName("when calling get()")
+	public void testGetFound()
+	{
+		Integer orderId; 
+		BookOrder bookOrder ; 
+		
+		
+		//get the bookOrder from the database
+		orderId = 34; 
+		bookOrder = orderDAO.get(orderId); 
+		
+		assertNotNull(bookOrder);
+		
+		System.out.println(">>testGetFound():bookOrder with id " + orderId + " ,has " + bookOrder.getOrderDetails().size());
+		
+		
+	}
 
 }
