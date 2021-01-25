@@ -152,7 +152,7 @@ public class ReviewService
 		BookDAO bookDAO;
 		String targetPage;
 		Book book;
-		HttpSession session; 
+		//HttpSession session; 
 
 		// target page - review_form.jsp
 		targetPage = "frontend/review_form.jsp";
@@ -166,8 +166,10 @@ public class ReviewService
 		book = bookDAO.get(bookId);
 		bookDAO.closeCurrentSession();
 
-		// set the book as an attribute in the request
-		request.setAttribute("book", book);
+		
+		// set the book as an attribute in the SESSION
+		//request.setAttribute("book", book);
+		request.getSession().setAttribute("book", book); 
 		
 		
 		// forward the request to the review_form.jsp page
