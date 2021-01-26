@@ -1,28 +1,17 @@
 package org.nir.bookstore.dao;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityNotFoundException;
-
-import org.apache.taglibs.standard.tag.common.core.ForEachSupport;
-import org.hibernate.criterion.DetachedCriteria;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,11 +19,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.BookOrder;
-import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.OrderDetail;
-import org.nir.bookstore.entities.OrderDetailId;
-import org.nir.bookstore.entities.Review;
 
 public class TestOrderDAO
 {
@@ -351,5 +337,48 @@ public class TestOrderDAO
 				" , subtotal = " + d.getSubtotal()));
 		
 	}
-
+	//ok
+	@Test
+	@DisplayName("when calling count() ")
+	public void testCount()
+	{
+		Integer id ; 
+		long actual ; 
+		long expected;
+		BookOrder bookOrder; 
+		
+		id = 34; 
+		bookOrder = orderDAO.get(id); 
+	
+		actual= orderDAO.count();
+		expected = 4; 
+		
+		assertEquals(expected, actual);
+		
+		
+		System.out.println(">>testCount():number of rows in book_order table: " + actual); 
+	}
+	
+	//OK
+	@Test
+	@DisplayName("when calling delete() ")
+	public void testDelete()
+	{
+		Integer id ; 
+		
+		//1. delete book_order with id = 35
+		id = 35; 
+		orderDAO.delete(id);
+		
+		
+		//2.test deletion by reading it again from data base 
+		BookOrder bookOrder = orderDAO.get(id);
+		assertNull(bookOrder);
+		
+		
+		
+						
+		
+		
+	}
 }

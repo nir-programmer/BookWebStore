@@ -18,10 +18,10 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	@Override
 	public void delete(Object id)
 	{
-		// TODO Auto-generated method stub
-		
+		super.delete(BookOrder.class, id);
 	}
 	
+	//OK
 	public BookOrder update(BookOrder bookOrder)
 	{
 		return super.update(bookOrder);
@@ -45,11 +45,11 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		return super.findWithNamedQuery("BookOrder.findAll");
 	}
 
+	//OK
 	@Override
 	public long count()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return super.countWithNamedQuery("BookOrder.countAll"); 
 	}
 
 	
