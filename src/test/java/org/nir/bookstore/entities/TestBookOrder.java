@@ -15,6 +15,70 @@ import org.junit.jupiter.api.Test;
 
 public class TestBookOrder
 {
+	@Test
+	@DisplayName("when calling getBookCopies()")
+	public void testGetBookCopies()
+	{
+		OrderDetail orderDetail1 ; 
+		OrderDetail orderDetail2;
+		OrderDetail orderDetail3;
+		Set<OrderDetail> orderDetails; 
+		BookOrder bookOrder;
+		Book book1 ; 
+		Book book2; 
+		Book book3; 
+		
+		//initial books
+		book1 = new Book(1); 
+		book1.setPrice(40);
+		
+		book2 = new Book(2); 
+		book2.setPrice(50);
+		
+		book3 = new Book(3)  ;
+		book3.setPrice(20);
+		
+		//initial OrderDetails
+		orderDetail1 = new OrderDetail(); 
+		orderDetail1.setBook(book1);
+		orderDetail1.setQuantity(3);
+		orderDetail1.setSubtotal(3 * book1.getPrice());
+		
+		orderDetail2 = new OrderDetail(); 
+		orderDetail2.setBook(book2);
+		orderDetail2.setQuantity(2);
+		orderDetail2.setSubtotal(2 * book2.getPrice());
+		
+		orderDetail3 = new OrderDetail(); 
+		orderDetail3.setBook(book3);
+		orderDetail3.setQuantity(1);
+		orderDetail3.setSubtotal(1 * book3.getPrice());
+		
+		//initial the set
+		orderDetails = new HashSet<OrderDetail>();
+		orderDetails.add(orderDetail1); 
+		orderDetails.add(orderDetail2); 
+		orderDetails.add(orderDetail3); 
+		
+		//Create bookOrder and set the Set into BookOrder
+		bookOrder = new BookOrder(); 
+		bookOrder.setOrderDetails(orderDetails);
+		
+		float expected = 7; 
+		float actual = bookOrder.getBookCopies();
+		
+		assertEquals(expected, actual);
+		
+		expected = 240; 
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	/*
 	 * private static BookOrder bookOrder1, bookOrder2;
 	 * 

@@ -39,7 +39,7 @@
 		</div>
 		
 		<div>
-			<a href="orders">
+			<a href="list_orders">
 				<img alt="" src="../images/orders.png"><br>Orders
 				</a>
 		</div>

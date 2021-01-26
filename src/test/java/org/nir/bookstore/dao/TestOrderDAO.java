@@ -62,44 +62,51 @@ public class TestOrderDAO
 	{
 		Customer customer;
 		BookOrder bookOrder;
-		OrderDetail orderDetail;
+		OrderDetail orderDetail1;
+		OrderDetail orderDetail2; 
 		// OrderDetailId orderDetailId;
 		Set<OrderDetail> orderDetails;
-		Book book;
+		Book book1;
+		Book book2;
 
-		// create the customer with id = 11
+		// create the customer with id = 12
 		customer = new Customer();
-		customer.setCustomerId(11);
+		customer.setCustomerId(12);
 
 		// create the BookOrder
 		bookOrder = new BookOrder();
 
 		// add the customer and other fields to the bookOrder
 		bookOrder.setCustomer(customer);
-		bookOrder.setRecipientName("Nir Ithzak");
+		bookOrder.setRecipientName("AAAAAA");
 		bookOrder.setRecipientPhone("0544678017");
 		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
 
 		// Create the Book with existing id : 33(java 8)
-		book = new Book(33);
-
+		book1 = new Book(33);
+		 book2 = new Book(34); 
 		// Create set of orderDetails
 		orderDetails = new HashSet<OrderDetail>();
 
 		// create a new OrderDetail
-		orderDetail = new OrderDetail();
-
+		orderDetail1 = new OrderDetail();
+		orderDetail2 = new OrderDetail();
 		// MANY TO MANY: add the book and the bookOrder references to the
 		// Join table(orderDetail) I have to do this!he got EXCEPTION
-		orderDetail.setBook(book);
-		orderDetail.setBookOrder(bookOrder);
-		// set the quantity and subtotal vlues
-		orderDetail.setQuantity(2);
-		orderDetail.setSubtotal(68f);
-
+		orderDetail1.setBook(book1);
+		orderDetail1.setQuantity(2);
+		orderDetail1.setSubtotal(73.44f);
+		orderDetail1.setBookOrder(bookOrder);
+		
+		
+		orderDetail2.setBook(book2);
+		orderDetail2.setQuantity(3);
+		orderDetail2.setSubtotal(179.97f); 
+		orderDetail2.setBookOrder(bookOrder);
 		// add the orderDetail to the set
-		orderDetails.add(orderDetail);
-
+		orderDetails.add(orderDetail1);
+		orderDetails.add(orderDetail2);
+		
 		// add the Set to the BookOrder
 		bookOrder.setOrderDetails(orderDetails);
 
@@ -108,6 +115,13 @@ public class TestOrderDAO
 		BookOrder savedOrder = orderDAO.create(bookOrder);
 
 		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
+		
+		//loop over the set of OrderDetails
+		savedOrder.getOrderDetails().forEach(o -> System.out.println("oid = " + o.getBookOrder()+
+				" , bid = " + o.getBook().getBookId() + " , quantity = " + o.getQuantity() +
+				" ,subtotal = "+ o.getSubtotal()));
+		
+		
 
 	}
 
@@ -201,11 +215,11 @@ public class TestOrderDAO
 	public void testListAll()
 	{
 		List<BookOrder> bookOrders = orderDAO.listAll();
-
+		
 		assertTrue(bookOrders.size() > 0);
 
-		bookOrders.forEach(o -> System.out.println(o.getOrderId()));
-
+		bookOrders.forEach(o -> System.out.println("orderId = " + o.getOrderId() + " - " + 
+		o.getOrderDate()));
 	}
 
 	/*
@@ -242,8 +256,8 @@ public class TestOrderDAO
 	public void testUpdateBookOrder()
 	{
 		// Read a BookOreder from the database
-		Integer id = 30;
-		BookOrder bookOrder = orderDAO.get(30);
+		Integer id = 34;
+		BookOrder bookOrder = orderDAO.get(id);
 
 		assertNotNull(bookOrder);
 
@@ -253,6 +267,38 @@ public class TestOrderDAO
 		// call update()
 		orderDAO.update(bookOrder);
 	}
+	
+	@Test
+	@DisplayName("when calling update()")
+	public void testUpdateTotalOfBookOrder()
+	{
+		// Read a BookOreder from the database
+		Integer id = 34;
+		BookOrder bookOrder = orderDAO.get(id);
+
+		assertNotNull(bookOrder);
+
+		// set a new Reciepient name - AAAA
+		bookOrder.setTotal(253.41f);
+
+		// call update()
+		orderDAO.update(bookOrder);
+	}
+	
+	@Test
+	@DisplayName("when calling getBookCopies")
+	public void testGetBookCopies()
+	{
+		Integer orderId = 34; 
+		BookOrder bookOrder = orderDAO.get(orderId);
+		
+		int expected = 13;
+		int actual = bookOrder.getBookCopies(); 
+		
+		assertEquals(expected, actual);
+		
+	}
+	
 
 	// Great!
 	@Test
