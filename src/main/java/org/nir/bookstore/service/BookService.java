@@ -17,7 +17,9 @@ import javax.servlet.http.Part;
 
 import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.dao.CategoryDAO;
+import org.nir.bookstore.dao.OrderDAO;
 import org.nir.bookstore.entities.Book;
+import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Review;
 import org.xml.sax.InputSource;
@@ -273,19 +275,48 @@ public class BookService {
 			reviews = book.getReviews();
 			numberOfReviews = reviews.size();
 
-			// if there is one or more reviews - dont delete and the message
+			// if there is one or more reviews - don't delete and the message
 			if (numberOfReviews >= 1) {
 				message = "Couldn't delete book with id :" + bookId + " becuase there are " + numberOfReviews
 						+ " reviews for this book";
 				System.out.println(message);
 				CommonUtitlity.showMessageBackend(message, request, response);
 			}
-
+			
+			//here I have - reviews for this book
 			else 
 			{
-				this.bookDao.delete(bookId);
-				message = "The book was deleted successfully";
-				System.out.println(message);
+				
+				OrderDAO orderDAO; 
+				long numberOfOrders; 
+				
+				//Assignment 22: check if there are orders for this book
+				 orderDAO = new OrderDAO(); 
+				orderDAO.openCurrentSession();
+				numberOfOrders = orderDAO.countOrderDetailByBook(bookId);
+				orderDAO.closeCurrentSession();
+				
+				/*
+				 * if numberOfOrders > 0  : 
+				 * Add a message to the request 
+				 * 
+				 */
+				if(numberOfOrders > 0)
+				{
+					message = "Could not delete book with ID " + bookId +"  because there are "
+							+ "orders associated with it"; 
+					
+				}
+				//END OF 22
+				//delete the Book ..
+				else
+				{
+					
+					this.bookDao.delete(bookId);
+					message = "The book was deleted successfully";
+					System.out.println(message);
+				}
+				
 				bookDao.closeCurrentSessionWithTransaction();
 				listBooks(message);
 			}

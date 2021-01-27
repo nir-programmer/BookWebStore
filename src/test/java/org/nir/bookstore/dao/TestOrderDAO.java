@@ -422,8 +422,26 @@ public class TestOrderDAO
 		assertNull(bookOrder);
 		
 		
+	}
+	
+	//Assignment 22
+	@Test
+	@DisplayName("when calling countOrderDetailByBook() method:")
+	public void testCountOrderDetailByBook()
+	{
 		
-						
+		Integer bookId;
+		long expected ;
+		long actual ; 
+		
+		bookId = 32; 
+		expected = 2; 
+		actual = orderDAO.countOrderDetailByBook(bookId);
+		
+		assertEquals(expected, actual);
+		
+		System.out.println("Number of order details with this book id :" + actual); 
+		
 		
 		
 	}
