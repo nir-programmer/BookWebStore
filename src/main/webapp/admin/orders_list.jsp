@@ -50,6 +50,10 @@
 				<c:url value="delete_link" var="deleteLink">
 					<c:param name="id" value="order.orderId"></c:param>
 				</c:url>
+				
+				<c:url value="view_order" var="viewLink">
+					<c:param name="id" value="${order.orderId}" />
+				</c:url>
 				<tr>
 					<td>${status.index + 1}</td>
 					<td>${order.orderId}</td>
@@ -63,9 +67,9 @@
 					<td>${order.paymentMethod}</td>
 					<td>${order.status}</td>
 					<td>${order.orderDate}</td>
-					<td><a href="${detailsLink}">Details</a>&nbsp; <a
-						href="${editLink}">Edit</a>&nbsp; <a href="javascript:void(0)"
-						class="deleteLink" id="${book.bookId}">Delete</a></td>
+					<td><a href="${viewLink}">Details</a>&nbsp; 
+					<a href="${editLink}">Edit</a>&nbsp; 
+					<a href="javascript:void(0)"class="deleteLink" id="${book.bookId}">Delete</a></td>
 				</tr>
 			</c:forEach>
 

@@ -306,6 +306,7 @@ public class Book implements java.io.Serializable
 		this.reviews = reviews;
 	}
 
+	//keep it lazy
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<OrderDetail> getOrderDetails()
 	{
