@@ -68,7 +68,9 @@ public class HibernateDAO<E>
 		getCurrentSession().save(entity);
 		
 		//try to fix to many connectinos- close the session
-		closeCurrentSession();
+		/*
+		 * if(currentSession != null) closeCurrentSession();
+		 */
 		return entity; 
 	}
 	

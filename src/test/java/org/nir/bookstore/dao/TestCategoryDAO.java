@@ -55,7 +55,7 @@ public class TestCategoryDAO {
 	@Test
 	@DisplayName("when creating a new Category by the CategoryDAO")
 	void testCreateCategoryWithCategoryDAO() {
-		Category category = new Category("Advanced Java");
+		Category category = new Category("Comix");
 
 		System.out.println(">>testCreateCategoryWithCategoryDAO():try to create a new Category named Cookings");
 		categoryDAO.create(category);

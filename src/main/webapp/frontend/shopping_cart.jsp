@@ -104,7 +104,7 @@
 							</td>
 							
 							<td>
-								<a href="/frontend/checkout">Checkout</a>
+								<a href="checkout">Checkout</a>
 							</td>
 						</tr>
 

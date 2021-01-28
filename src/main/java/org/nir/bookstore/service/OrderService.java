@@ -84,9 +84,11 @@ public class OrderService
 
 	public void showCheckOutForm() throws ServletException, IOException
 	{
-		String checkoutPage = "checkout";
+		String checkoutPage = "frontend/checkout.jsp";
+		System.out.println(">>OrderSerice.showCheckOutForm():URL IS : " +request.getRequestURI().toString());
 		
-		CommonUtitlity.forwardToPage(checkoutPage, request, response);
+		//CommonUtitlity.forwardToPage(checkoutPage, request, response);
+		request.getRequestDispatcher(checkoutPage).forward(request, response);
 		
 	}
 	
