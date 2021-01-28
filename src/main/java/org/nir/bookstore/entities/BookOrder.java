@@ -32,12 +32,11 @@ import javax.persistence.Transient;
 				query = "SELECT bo FROM BookOrder bo ORDER BY bo.orderDate DESC"), 
 				@NamedQuery(name="BookOrder.countAll",
 				query = "SELECT COUNT(*) FROM BookOrder"),
-				//Assignment 22
-				/*
-				 * @NamedQuery(name = "BookOrder.countOrderDetailByBook", query =
-				 * "SELECT COUNT(bo) FROM BookOrder bo " +
-				 * "WHERE bo.orderDetails.book.bookId =: bookId")
-				 */
+				//Assignment 23
+				  @NamedQuery(name = "BookOrder.countByCustomer", 
+				  query = "SELECT COUNT(bo) FROM BookOrder bo " +
+				  "WHERE bo.customer.customerId =: customerId")
+				 
 	})
 @Table(name = "book_order", catalog = "bookstoredb")
 public class BookOrder implements java.io.Serializable

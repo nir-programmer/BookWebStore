@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.nir.bookstore.dao.CustomerDAO;
+import org.nir.bookstore.dao.OrderDAO;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.Review;
 
@@ -182,12 +183,31 @@ public class CustomerService {
 				System.out.println(">>CustomerService.deleteCustomer(): " + message);
 				CommonUtitlity.showMessageBackend(message, request, response);
 			} 
+			//There are no reviews made by this customer
 			else 
 			{
-				message = "Customer with id " + id + " has been deleted succesfully!";
-				this.customerDAO.delete(id);
-				System.out.println(">>CustomerService.deleteCustomer(): " + message);
-				this.customerDAO.closeCurrentSessionWithTransaction();
+				//Assignment 23: check if there are BookOrders for this customer
+				OrderDAO orderDAO = new OrderDAO(); 
+				orderDAO.openCurrentSession();
+				long numberOfOrders = orderDAO.countWithNamedQuery("BookOrder.countByCustomer",
+						"customerId", id);
+				orderDAO.closeCurrentSession();
+				
+				//set an error message
+				if(numberOfOrders > 0)
+				{
+					message = "Could not delete customer with ID "+ id +"because he/she placed orders";
+				}
+				else
+				{
+					message = "Customer with id " + id + " has been deleted succesfully!";
+					this.customerDAO.delete(id);
+					System.out.println(">>CustomerService.deleteCustomer(): " + message);
+					this.customerDAO.closeCurrentSessionWithTransaction();
+					
+				}
+				//End of 23
+				
 				request.setAttribute("message", message);
 				this.listCustomers(message);
 			}
@@ -368,5 +388,7 @@ public class CustomerService {
 		newCustomer.setZipcode(zipCode);
 		newCustomer.setCountry(country);
 	}
+	
+	
 
 }

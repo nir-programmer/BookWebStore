@@ -442,7 +442,22 @@ public class TestOrderDAO
 		
 		System.out.println("Number of order details with this book id :" + actual); 
 		
-		
-		
 	}
+	
+	//Assignment 23
+		@Test
+		@DisplayName("when calling countByCustomer() method:")
+		public void testCountByCustomer()
+		{
+			Integer customerId = 11;  
+			long actual; 
+			long expected = 3; 
+			
+			actual = orderDAO.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
+			
+			assertEquals(expected, actual);
+			
+			
+			
+		}
 }

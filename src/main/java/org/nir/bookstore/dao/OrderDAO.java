@@ -52,10 +52,17 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		return super.countWithNamedQuery("BookOrder.countAll"); 
 	}
 	
-	//Assignment 22
-	public long countOrderDetailByBook(int bookId) {
-		return super.countWithNamedQuery("OrderDetail.countByBook", "bookId", bookId);
-	}	
+	//Assignment 22 WRONG
+	/*
+	 * public long countOrderDetailByBook(int bookId) { return
+	 * super.countWithNamedQuery("OrderDetail.countByBook", "bookId", bookId); }
+	 */	
+	
+	//Assignment 23
+	public long countOrderDetailByBook(int customerId) 
+	{
+		return super.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
+	}
 	
 
 	
