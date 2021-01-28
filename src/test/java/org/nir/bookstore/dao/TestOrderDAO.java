@@ -71,7 +71,9 @@ public class TestOrderDAO
 
 		// create the customer with id = 12
 		customer = new Customer();
-		customer.setCustomerId(12);
+		Integer customerId =12; 
+		customer.setCustomerId(customerId);
+		System.out.println(">>testCreateBookOrder():name of customer with id = " + customerId );
 
 		// create the BookOrder
 		bookOrder = new BookOrder();
