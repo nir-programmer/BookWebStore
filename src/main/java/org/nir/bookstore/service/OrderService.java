@@ -80,6 +80,15 @@ public class OrderService
 		
 		
 	}
+
+
+	public void showCheckOutForm() throws ServletException, IOException
+	{
+		String checkoutPage = "checkout";
+		
+		CommonUtitlity.forwardToPage(checkoutPage, request, response);
+		
+	}
 	
 	
 

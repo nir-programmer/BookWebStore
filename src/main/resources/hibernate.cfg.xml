@@ -10,8 +10,9 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
 		<!-- JDBC connection pool settings ... using built-in test pool -->
+		<!-- I TRY TO FIST THE EXCEPTPION FOR TO MANY CONNECTNIOS -->
 		<property name="connection.pool_size">1</property>
-
+		
 		<!-- Select our SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
@@ -30,5 +31,8 @@
 
 		<!-- Stack Over Flow... -->
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</property>
+		
+		<!-- try to solve the Exception for to many connections -->
+		<property name="maxIdle">1</property>
 	</session-factory>
 </hibernate-configuration>
