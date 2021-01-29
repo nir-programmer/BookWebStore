@@ -21,6 +21,7 @@ import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.OrderDetail;
+import org.nir.bookstore.service.BookService;
 
 public class TestOrderDAO
 {
@@ -469,7 +470,7 @@ public class TestOrderDAO
 			Integer customerId = 11;  
 			List<BookOrder> bookOrders ; 
 			
-			bookOrders = orderDAO.findWithNamedQuery("BookOrder.listByCustomer", "customerId", customerId);
+			bookOrders = orderDAO.findWithNamedQuery("BookOrder.findByCustomer", "customerId", customerId);
 			
 			int actual = bookOrders.size();
 			int expected = 3; 
@@ -486,21 +487,48 @@ public class TestOrderDAO
 		{
 			Integer customerId = 11;  
 			List<BookOrder> bookOrders ; 
-			Customer customer ; 
+			//Customer customer ; 
 			
+			//HE CHANGE THE PARAMTER TYPE FORM CUSTOMER TO INTEGER
 			//create a customer with exiting  id = 11;
-			customer =new Customer();
-			customer.setCustomerId(customerId);
+			/*
+			 * customer =new Customer(); customer.setCustomerId(customerId);
+			 */
 		
-			bookOrders = orderDAO.listByCustomer(customer);
+			bookOrders = orderDAO.listByCustomer(customerId);
 			
 			int actual = bookOrders.size();
 			int expected = 3; 
+			//assertEquals(expected, actual);
 			assertEquals(expected, actual);
-			
-			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId()));
+			System.out.println(">>List of orders for customer id : " + customerId);
+			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() +
+					" - " + o.getOrderDate()));
 				
 		}
+		
+		//OK
+				@Test
+				@DisplayName("when calling listByCustomer() method:")
+				public void testListByCustomerNonExists()
+				{
+					Integer customerId = 22;  
+					List<BookOrder> bookOrders ; 
+					
+				
+					bookOrders = orderDAO.listByCustomer(customerId);
+					
+					int actual = bookOrders.size();
+					int expected = 3; 
+					//assertEquals(expected, actual);
+					//assertEquals(expected, actual);
+					assertTrue(bookOrders.isEmpty());
+					
+					System.out.println(">>List of orders for customer id : " + customerId);
+					bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() +
+							" - " + o.getOrderDate()));
+						
+				}
 		
 		
 		

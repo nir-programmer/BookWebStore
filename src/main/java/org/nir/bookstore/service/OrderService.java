@@ -219,6 +219,33 @@ public class OrderService
 		 
 		 	
 	}
+
+
+	//He changed the type of the listByCustomer() to Integer( instead of Customer)
+	public void listOrdersByCustomer() throws ServletException, IOException
+	{
+		
+		Customer customer ; 
+		Integer customerId;
+		List<BookOrder> bookOrders; 
+		HttpSession session ;
+		String targetPage = "frontend/order_list.jsp";
+		//1.read the logged customer  FROM THE SESSION
+		session = request.getSession();
+		customer = (Customer)session.getAttribute("loggedCustomer");
+		
+		
+				
+		//2.read the list of orders for this customer
+		this.orderDAO.openCurrentSession();
+		bookOrders = orderDAO.listByCustomer(customer.getCustomerId());
+		this.orderDAO.closeCurrentSession();
+		
+		//3.set the list in the request and forward to the target page
+		request.setAttribute("orders", bookOrders);
+		request.getRequestDispatcher(targetPage).forward(request, response);
+		
+	}
 	
 	
 	

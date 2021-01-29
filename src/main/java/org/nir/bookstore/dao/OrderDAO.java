@@ -66,13 +66,13 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		return super.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
 	}
 	
-	public List<BookOrder> listByCustomer(Customer customer)
+	public List<BookOrder> listByCustomer(Integer customerId)
 	{
 		 
-		Integer customerId = 11;  
+		//Integer customerId = 11;  
 		List<BookOrder> bookOrders ; 
 		
-		bookOrders = this.findWithNamedQuery("BookOrder.listByCustomer", "customerId", customerId);
+		bookOrders = this.findWithNamedQuery("BookOrder.findByCustomer", "customerId", customerId);
 		return bookOrders;
 		
 	}
