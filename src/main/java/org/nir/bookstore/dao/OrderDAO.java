@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.nir.bookstore.entities.BookOrder;
+import org.nir.bookstore.entities.Customer;
 
 public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<BookOrder>
 {
@@ -65,6 +66,16 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		return super.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
 	}
 	
+	public List<BookOrder> listByCustomer(Customer customer)
+	{
+		 
+		Integer customerId = 11;  
+		List<BookOrder> bookOrders ; 
+		
+		bookOrders = this.findWithNamedQuery("BookOrder.listByCustomer", "customerId", customerId);
+		return bookOrders;
+		
+	}
 
 	
 

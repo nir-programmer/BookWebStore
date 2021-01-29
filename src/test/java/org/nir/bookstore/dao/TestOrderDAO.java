@@ -459,7 +459,50 @@ public class TestOrderDAO
 			
 			assertEquals(expected, actual);
 			
-			
-			
 		}
+		
+		//OK
+		@Test
+		@DisplayName("when calling listByCustomer() method:")
+		public void testListByCustomerWithfindWithNamedQuery()
+		{
+			Integer customerId = 11;  
+			List<BookOrder> bookOrders ; 
+			
+			bookOrders = orderDAO.findWithNamedQuery("BookOrder.listByCustomer", "customerId", customerId);
+			
+			int actual = bookOrders.size();
+			int expected = 3; 
+			assertEquals(expected, actual);
+			
+			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId()));
+				
+		}
+		
+		//OK
+		@Test
+		@DisplayName("when calling listByCustomer() method:")
+		public void testListByCustomer()
+		{
+			Integer customerId = 11;  
+			List<BookOrder> bookOrders ; 
+			Customer customer ; 
+			
+			//create a customer with exiting  id = 11;
+			customer =new Customer();
+			customer.setCustomerId(customerId);
+		
+			bookOrders = orderDAO.listByCustomer(customer);
+			
+			int actual = bookOrders.size();
+			int expected = 3; 
+			assertEquals(expected, actual);
+			
+			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId()));
+				
+		}
+		
+		
+		
+		
 }
