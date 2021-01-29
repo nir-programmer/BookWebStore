@@ -62,7 +62,7 @@ public class ShoppingCart
 	}
 	
 	// OK
-	public double getTotalAmount()
+	public float getTotalAmount()
 	{
 		float total = 0.0f; 
 		

@@ -83,7 +83,7 @@
 					
 					<h2>Your Shipping Information</h2>
 					<!-- relative URL of the Servlet that handles Submission of the this form  -->
-					<form id ="orderForm" action = "place-orer" method="post">
+					<form id ="orderForm" action = "place_order" method="post">
 						<table class="normal">
 							<tr>
 								<td>Recipient Name:</td>

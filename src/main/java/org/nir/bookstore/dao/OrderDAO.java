@@ -32,7 +32,8 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	{
 		//Default values
 		bookOrder.setOrderDate(new Date());
-		bookOrder.setPaymentMethod("Cash on Delivery");
+		//paymentMethod is set by the OrderService.placeOrder() method - reading from the drop down list
+		//bookOrder.setPaymentMethod("Cash on Delivery");
 		bookOrder.setStatus("Processing");
 		
 		return super.create(bookOrder);
