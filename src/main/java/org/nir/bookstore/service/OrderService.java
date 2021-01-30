@@ -57,7 +57,7 @@ public class OrderService
 	
 	public void  viewOrderDetailForAdmin() throws ServletException, IOException
 	{
-		String orderDetailPage = "order_details.jsp";
+		String orderDetailPage = "order_detail.jsp";
 		Integer id = Integer.parseInt(request.getParameter("id")); 
 		System.out.println(">>OrderService.viewOrderDetailForAdmin(): id of BookOrder is :" + id);
 		//Just for testing a non existing order: id = 2
@@ -246,6 +246,32 @@ public class OrderService
 		request.getRequestDispatcher(targetPage).forward(request, response);
 		
 	}
+
+
+	public void showOrderDetailForCustomer() throws ServletException, IOException
+	{
+		Integer orderId ; 
+		BookOrder bookOrder;
+		String orderDetailsPage; 
+		//For Security!
+		Customer customer = (Customer)request.getSession().getAttribute("loggedCustomer");
+		
+		
+		//1.Read the orderId from the request
+		orderId = Integer.parseInt(request.getParameter("id")); 
+		
+		//2.read the BookOrder with this id from the database 
+		this.orderDAO.openCurrentSession();
+		//I HAVE TO CALL THE SECURITY OVERLOAD GET() METHOD!!
+		bookOrder = this.orderDAO.get(orderId, customer.getCustomerId());
+		this.orderDAO.closeCurrentSession();
+		
+		//3.Forward to page : 'frontend/order_details.jsp'
+		orderDetailsPage = "frontend/order_detail.jsp";
+		request.setAttribute("order", bookOrder);
+		CommonUtitlity.forwardToPage(orderDetailsPage, request, response);
+	}
+	
 	
 	
 	

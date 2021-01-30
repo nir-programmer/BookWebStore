@@ -64,7 +64,7 @@ public class TestOrderDAO
 		Customer customer;
 		BookOrder bookOrder;
 		OrderDetail orderDetail1;
-		OrderDetail orderDetail2; 
+		OrderDetail orderDetail2;
 		// OrderDetailId orderDetailId;
 		Set<OrderDetail> orderDetails;
 		Book book1;
@@ -72,9 +72,9 @@ public class TestOrderDAO
 
 		// create the customer with id = 12
 		customer = new Customer();
-		Integer customerId =12; 
+		Integer customerId = 12;
 		customer.setCustomerId(customerId);
-		System.out.println(">>testCreateBookOrder():name of customer with id = " + customerId );
+		System.out.println(">>testCreateBookOrder():name of customer with id = " + customerId);
 
 		// create the BookOrder
 		bookOrder = new BookOrder();
@@ -87,7 +87,7 @@ public class TestOrderDAO
 
 		// Create the Book with existing id : 33(java 8)
 		book1 = new Book(33);
-		 book2 = new Book(34); 
+		book2 = new Book(34);
 		// Create set of orderDetails
 		orderDetails = new HashSet<OrderDetail>();
 
@@ -100,16 +100,15 @@ public class TestOrderDAO
 		orderDetail1.setQuantity(2);
 		orderDetail1.setSubtotal(73.44f);
 		orderDetail1.setBookOrder(bookOrder);
-		
-		
+
 		orderDetail2.setBook(book2);
 		orderDetail2.setQuantity(3);
-		orderDetail2.setSubtotal(179.97f); 
+		orderDetail2.setSubtotal(179.97f);
 		orderDetail2.setBookOrder(bookOrder);
 		// add the orderDetail to the set
 		orderDetails.add(orderDetail1);
 		orderDetails.add(orderDetail2);
-		
+
 		// add the Set to the BookOrder
 		bookOrder.setOrderDetails(orderDetails);
 
@@ -118,13 +117,10 @@ public class TestOrderDAO
 		BookOrder savedOrder = orderDAO.create(bookOrder);
 
 		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
-		
-		//loop over the set of OrderDetails
-		savedOrder.getOrderDetails().forEach(o -> System.out.println("oid = " + o.getBookOrder()+
-				" , bid = " + o.getBook().getBookId() + " , quantity = " + o.getQuantity() +
-				" ,subtotal = "+ o.getSubtotal()));
-		
-		
+
+		// loop over the set of OrderDetails
+		savedOrder.getOrderDetails().forEach(o -> System.out.println("oid = " + o.getBookOrder() + " , bid = "
+				+ o.getBook().getBookId() + " , quantity = " + o.getQuantity() + " ,subtotal = " + o.getSubtotal()));
 
 	}
 
@@ -214,15 +210,49 @@ public class TestOrderDAO
 
 	// OK
 	@Test
+	@DisplayName("when calling get()")
+	public void testGetByIdAndCustomerNull()
+	{
+		Integer orderId;
+		Integer customerId;
+		BookOrder bookOrder;
+
+		// get the bookOrder from the database for this customer only!
+		orderId = 45;
+		customerId = 99;
+		bookOrder = orderDAO.get(orderId, customerId);
+
+		assertNull(bookOrder);
+
+	}
+
+	@Test
+	@DisplayName("when calling get()")
+	public void testGetByIdAndCustomerNotNull()
+	{
+		Integer orderId;
+		Integer customerId;
+		BookOrder bookOrder;
+
+		// get the bookOrder from the database for this customer only!
+		orderId = 45;
+		customerId = 18;
+		bookOrder = orderDAO.get(orderId, customerId);
+
+		assertNotNull(bookOrder);
+
+	}
+
+	// OK
+	@Test
 	@DisplayName("when calling listAll() method")
 	public void testListAll()
 	{
 		List<BookOrder> bookOrders = orderDAO.listAll();
-		
+
 		assertTrue(bookOrders.size() > 0);
 
-		bookOrders.forEach(o -> System.out.println("orderId = " + o.getOrderId() + " - " + 
-		o.getOrderDate()));
+		bookOrders.forEach(o -> System.out.println("orderId = " + o.getOrderId() + " - " + o.getOrderDate()));
 	}
 
 	/*
@@ -270,7 +300,7 @@ public class TestOrderDAO
 		// call update()
 		orderDAO.update(bookOrder);
 	}
-	
+
 	@Test
 	@DisplayName("when calling update()")
 	public void testUpdateTotalOfBookOrder()
@@ -287,21 +317,20 @@ public class TestOrderDAO
 		// call update()
 		orderDAO.update(bookOrder);
 	}
-	
+
 	@Test
 	@DisplayName("when calling getBookCopies")
 	public void testGetBookCopies()
 	{
-		Integer orderId = 34; 
+		Integer orderId = 34;
 		BookOrder bookOrder = orderDAO.get(orderId);
-		
+
 		int expected = 13;
-		int actual = bookOrder.getBookCopies(); 
-		
+		int actual = bookOrder.getBookCopies();
+
 		assertEquals(expected, actual);
-		
+
 	}
-	
 
 	// Great!
 	@Test
@@ -335,7 +364,7 @@ public class TestOrderDAO
 
 	}
 
-	//OK
+	// OK
 	@Test
 	@DisplayName("when updating BookOrder and it's order detail (UPDATE CASCADE)")
 	public void testUpdateBookOrderAndOrderDetail()
@@ -355,16 +384,15 @@ public class TestOrderDAO
 		orderDetails = bookOrder.getOrderDetails();
 		assertEquals(2, orderDetails.size());
 		System.out.println("OrderDetails for BookOrder with id = " + bookOrderId);
-		orderDetails.forEach(d -> System.out.println("order id = " + d.getBookOrder().getOrderId()
-				+ " , book id = "
-				+ d.getBook().getBookId() + " , quantity= " + d.getQuantity() + 
-				" , subtotal = " + d.getSubtotal()));
+		orderDetails.forEach(d -> System.out.println("order id = " + d.getBookOrder().getOrderId() + " , book id = "
+				+ d.getBook().getBookId() + " , quantity= " + d.getQuantity() + " , subtotal = " + d.getSubtotal()));
 
-		// 3. Loop over the set and find the OrderDetail object with book_id = 32 and update
+		// 3. Loop over the set and find the OrderDetail object with book_id = 32 and
+		// update
 		// quantity to 3 and subtotal 117
 		bookId = 32;
 		iter = orderDetails.iterator();
-		
+
 		while (iter.hasNext()) {
 			OrderDetail orderDetail = iter.next();
 			if (orderDetail.getBook().getBookId() == bookId) {
@@ -372,165 +400,152 @@ public class TestOrderDAO
 				orderDetail.setSubtotal(117);
 			}
 		}
-		
+
 		// 5. PERSIST the bookOrder into the database
 		orderDAO.update(bookOrder);
-		
-		
-		
-		
+
 		System.out.println("After updating BookOrder, OrderDetails for BookOrder with id = " + bookOrderId);
-		orderDetails.forEach(d -> System.out.println("order id = " + d.getBookOrder().getOrderId()
-				+ " , book id = "
-				+ d.getBook().getBookId() + " , quantity= " + d.getQuantity() + 
-				" , subtotal = " + d.getSubtotal()));
-		
+		orderDetails.forEach(d -> System.out.println("order id = " + d.getBookOrder().getOrderId() + " , book id = "
+				+ d.getBook().getBookId() + " , quantity= " + d.getQuantity() + " , subtotal = " + d.getSubtotal()));
+
 	}
-	//ok
+
+	// ok
 	@Test
 	@DisplayName("when calling count() ")
 	public void testCount()
 	{
-		Integer id ; 
-		long actual ; 
+		Integer id;
+		long actual;
 		long expected;
-		BookOrder bookOrder; 
-		
-		id = 34; 
-		bookOrder = orderDAO.get(id); 
-	
-		actual= orderDAO.count();
-		expected = 4; 
-		
+		BookOrder bookOrder;
+
+		id = 34;
+		bookOrder = orderDAO.get(id);
+
+		actual = orderDAO.count();
+		expected = 4;
+
 		assertEquals(expected, actual);
-		
-		
-		System.out.println(">>testCount():number of rows in book_order table: " + actual); 
+
+		System.out.println(">>testCount():number of rows in book_order table: " + actual);
 	}
-	
-	//OK
+
+	// OK
 	@Test
 	@DisplayName("when calling delete() ")
 	public void testDelete()
 	{
-		Integer id ; 
-		
-		//1. delete book_order with id = 35
-		id = 35; 
+		Integer id;
+
+		// 1. delete book_order with id = 35
+		id = 35;
 		orderDAO.delete(id);
-		
-		
-		//2.test deletion by reading it again from data base 
+
+		// 2.test deletion by reading it again from data base
 		BookOrder bookOrder = orderDAO.get(id);
 		assertNull(bookOrder);
-		
-		
+
 	}
-	
-	//Assignment 22
+
+	// Assignment 22
 	@Test
 	@DisplayName("when calling countOrderDetailByBook() method:")
 	public void testCountOrderDetailByBook()
 	{
-		
+
 		Integer bookId;
-		long expected ;
-		long actual ; 
-		
-		bookId = 32; 
-		expected = 2; 
+		long expected;
+		long actual;
+
+		bookId = 32;
+		expected = 2;
 		actual = orderDAO.countOrderDetailByBook(bookId);
-		
+
 		assertEquals(expected, actual);
-		
-		System.out.println("Number of order details with this book id :" + actual); 
-		
+
+		System.out.println("Number of order details with this book id :" + actual);
+
 	}
-	
-	//Assignment 23
-		@Test
-		@DisplayName("when calling countByCustomer() method:")
-		public void testCountByCustomer()
-		{
-			Integer customerId = 11;  
-			long actual; 
-			long expected = 3; 
-			
-			actual = orderDAO.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
-			
-			assertEquals(expected, actual);
-			
-		}
-		
-		//OK
-		@Test
-		@DisplayName("when calling listByCustomer() method:")
-		public void testListByCustomerWithfindWithNamedQuery()
-		{
-			Integer customerId = 11;  
-			List<BookOrder> bookOrders ; 
-			
-			bookOrders = orderDAO.findWithNamedQuery("BookOrder.findByCustomer", "customerId", customerId);
-			
-			int actual = bookOrders.size();
-			int expected = 3; 
-			assertEquals(expected, actual);
-			
-			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId()));
-				
-		}
-		
-		//OK
-		@Test
-		@DisplayName("when calling listByCustomer() method:")
-		public void testListByCustomer()
-		{
-			Integer customerId = 11;  
-			List<BookOrder> bookOrders ; 
-			//Customer customer ; 
-			
-			//HE CHANGE THE PARAMTER TYPE FORM CUSTOMER TO INTEGER
-			//create a customer with exiting  id = 11;
-			/*
-			 * customer =new Customer(); customer.setCustomerId(customerId);
-			 */
-		
-			bookOrders = orderDAO.listByCustomer(customerId);
-			
-			int actual = bookOrders.size();
-			int expected = 3; 
-			//assertEquals(expected, actual);
-			assertEquals(expected, actual);
-			System.out.println(">>List of orders for customer id : " + customerId);
-			bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() +
-					" - " + o.getOrderDate()));
-				
-		}
-		
-		//OK
-				@Test
-				@DisplayName("when calling listByCustomer() method:")
-				public void testListByCustomerNonExists()
-				{
-					Integer customerId = 22;  
-					List<BookOrder> bookOrders ; 
-					
-				
-					bookOrders = orderDAO.listByCustomer(customerId);
-					
-					int actual = bookOrders.size();
-					int expected = 3; 
-					//assertEquals(expected, actual);
-					//assertEquals(expected, actual);
-					assertTrue(bookOrders.isEmpty());
-					
-					System.out.println(">>List of orders for customer id : " + customerId);
-					bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() +
-							" - " + o.getOrderDate()));
-						
-				}
-		
-		
-		
-		
+
+	// Assignment 23
+	@Test
+	@DisplayName("when calling countByCustomer() method:")
+	public void testCountByCustomer()
+	{
+		Integer customerId = 11;
+		long actual;
+		long expected = 3;
+
+		actual = orderDAO.countWithNamedQuery("BookOrder.countByCustomer", "customerId", customerId);
+
+		assertEquals(expected, actual);
+
+	}
+
+	// OK
+	@Test
+	@DisplayName("when calling listByCustomer() method:")
+	public void testListByCustomerWithfindWithNamedQuery()
+	{
+		Integer customerId = 11;
+		List<BookOrder> bookOrders;
+
+		bookOrders = orderDAO.findWithNamedQuery("BookOrder.findByCustomer", "customerId", customerId);
+
+		int actual = bookOrders.size();
+		int expected = 3;
+		assertEquals(expected, actual);
+
+		bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId()));
+
+	}
+
+	// OK
+	@Test
+	@DisplayName("when calling listByCustomer() method:")
+	public void testListByCustomer()
+	{
+		Integer customerId = 11;
+		List<BookOrder> bookOrders;
+		// Customer customer ;
+
+		// HE CHANGE THE PARAMTER TYPE FORM CUSTOMER TO INTEGER
+		// create a customer with exiting id = 11;
+		/*
+		 * customer =new Customer(); customer.setCustomerId(customerId);
+		 */
+
+		bookOrders = orderDAO.listByCustomer(customerId);
+
+		int actual = bookOrders.size();
+		int expected = 3;
+		// assertEquals(expected, actual);
+		assertEquals(expected, actual);
+		System.out.println(">>List of orders for customer id : " + customerId);
+		bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() + " - " + o.getOrderDate()));
+
+	}
+
+	// OK
+	@Test
+	@DisplayName("when calling listByCustomer() method:")
+	public void testListByCustomerNonExists()
+	{
+		Integer customerId = 22;
+		List<BookOrder> bookOrders;
+
+		bookOrders = orderDAO.listByCustomer(customerId);
+
+		int actual = bookOrders.size();
+		int expected = 3;
+		// assertEquals(expected, actual);
+		// assertEquals(expected, actual);
+		assertTrue(bookOrders.isEmpty());
+
+		System.out.println(">>List of orders for customer id : " + customerId);
+		bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() + " - " + o.getOrderDate()));
+
+	}
+
 }

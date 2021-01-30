@@ -1,10 +1,11 @@
 package org.nir.bookstore.dao;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.nir.bookstore.entities.BookOrder;
-import org.nir.bookstore.entities.Customer;
 
 public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<BookOrder>
 {
@@ -15,7 +16,28 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	{
 		return super.find(BookOrder.class, id);
 	}
-
+	
+	//For Security : I want this method to return the order only if the order belong to caller customer!!
+	public BookOrder get(Integer orderId , Integer customerId)
+	{
+		List<BookOrder> bookOrders;
+		Map<String,Object> parameters ; 
+		BookOrder bookOrder;
+		
+		//create a map and add pairs for orderIde , customerId
+		parameters = new HashMap<String, Object>();
+		parameters.put("orderId", orderId);
+		parameters.put("customerId" , customerId); 
+		
+		bookOrders = super.findWithNamedQuery("BookOrder.findByIdAndCustomer", parameters);
+		bookOrder = null ;
+		
+		//If the list is not empty , take the first element
+		if(!bookOrders.isEmpty())
+			bookOrder = bookOrders.get(0); 
+		
+		return bookOrder;
+	}
 	@Override
 	public void delete(Object id)
 	{
@@ -51,7 +73,7 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 	@Override
 	public long count()
 	{
-		return super.countWithNamedQuery("BookOrder.countAll"); 
+		return super.countWithNamedQuery("Bo)okOrder.countAll"); 
 	}
 	
 	//Assignment 22 WRONG

@@ -39,7 +39,11 @@ import javax.persistence.Transient;
 				  @NamedQuery(name = "BookOrder.findByCustomer", 
 								query = "SELECT bo FROM BookOrder bo "
 							           + "WHERE bo.customer.customerId =: customerId "
-							           + "ORDER BY bo.orderDate DESC")
+							           + "ORDER BY bo.orderDate DESC"),
+				  @NamedQuery(name = "BookOrder.findByIdAndCustomer", 
+				  query = "SELECT bo FROM BookOrder bo " +
+				  "WHERE bo.customer.customerId =: customerId "
+				  + "AND bo.orderId =: orderId")
 	})
 @Table(name = "book_order", catalog = "bookstoredb")
 public class BookOrder implements java.io.Serializable
