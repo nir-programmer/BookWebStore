@@ -23,7 +23,7 @@
 	</c:if>
 
 	<c:if test="${fn:length(orders) >  0 }">
-		<div align = "center">
+		<div align="center">
 			<table border="1">
 				<tr>
 					<th>Index</th>
@@ -35,17 +35,20 @@
 					<th>Actions</th>
 				</tr>
 				<c:forEach items="${orders}" var="order" varStatus="status">
+				
+					<c:url value="view_order" var="viewOrderLink">
+						<c:param name="id" value="${order.orderId}"></c:param>
+					</c:url>
 					<tr>
 						<td>${status.index + 1}</td>
 						<td>${order.orderId }</td>
 						<td>${order.bookCopies}</td>
-						
+
 						<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
-										value="${order.total}" type="currency" />
-						</td>
+								value="${order.total}" type="currency" /></td>
 						<td>${order.orderDate }</td>
 						<td>${order.status}</td>
-						<td><b><a href="">View Details</a></b></td>
+						<td><b><a href="${viewOrderLink}">View Details</a></b></td>
 					</tr>
 				</c:forEach>
 			</table>
