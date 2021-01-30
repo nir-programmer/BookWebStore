@@ -1,3 +1,4 @@
+
 package org.nir.bookstore.entities;
 // Generated 3 Dec 2020, 21:03:10 by Hibernate Tools 5.2.12.Final
 
