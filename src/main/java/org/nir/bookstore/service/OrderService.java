@@ -279,6 +279,7 @@ public class OrderService
 		BookOrder order;
 		String editPage ; 
 		String message; 
+		HttpSession session;
 		//1.Read the orderId form the request
 		orderId = Integer.parseInt(request.getParameter("id"));
 
@@ -287,12 +288,23 @@ public class OrderService
 		order= this.orderDAO.get(orderId);
 		this.orderDAO.closeCurrentSession();
 		
+		/*
+		 * 3.IMPORTANT:I will need order object also in is the add_book_form.jsp 
+		 * , So I need to set it in the session INSTEAD  of the request attribute
+		 */
+		session = request.getSession();
+		session.setAttribute("order", order);
 		
-		//3.Add the order to the request and Forward to order_form.jsp page
-		request.setAttribute("order", order);
-		//no need - 'admin/order_form.jsp'
 		editPage = "order_form.jsp";
 		CommonUtitlity.forwardToPage(editPage, request, response);
+		  
+		
+		/*THIS IS WRONG - I want the order in the session
+		 * //4.Add the order to the request and Forward to order_form.jsp page
+		 * request.setAttribute("order", order);
+		 */
+		//no need - 'admin/order_form.jsp'
+		
 			
 		
 		

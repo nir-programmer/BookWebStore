@@ -152,7 +152,13 @@
 	<script> 
 		function showAddBookPopup() 
 		{
-			window.open('add_book_form', '_blank', 'width=300, height=200, top=100, left=100');
+			var width = 600;
+			var height = 250; 
+			var left = (screen.width - width) / 2 ; 
+			var top = (screen.height - height) / 2; 
+			
+			window.open('add_book_form', '_blank', 'width=' + width +
+					', height=' + height + ', top=' + top + ', left=' + left);
 		
 		}
 	
