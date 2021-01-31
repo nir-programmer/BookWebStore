@@ -26,7 +26,7 @@
 		</div>
 	</c:if>
 
-	<c:if test="${message == null}">
+	
 
 
 		<!-- Section 1: order overview form-->
@@ -137,14 +137,14 @@
 				<!-- Section 3: Buttons: Save, Cancel(in the form scope) -->
 				<div align="center">
 					<br />
-					<a href="javascript:showAddBookPopup"><b>Add Books</b></a>
+					<a href="javascript:showAddBookPopup()"><b>Add Books</b></a>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
 						value="Save" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
 						type="button" value="Cancel" />
 				</div>
 			</div>
 		</form>
-	</c:if>
+	
 
 	<jsp:include page="footer.jsp"></jsp:include>
 	
@@ -152,7 +152,7 @@
 	<script> 
 		function showAddBookPopup() 
 		{
-			window.open('add_book_form', '_blank, width=300, height=200, top=100, left=100');
+			window.open('add_book_form', '_blank', 'width=300, height=200, top=100, left=100');
 		
 		}
 	
