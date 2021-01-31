@@ -277,8 +277,8 @@ public class OrderService
 	{
 		Integer orderId; 
 		BookOrder order;
-		String orderFormPage ; 
-		
+		String editPage ; 
+		String message; 
 		//1.Read the orderId form the request
 		orderId = Integer.parseInt(request.getParameter("id"));
 
@@ -286,13 +286,14 @@ public class OrderService
 		this.orderDAO.openCurrentSession();
 		order= this.orderDAO.get(orderId);
 		this.orderDAO.closeCurrentSession();
-
+		
+		
 		//3.Add the order to the request and Forward to order_form.jsp page
 		request.setAttribute("order", order);
 		//no need - 'admin/order_form.jsp'
-		orderFormPage = "order_form.jsp";
-		CommonUtitlity.forwardToPage(orderFormPage, request, response);
-		
+		editPage = "order_form.jsp";
+		CommonUtitlity.forwardToPage(editPage, request, response);
+			
 		
 		
 	}
