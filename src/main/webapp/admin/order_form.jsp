@@ -133,50 +133,29 @@
 						</tr>
 					</table>
 				</div>
-				
+
 				<!-- Section 3: Buttons: Save, Cancel(in the form scope) -->
 				<div align="center">
-					<br /> <b><a href="">Add Books</a> </b>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value="Save" />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Cancel" />
+					<br />
+					<a href="javascript:showAddBookPopup"><b>Add Books</b></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
+						value="Save" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+						type="button" value="Cancel" />
 				</div>
 			</div>
 		</form>
 	</c:if>
 
 	<jsp:include page="footer.jsp"></jsp:include>
+	
+	<!-- JS popup script to add book to the order -->
+	<script> 
+		function showAddBookPopup() 
+		{
+			window.open('add_book_form', '_blank, width=300, height=200, top=100, left=100');
+		
+		}
+	
+	</script>
 </body>
-
-<script>
-	$(document)
-			.ready(
-					function() {
-						$(".deleteLink")
-								.each(
-										function() {
-											$(this)
-													.on(
-															"click",
-															function() {
-																bookId = $(this)
-																		.attr(
-																				"id");
-																if (confirm('Are you sure you want to delete book with ID '
-																		+ bookId
-																		+ '?')) {
-																	window.location = 'delete_book?id='
-																			+ bookId;
-																}
-															});
-										});
-					});
-</script>
-
-
-
-
-
-
 </html>
