@@ -119,7 +119,7 @@
 								<td><input type="text" size="5" name="quantity"
 									value="${orderDetail.quantity}"></td>
 								<td>${orderDetail.subtotal}</td>
-								<td><b><a href="">Remove</a> </b></td>
+								<td><b><a href="remove_book_from_order?id=${orderDetail.book.bookId }">Remove</a> </b></td>
 							</tr>
 						</c:forEach>
 
@@ -139,8 +139,11 @@
 					<br />
 					<a href="javascript:showAddBookPopup()"><b>Add Books</b></a>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
-						value="Save" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-						type="button" value="Cancel" />
+						value="Save" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<!--  I need to forward to the list_order.jsp !! So the history didnt work! -->
+						<!-- <input	type="button" value="Cancel" onclick="javascript:history.go(-1);" /> -->
+						<input	type="button" value="Cancel" 
+						onclick="javascript:window.location.href='list_orders';" />
 				</div>
 			</div>
 		</form>
