@@ -280,20 +280,35 @@ public class OrderService
 		String editPage ; 
 		String message; 
 		HttpSession session;
+		//////////////////////////////////
+		session = request.getSession();
+		
 		//1.Read the orderId form the request
 		orderId = Integer.parseInt(request.getParameter("id"));
 
-		//2. Read the BookOrder object from the data base
-		this.orderDAO.openCurrentSession();
-		order= this.orderDAO.get(orderId);
-		this.orderDAO.closeCurrentSession();
+		//Important: Check the value of the NewBookPendingToAddToOrder session attribute
+		Object isPendingBook = session.getAttribute("NewBookPendingToAddToOrder");
 		
-		/*
-		 * 3.IMPORTANT:I will need order object also in is the add_book_form.jsp 
-		 * , So I need to set it in the session INSTEAD  of the request attribute
-		 */
-		session = request.getSession();
-		session.setAttribute("order", order);
+		//if there is no pending  book in the session - then fetch the book form the db and
+		//set it into the session
+		if(isPendingBook == null)
+		{
+			//2. Read the BookOrder object from the data base
+			this.orderDAO.openCurrentSession();
+			order= this.orderDAO.get(orderId);
+			this.orderDAO.closeCurrentSession();
+			
+			/*
+			 * 3.IMPORTANT:I will need order object also in is the add_book_form.jsp 
+			 * , So I need to set it in the session INSTEAD  of the request attribute
+			 */
+			session.setAttribute("order", order);
+		}
+		//There is a pending Book in the session - remove this flag attribute from the session..
+		else
+		{
+			session.removeAttribute("NewBookPendingToAddToOrder");
+		}
 		
 		editPage = "order_form.jsp";
 		CommonUtitlity.forwardToPage(editPage, request, response);
