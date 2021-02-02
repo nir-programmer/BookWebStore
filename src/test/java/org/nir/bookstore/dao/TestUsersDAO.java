@@ -49,12 +49,13 @@ public class TestUsersDAO
 	@DisplayName("when creating a new user by the userDao")
 	void testCreateUsers()
 	{
+		Users user1 = new Users("a@a", "a", "a");
 		
-		Users user1 = new Users("YYY", "YYY", "YYY");
 		Users user2 = new Users("AAA", "AAA", "AAA");
 		Users user3 = new Users("BBB", "BBB", "BBB");
 		Users user4 = new Users("niritzhak10@gmail.com", "superduper100", "Niron Itzhak"); 
-		Users user5 = new Users("a@a", "a", "a"); 
+		Users user5 = new Users("YYY", "YYY", "YYY");
+		
 		usersDAO.openCurrentSessionWithTransaction();
 		usersDAO.create(user1);
 		usersDAO.create(user2);
