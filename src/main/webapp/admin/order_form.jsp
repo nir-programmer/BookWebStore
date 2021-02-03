@@ -9,7 +9,8 @@
 <title>Order Details Form - Evergreen Bookstore Administration</title>
 <link rel="stylesheet" href="../css/style.css">
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
-<!-- <script type="text/javascript" src="../js/jquery.validate.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+
 </head>
 <body>
 
@@ -116,8 +117,10 @@
 								<td>${orderDetail.book.author}</td>
 								<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
 										value="${orderDetail.book.price}" type="currency" /></td>
-								<td><input type="text" size="5" name="quantity"
-									value="${orderDetail.quantity}"></td>
+								<td>
+									<input type="hidden" name="quantity" value="${orderDetail.quantity}">
+									<input type="text" size="5" name="quantity" value="${orderDetail.quantity}">
+								</td>
 								<td>${orderDetail.subtotal}</td>
 								<td><b><a href="remove_book_from_order?id=${orderDetail.book.bookId }">Remove</a> </b></td>
 							</tr>
@@ -165,6 +168,27 @@
 		
 		}
 	
+	//jQuery function to validate form fields
+	$(document).ready(function()
+	{
+		$("#orderForm").validate({
+			rules: 
+			{
+				
+				recipientName: "required",
+				recipientPhone: "required",
+				shippingAddress: "required",
+				
+			},
+			messages: 
+			{
+				recipientName: "Please enter a recipient name",
+				recipientPhone: "Please enter a recipient phone",
+				shippingAddress: "Please enter a shipping address",
+			}
+		}); 
+		
+	}); 
 	</script>
 </body>
 </html>
