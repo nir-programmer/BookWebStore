@@ -80,11 +80,29 @@
 					<tr>
 						<td><b>Order Status:</b></td>
 						<td><select name="status">
-								<option value="Processing">Processing</option>
-								<option value="Shipping">Shipping</option>
-								<option value="Delivered">Delivered</option>
-								<option value="Completed">Completed</option>
-								<option value="Canceled">Canceled</option>
+							<option value="Processing" 
+								  <c:if test="${order.status eq 'Processing' }" >  
+								   selected='selected' </c:if> >Processing
+							</option>
+							
+							<option value="Shipping" 
+							        <c:if test="${order.status eq 'Shipping' }" >  
+									 selected='selected' </c:if>>Shipping
+							</option>
+								<option value="Delivered" 
+								<c:if test="${order.status eq 'Delivered' }" >  
+								selected='selected' </c:if>>Delivered
+							</option>
+							
+								<option value="Completed"
+										 <c:if test="${order.status eq 'Completed' }" >  
+									     selected='selected' </c:if>>Completed
+								</option>
+								
+								<option value="Canceled"
+										 <c:if test="${order.status eq 'Canceled' }" >  
+									     selected='selected' </c:if>>Canceled
+								</option>
 
 						</select></td>
 					</tr>
@@ -115,12 +133,15 @@
 								<!--  put both title and book image in this cell -->
 								<td>${orderDetail.book.title}</td>
 								<td>${orderDetail.book.author}</td>
-								<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
-										value="${orderDetail.book.price}" type="currency" /></td>
+								<td>
+									<input type="hidden" name="price" value="${orderDetail.book.price}" />
+									<fmt:setLocale value="en_US" /> <fmt:formatNumber
+										value="${orderDetail.book.price}" type="currency" />
+								</td>
 								<td>
 <%--IMPORTANT(form the shoppincart): <input type="hidden" name="book_id" value="${item.key.bookId}" /> --%>
 									<input type="hidden" name="bookId" value="${orderDetail.book.bookId}">
-									<input type="text" size="5" name="quantity${statud.index + 1 }" 
+									<input type="text" size="5" name="quantity${status.index + 1 }" 
 									    value="${orderDetail.quantity}">
 								</td>
 								<td>${orderDetail.subtotal}</td>

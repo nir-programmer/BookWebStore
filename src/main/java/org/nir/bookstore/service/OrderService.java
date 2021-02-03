@@ -34,9 +34,18 @@ public class OrderService
 		this.orderDAO = new OrderDAO() ;
 	}
 
-
-	public void listAll() throws ServletException, IOException
+	public  void listAll() throws ServletException, IOException
 	{
+	 listAll(null);
+		
+	}
+
+	public void listAll(String message) throws ServletException, IOException
+	{
+		if(message != null)
+		{
+			request.setAttribute("message", message);
+		}
 		String ordersPage = "orders_list.jsp"; 
 		//OrderDAO orderDAO;
 		List<BookOrder> bookOrders; 
@@ -324,6 +333,110 @@ public class OrderService
 		
 		
 	}
+
+
+	public void updateOrder() throws ServletException, IOException
+	{
+		//read the BookOrder from the SESSION!!
+		HttpSession session ;
+		BookOrder bookOrder;
+		Set<OrderDetail> orderDetails;
+		
+		//Read GENERAL information of the order from the form(section 1 )
+		String recipientName;
+		String recipientPhone; 
+		String shippingAddress; 
+		String paymentMethod;
+		String status; 
+		
+		//total for the BookOrder - calculated in this method !
+		float totalAmount = 0.0f ; 
+		 
+		 //this message will be displayed in the REFRESHED list_order.jsp page
+		 String message; 
+		
+		
+		
+		//Read OrderDetails information of the order from the form(section 2)
+		String[] arrayBookId ; //hidden fields
+		String[] arrayPrice;//hidden fields
+		String[] arrayQuantity; //not hidden field
+		
+		
+		//CREATION
+		//1.Create the BookOrder object from the session .
+		 session = request.getSession();
+		 bookOrder = (BookOrder) session.getAttribute("order"); 
+		 
+		 
+		 
+		 //2.Read GENERAL values from the form in the order_form.jsp :
+		 recipientName = request.getParameter("recipientName");
+		 recipientPhone = request.getParameter("recipientPhone");
+		 shippingAddress = request.getParameter("shippingAddress"); 
+		 paymentMethod = request.getParameter("paymentMethod"); 
+		 status = request.getParameter("status"); 
+		 
+		//Test it in the console:  >>updateOrder():status = Shipping : OK
+		 System.out.println(">>updateOrder():status = " + status); 
+		 //Read ORDER DETAIL related values from the form(section 2) 
+		 arrayBookId = request.getParameterValues("bookId"); 
+		 arrayPrice = request.getParameterValues("price"); 
+		 arrayQuantity = new String[arrayBookId.length]; 
+		 
+		 //read quantities into the array 
+		 for (int i = 1 ; i <= arrayQuantity.length; i++)
+			 arrayQuantity[i -1 ]  = request.getParameter("quantity" + i); 
+		 
+		 //read the Set of OrderDetail from the order in the session
+		 orderDetails = bookOrder.getOrderDetails();
+		 //Remove all OrderDetail from this BookOrder's  orderDetails! 
+		 orderDetails.clear();
+		 
+		//Recreate them from the form fields(section 2) //quantity, subtotal , Book, BookOrder
+		 for(int i = 0 ; i < arrayBookId.length; i ++ )
+		 {
+			 int bookId = Integer.parseInt(arrayBookId[i]); 
+			 int quantity = Integer.parseInt(arrayQuantity[i]); 
+			 float price = Float.parseFloat(arrayPrice[i]); 
+			 
+			 //calculate subtotal for the order detail 
+			 float subtotal = quantity * price;
+			 
+			 
+			 
+			 //create a new OrderDetail for the current book and set its values
+			 OrderDetail orderDetail  = new OrderDetail() ;
+			 orderDetail.setBook(new Book(bookId));
+			 orderDetail.setQuantity(quantity);
+			 orderDetail.setSubtotal(subtotal);
+			 orderDetail.setBookOrder(bookOrder);
+			 
+			 
+			 //add this OrderDetail to the OrderDetails(was cleared before the loop) of the BookOrder
+			 orderDetails.add(orderDetail);
+			 
+			 //update the totalAmount
+			 totalAmount += subtotal;
+		 }
+		
+		 //set the totalAmout in the BookOrder
+		 bookOrder.setTotal(totalAmount);
+		 bookOrder.setStatus(status);
+		 
+		 //update the database - add this BookOrder
+		 this.orderDAO.openCurrentSessionWithTransaction();
+		 this.orderDAO.update(bookOrder);
+		 this.orderDAO.closeCurrentSessionWithTransaction();
+		 
+		 //Refresh the order_list.jsp by calling the listAll() ;
+		 message = "The order " + bookOrder.getOrderId() + " has been updated successfully";
+		 this.listAll(message);
+		 
+	}
+
+
+	
 	
 	
 	

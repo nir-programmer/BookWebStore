@@ -50,7 +50,7 @@
 				<c:url value="delete_link" var="deleteLink">
 					<c:param name="id" value="order.orderId"></c:param>
 				</c:url>
-				
+
 				<c:url value="view_order" var="viewLink">
 					<c:param name="id" value="${order.orderId}" />
 				</c:url>
@@ -62,14 +62,13 @@
 					<!-- This value is returned from a transient getter in BookOrder entity -->
 					<td>${order.bookCopies}</td>
 					<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
-							value="${order.total}" type="currency" />
-					</td>
+							value="${order.total}" type="currency" /></td>
 					<td>${order.paymentMethod}</td>
 					<td>${order.status}</td>
 					<td>${order.orderDate}</td>
-					<td><a href="${viewLink}">Details</a>&nbsp; 
-					<a href="${editLink}">Edit</a>&nbsp; 
-					<a href="javascript:void(0)"class="deleteLink" id="${book.bookId}">Delete</a></td>
+					<td><a href="${viewLink}">Details</a>&nbsp; <a
+						href="${editLink}">Edit</a>&nbsp; <a href="javascript:void(0)"
+						class="deleteLink" id="${order.orderId}">Delete</a></td>
 				</tr>
 			</c:forEach>
 
@@ -94,11 +93,11 @@
 																bookId = $(this)
 																		.attr(
 																				"id");
-																if (confirm('Are you sure you want to delete book with ID '
-																		+ bookId
+																if (confirm('Are you sure you want to delete order with ID '
+																		+ orderId
 																		+ '?')) {
-																	window.location = 'delete_book?id='
-																			+ bookId;
+																	window.location = 'delete_order?id='
+																			+ orderId;
 																}
 															});
 										});
