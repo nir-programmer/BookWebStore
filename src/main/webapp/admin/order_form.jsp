@@ -118,8 +118,10 @@
 								<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
 										value="${orderDetail.book.price}" type="currency" /></td>
 								<td>
-									<input type="hidden" name="quantity" value="${orderDetail.quantity}">
-									<input type="text" size="5" name="quantity" value="${orderDetail.quantity}">
+<%--IMPORTANT(form the shoppincart): <input type="hidden" name="book_id" value="${item.key.bookId}" /> --%>
+									<input type="hidden" name="bookId" value="${orderDetail.book.bookId}">
+									<input type="text" size="5" name="quantity${statud.index + 1 }" 
+									    value="${orderDetail.quantity}">
 								</td>
 								<td>${orderDetail.subtotal}</td>
 								<td><b><a href="remove_book_from_order?id=${orderDetail.book.bookId }">Remove</a> </b></td>
@@ -179,12 +181,26 @@
 				recipientPhone: "required",
 				shippingAddress: "required",
 				
+				<c:forEach var="book" items="${order.orderDetails}" varStatus="status">
+				 quantity${status.index + 1}: {
+					required: true , number: true, 	min: 1
+				},
+		</c:forEach>
+				
 			},
 			messages: 
 			{
 				recipientName: "Please enter a recipient name",
 				recipientPhone: "Please enter a recipient phone",
 				shippingAddress: "Please enter a shipping address",
+				
+				<c:forEach var="book" items="${order.orderDetails}" varStatus="status">
+				quantity${status.index + 1}: {
+					required: "Please enter quantity" ,
+					number: "Quantity must be a number", 
+					min: "Quantity must be greater than 0"
+					},
+			</c:forEach> 
 			}
 		}); 
 		
