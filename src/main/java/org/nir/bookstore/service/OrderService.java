@@ -435,6 +435,27 @@ public class OrderService
 		 
 	}
 
+	public void deleteOrder() throws ServletException, IOException
+	{
+		
+		Integer orderId; 
+		String message; 
+		
+		//1.Read the orderId from the request : "id"
+		orderId = Integer.parseInt(request.getParameter("id")); 
+		
+		//2.Just delete with OrderDAO: 
+		this.orderDAO.openCurrentSessionWithTransaction();
+		this.orderDAO.delete(orderId);
+		this.orderDAO.closeCurrentSessionWithTransaction();
+		
+		//3.Forward to the refreshed  order_list.jsp page with a message
+		 message = "The order ID  " + orderId + " has been deleted."; 
+			/* request.setAttribute("message", message); */
+		 this.listAll(message);
+		 
+	}
+
 
 	
 	

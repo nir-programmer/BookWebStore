@@ -66,8 +66,10 @@
 					<td>${order.paymentMethod}</td>
 					<td>${order.status}</td>
 					<td>${order.orderDate}</td>
-					<td><a href="${viewLink}">Details</a>&nbsp; <a
-						href="${editLink}">Edit</a>&nbsp; <a href="javascript:void(0)"
+					<td>
+						<a href="${viewLink}">Details</a>&nbsp;
+					 <a href="${editLink}">Edit</a>&nbsp; 
+					<a href="javascript:void(0)"
 						class="deleteLink" id="${order.orderId}">Delete</a></td>
 				</tr>
 			</c:forEach>
@@ -90,7 +92,7 @@
 													.on(
 															"click",
 															function() {
-																bookId = $(this)
+																orderId = $(this)
 																		.attr(
 																				"id");
 																if (confirm('Are you sure you want to delete order with ID '
