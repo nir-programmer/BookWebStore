@@ -460,9 +460,31 @@ public class OrderService
 		
 		Integer orderId; 
 		String message; 
-		
+	
 		//1.Read the orderId from the request : "id"
 		orderId = Integer.parseInt(request.getParameter("id")); 
+		
+		/*
+		 * Assingment 25 - check if there is an order with this id in the databases
+		 * 
+		 */
+		BookOrder bookOrder ;
+		this.orderDAO.openCurrentSession();
+		bookOrder = this.orderDAO.get(orderId);
+		if(bookOrder == null)
+		{
+			message = "Could not find order with ID " + orderId + 
+					", or it might have been deleted by another admin";
+			
+			this.orderDAO.closeCurrentSession();
+			CommonUtitlity.forwardToPage("message.jsp", message, request, response);
+			return; 
+		}
+		
+		this.orderDAO.closeCurrentSession();
+		
+		//Assingment 25 END
+		
 		
 		//2.Just delete with OrderDAO: 
 		this.orderDAO.openCurrentSessionWithTransaction();
