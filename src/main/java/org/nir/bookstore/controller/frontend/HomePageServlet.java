@@ -15,41 +15,66 @@ import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.service.CategoriesService;
 
-/**
- * Servlet implementation class HomePageServlet
- */
+
 @WebServlet("")
 public class HomePageServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public HomePageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{	
+		BookDAO bookDAO; 
+		String targetPage; 
+		List<Book> newBooks;
+		List<Book> bestSellingBooks;
+		List<Book> mostFavoredBooks;
+		
+		//Open current session
+		bookDAO = new BookDAO(); 
+		bookDAO.openCurrentSession();
 		
 		
-		BookDAO bookDAO = new BookDAO();
+		//Read list of newest books
+		newBooks = bookDAO.listNewBooks();
+		request.setAttribute("newBooks", newBooks);
 		
-		bookDAO.openCurrentSession(); 
-		List<Book> newBooks = bookDAO.listNewBooks();
+		
+		//Read list of best selling books
+		bestSellingBooks = bookDAO.listBestSellingBooks();
+		request.setAttribute("bestSellingBooks", bestSellingBooks);
+		
+		
+		//Read list of most favored books
+		
+		
+		//close current session
 		bookDAO.closeCurrentSession();
 		
-		request.setAttribute("newBooks", newBooks);
-		//request.setAttribute("categories", categories);
 		
-		//newBooks.forEach(c -> System.out.println(c.getTitle()));
+		//forward to the home page
+		targetPage = "frontend/index.jsp"; 
+		request.getRequestDispatcher(targetPage).forward(request, response);
 		
-		request.getRequestDispatcher("frontend/index.jsp").forward(request, response);
+		//Read list of newest books
+		/*
+		 * BookDAO bookDAO = new BookDAO();
+		 * 
+		 * bookDAO.openCurrentSession(); List<Book> newBooks = bookDAO.listNewBooks();
+		 * bookDAO.closeCurrentSession();
+		 * 
+		 * request.setAttribute("newBooks", newBooks);
+		 * 
+		 * 
+		 * 
+		 * request.getRequestDispatcher("frontend/index.jsp").forward(request,
+		 * response);
+		 */
 	}
 
 	
