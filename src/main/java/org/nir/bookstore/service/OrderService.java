@@ -290,11 +290,31 @@ public class OrderService
 		String message; 
 		HttpSession session;
 		//////////////////////////////////
+		
+		
+		
+		
 		session = request.getSession();
 		
 		//1.Read the orderId form the request
 		orderId = Integer.parseInt(request.getParameter("id"));
+		///////////////////////////////////////////////////////////////
+		/*
+		 * Assingment 24:
+		 * Check if there is an order with this id in the database
+		 */
+		this.orderDAO.openCurrentSession();
+		order = this.orderDAO.get(orderId); 
+		if(order == null)
+		{
+			message = "Could not find order with ID " + orderId;
+			this.orderDAO.closeCurrentSession();
+			CommonUtitlity.forwardToPage("message.jsp", message, request, response);
+			return ; 
+		}
+		this.orderDAO.closeCurrentSession();
 
+		/////////////////////////////////////////////////////////
 		//Important: Check the value of the NewBookPendingToAddToOrder session attribute
 		Object isPendingBook = session.getAttribute("NewBookPendingToAddToOrder");
 		
