@@ -19,11 +19,10 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "OrderDetail.countByBook",
-			query = "SELECT COUNT(*) FROM OrderDetail od WHERE od.book.bookId =: bookId")
-		/*
-		 * @NamedQuery(name = "OrderDetail.countByBook" , query =
-		 * "SELECT COUNT() FROM OrderDetail od WHERE od.book.bookId =: bookId")
-		 */
+			query = "SELECT COUNT(*) FROM OrderDetail od WHERE od.book.bookId =: bookId"),
+	@NamedQuery(name="OrderDetail.bestSelling" , 
+				query="SELECT od.book FROM OrderDetail od GROUP BY od.book.bookId "
+						+ "ORDER BY SUM(od.quantity) DESC")
 })
 @Table(name = "order_detail", catalog = "bookstoredb")
 public class OrderDetail implements java.io.Serializable

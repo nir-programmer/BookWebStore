@@ -95,5 +95,11 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	 * }
 	 */
 	
+	public List<Book> listBestSellingBooks()
+	{
+		return super.findWithNamedQuery("OrderDetail.bestSelling", 0, 4);
+		
+	}
+	
 	
 }

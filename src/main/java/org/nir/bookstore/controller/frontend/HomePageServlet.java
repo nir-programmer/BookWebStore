@@ -36,14 +36,7 @@ public class HomePageServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{	
-		System.out.println(">>HomePageServlet: list of categories = " + request.getAttribute("categories"));
 		
-		/*
-		 * CategoryDAO categoryDAO = new CategoryDAO();
-		 * categoryDAO.openCurrentSessionWithTransaction(); List<Category> categories =
-		 * categoryDAO.listAll(); categoryDAO.closeCurrentSessionWithTransaction();
-		 */
-
 		
 		BookDAO bookDAO = new BookDAO();
 		
@@ -54,7 +47,7 @@ public class HomePageServlet extends HttpServlet
 		request.setAttribute("newBooks", newBooks);
 		//request.setAttribute("categories", categories);
 		
-		newBooks.forEach(c -> System.out.println(c.getTitle()));
+		//newBooks.forEach(c -> System.out.println(c.getTitle()));
 		
 		request.getRequestDispatcher("frontend/index.jsp").forward(request, response);
 	}

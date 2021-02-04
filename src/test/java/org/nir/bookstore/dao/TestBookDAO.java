@@ -392,4 +392,17 @@ public class TestBookDAO
 		List<Book> books = bookDAO.listByCategory(14); 
 		books.forEach(c -> System.out.println(c.getTitle()));
 	}
+	
+	@Test
+	@DisplayName("When calling listBestSellingBooks")
+	public void testBestSellingBooks()
+	{
+		List<Book> bestSellingBooks = bookDAO.listBestSellingBooks();
+		
+		assertNotNull(bestSellingBooks);
+		assertEquals(4, bestSellingBooks.size());
+		
+		bestSellingBooks.forEach(b -> System.out.println("book Id: " + b.getBookId() + 
+				", book title: " + b.getTitle()));
+	}
 }
