@@ -10,6 +10,7 @@
 		<property name="hibernate.connection.password">superduper100</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
+		<!-- OPTIONAL PROPERTY -->
 		<property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
 
        <!-- hibernate.c3p0.min_size – Minimum number of JDBC connections in the pool. Hibernate default: 1 -->
