@@ -50,11 +50,17 @@ public class CommonFilter implements Filter
 		
 		if(!path.startsWith("/admin/"))
 		{
-			System.out.println(">>CommonFilter.doFilter()-This message should be printed only "
-					+ "for request with URI  without  '/admin/' ! ");
+			System.out.println(">>CommonFilter.doFilter():Calling categoryDAO.openCurrentSession()...");
 			this.categoryDAO.openCurrentSession();
+			System.out.println(">>CommonFilter.doFilter():categoryDAO.openCurrentSession() RETURNED!");
+			
 			List<Category> categories = this.categoryDAO.listAll();
 			//this.categoryDAO.closeCurrentSession();
+			
+			System.out.println(">>CommonFilter.doFilter(): Calling catetoryDAO.closeCurrentSession()...");
+			categoryDAO.closeCurrentSession();
+			System.out.println("CommonFilter.doFilter():categoryDAO.closeCurrentSession() RETURNED!");
+			
 			
 			//categoriems.forEach(c -> System.out.println(c.getName()));
 			httpServletRequest.setAttribute("categories", categories);

@@ -37,8 +37,10 @@ public class HomePageServlet extends HttpServlet
 		
 		//Open current session
 		bookDAO = new BookDAO(); 
-		bookDAO.openCurrentSession();
 		
+		System.out.println(">>HomePageServlet.doGet(): Calling bookDAO.openCurrentSession()...");
+		bookDAO.openCurrentSession();
+		System.out.println(">>HomePageServlet.doGet():bookDAO.openCurrentSession() RETURNED!");
 		
 		//Read list of newest books
 		newBooks = bookDAO.listNewBooks();
@@ -54,7 +56,9 @@ public class HomePageServlet extends HttpServlet
 		
 		
 		//close current session
+		System.out.println(">>HomePageServlet.doGet(): Calling bookDAO.closeCurrentSession()...");
 		bookDAO.closeCurrentSession();
+		System.out.println(">>HomePageServlet.doGet():bookDAO.closeCurrentSession() RETURNED!");
 		
 		
 		//forward to the home page

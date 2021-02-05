@@ -1,18 +1,13 @@
 package org.nir.bookstore.dao;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.nir.bookstore.entities.Book;
@@ -26,6 +21,16 @@ import org.nir.bookstore.entities.Users;
 
 public class HibernateDAO<E>
 {	
+	//Tests..
+	private static int numberOfOpenSessions = 0 ;
+	private static  int numberOfClosedSessions = 0 ;
+	private static int  numberOfBeginTransactions  = 0 ;
+	private static int numberOfCommitedTransactions  = 0 ;
+	private static int numberOfOpenSessionFactory = 0 ; 
+	private static int numberOfClosedSessionFactory = 0 ; 
+	///
+	
+	
 	protected  Session currentSession;  
 	protected Transaction currentTransaction; 
 	
@@ -34,7 +39,11 @@ public class HibernateDAO<E>
 	
 	static 
 	{
+		System.out.println(">>HibernateDAO inside the static block , numberOfOpenSessionFactory =  "
+						+ numberOfClosedSessionFactory);
+		
 		System.out.println(">>HibernateDAO inside the static block - try to create session factory");
+		
 		sessionFactory = new Configuration().configure("hibernate.cfg.xml")
 				 .addAnnotatedClass(Category.class)
 				 .addAnnotatedClass(Book.class)
@@ -46,8 +55,11 @@ public class HibernateDAO<E>
 				 .addAnnotatedClass(BookOrder.class)
 				 .buildSessionFactory();
 		
-		System.out.println(">>HibernateDAO inside the static block - sessionFactory created!");
+		numberOfClosedSessionFactory ++ ;
 		
+		System.out.println(">>HibernateDAO inside the static block - sessionFactory created!");
+		System.out.println(">>HibernateDAO inside the static block , numberOfOpenSessionFactory =  "
+				+ numberOfClosedSessionFactory);
 	}
 	///////////////////////////////////////////////////////
 	public HibernateDAO() {}
@@ -185,60 +197,141 @@ public class HibernateDAO<E>
 	 ***************************************************/
 	public Session openCurrentSession()
 	{
+		System.out.println(">>HibernateDAO.openCurrentSession():numberOfOpenSessions = "
+					+ numberOfOpenSessions);
+		
 		System.out.println(">>HibernateDAO.openCurrentSession():Trying to open a new Session...");
+		
 		currentSession = getSessionFactory().openSession();
+		
 		System.out.println(">>HibernateDAO.openCurrentSession():A new Session has opened successfully");
+		
+		numberOfOpenSessions++; 
+		
+		System.out.println(">>HibernateDAO.openCurrentSession():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
+	
+
 		return currentSession;
 	}
 	
 	public void openCurrentSessionWithTransaction() 
 	{
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
+		
 		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():Trying to open a new Session...");
+		
 		currentSession = getSessionFactory().openSession();
-		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():A new Session has opened successfully");
+		
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():A "
+				+ "	new Session has opened successfully");
+		
+		//update number of open sessions
+		numberOfOpenSessions++;
+		
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
+		
+		
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():numberOfOpenBegunTransactions = "
+				+ numberOfBeginTransactions);
 		
 		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():Trying to begin a  newTransaction...");
+		
 		currentTransaction = currentSession.beginTransaction();
+		
+		//update number of begun transactions
+		numberOfBeginTransactions++;
+		
+		
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():numberOfOpenBegunTransactions = "
+				+ numberOfBeginTransactions);
+		
+		
 		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():A new Transaction begun successfully!");
 	}
 	
 	
 	public void closeCurrentSession()
 	{
-		System.out.println(">>HibernateDAO.closeCurrentSession():Trying to close the Session...");
+		System.out.println(">>HibernateDAO.closeCurrentSession():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
+	
+		System.out.println(">>HibernateDAO.openCurrentSession():Trying to close a Session");
+	
 		currentSession.close();
+		
+		//update number of open sessions
+		numberOfOpenSessions--; 
+		
 		System.out.println(">>HibernateDAO.closeCurrentSession():A session closed successfylly!");
+		
+		System.out.println(">>HibernateDAO.closeCurrentSession():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
 	}
 	
 	public void closeCurrentSessionWithTransaction()
 	{
-		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Trying to commit a Transaction...");
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():"
+				+ "Trying to commit a Transaction...");
+		
 		currentTransaction.commit();
-		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Transaction has been commited successfully!");
+		
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():"
+				+ "Transaction has been commited successfully!");
+		
+		//update number of begun transactions
+		numberOfBeginTransactions--;
+		
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():numberOfOpenBegunTransactions = "
+				+ numberOfBeginTransactions);
+
 		
 		
-		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Trying to close the Session...");
+		
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():"
+				+ "numberOfOpenSessions = "+ numberOfOpenSessions);
+	
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTruansaction()"
+					+ ":Trying to close a Session");
+	
 		currentSession.close();
+		
+		//update number of open sessions
+		numberOfOpenSessions--; 
+		
 		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():A session closed successfylly!");
+		
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():numberOfOpenSessions = "
+				+ numberOfOpenSessions);
+
 	}
 	
 	protected static SessionFactory getSessionFactory()
 	{
 		
-		System.out.println(">>HibernateDAO.getSessionFactory():Trying to create the SessionFactory...");
-	
-		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
-				 .addAnnotatedClass(Category.class)
-				 .addAnnotatedClass(Book.class)
-				 .addAnnotatedClass(Customer.class)
-				 .addAnnotatedClass(OrderDetailId.class)
-				 .addAnnotatedClass(OrderDetail.class)
-				 .addAnnotatedClass(Review.class)
-				 .addAnnotatedClass(Users.class)
-				 .addAnnotatedClass(BookOrder.class)
-				 .buildSessionFactory();
+		boolean isSessionFactoryOpen = sessionFactory.isOpen();
 		
-		System.out.println(">>HibernateDAO.getSessionFactory():A new SessionFactory has been created successfully!");
+		System.out.println(">>HibernateDAO.getSessionFactory(): The SessionFactory is open: " + isSessionFactoryOpen);
+		
+		/*
+		 * System.out.
+		 * println(">>HibernateDAO.getSessionFactory():Trying to create the SessionFactory..."
+		 * );
+		 * 
+		 * SessionFactory sessionFactory = new
+		 * Configuration().configure("hibernate.cfg.xml")
+		 * .addAnnotatedClass(Category.class) .addAnnotatedClass(Book.class)
+		 * .addAnnotatedClass(Customer.class) .addAnnotatedClass(OrderDetailId.class)
+		 * .addAnnotatedClass(OrderDetail.class) .addAnnotatedClass(Review.class)
+		 * .addAnnotatedClass(Users.class) .addAnnotatedClass(BookOrder.class)
+		 * .buildSessionFactory();
+		 * 
+		 * System.out.
+		 * println(">>HibernateDAO.getSessionFactory():A new SessionFactory has been created successfully!"
+		 * );
+		 */
 		return sessionFactory;
 	}
 	
