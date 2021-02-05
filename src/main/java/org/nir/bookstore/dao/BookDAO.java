@@ -104,7 +104,19 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	
 	public List<Book> listMostFavoredBooks()
 	{
-		return null;
+		List<Book> mostFavoredBooks = new ArrayList<>(); 
+		
+		List<Object[]> result = super.findWithNamedQueryObjects("Review.mostFavoredBooks", 0 , 4); 
+		
+		if(!result.isEmpty())
+		{
+			for(Object[] elements : result )
+			{
+				Book book = (Book) elements[0]; 
+				mostFavoredBooks.add(book);
+			}
+		}
+		return mostFavoredBooks;
 		
 	}
 	

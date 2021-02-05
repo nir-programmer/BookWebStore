@@ -165,6 +165,21 @@ public class HibernateDAO<E>
 		List<E> entities = query.getResultList();
 		return entities;
 	}
+	
+	/*
+	 * This method is to fix the problem with retrieving the List<Book> most favored ..
+	 * 
+	 */
+	protected List<Object[]> findWithNamedQueryObjects(String queryName , int firstResult , int maxResult) 
+	{
+		Session session = getCurrentSession();
+		Query<Object[]> query = session.createNamedQuery(queryName);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResult); 
+		
+		List<Object[]> entities = query.getResultList();
+		return entities;
+	}
 
 	
 	protected long countWithNamedQuery(String queryName) 
