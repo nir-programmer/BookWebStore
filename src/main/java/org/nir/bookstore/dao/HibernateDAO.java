@@ -185,31 +185,48 @@ public class HibernateDAO<E>
 	 ***************************************************/
 	public Session openCurrentSession()
 	{
+		System.out.println(">>HibernateDAO.openCurrentSession():Trying to open a new Session...");
 		currentSession = getSessionFactory().openSession();
+		System.out.println(">>HibernateDAO.openCurrentSession():A new Session has opened successfully");
 		return currentSession;
 	}
 	
 	public void openCurrentSessionWithTransaction() 
 	{
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():Trying to open a new Session...");
 		currentSession = getSessionFactory().openSession();
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():A new Session has opened successfully");
+		
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():Trying to begin a  newTransaction...");
 		currentTransaction = currentSession.beginTransaction();
+		System.out.println(">>HibernateDAO.openCurrentSessionWithTransaction():A new Transaction begun successfully!");
 	}
 	
 	
 	public void closeCurrentSession()
 	{
+		System.out.println(">>HibernateDAO.closeCurrentSession():Trying to close the Session...");
 		currentSession.close();
+		System.out.println(">>HibernateDAO.closeCurrentSession():A session closed successfylly!");
 	}
 	
 	public void closeCurrentSessionWithTransaction()
 	{
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Trying to commit a Transaction...");
 		currentTransaction.commit();
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Transaction has been commited successfully!");
+		
+		
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():Trying to close the Session...");
 		currentSession.close();
+		System.out.println(">>HibernateDAO.closeCurrentSessionWithTransaction():A session closed successfylly!");
 	}
 	
 	protected static SessionFactory getSessionFactory()
 	{
 		
+		System.out.println(">>HibernateDAO.getSessionFactory():Trying to create the SessionFactory...");
+	
 		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
 				 .addAnnotatedClass(Category.class)
 				 .addAnnotatedClass(Book.class)
@@ -221,7 +238,7 @@ public class HibernateDAO<E>
 				 .addAnnotatedClass(BookOrder.class)
 				 .buildSessionFactory();
 		
-		
+		System.out.println(">>HibernateDAO.getSessionFactory():A new SessionFactory has been created successfully!");
 		return sessionFactory;
 	}
 	
