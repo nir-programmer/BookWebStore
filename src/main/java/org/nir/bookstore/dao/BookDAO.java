@@ -1,5 +1,6 @@
 package org.nir.bookstore.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -98,6 +99,12 @@ public class BookDAO extends HibernateDAO<Book> implements GenericeDAO<Book>
 	public List<Book> listBestSellingBooks()
 	{
 		return super.findWithNamedQuery("OrderDetail.bestSelling", 0, 4);
+		
+	}
+	
+	public List<Book> listMostFavoredBooks()
+	{
+		return null;
 		
 	}
 	

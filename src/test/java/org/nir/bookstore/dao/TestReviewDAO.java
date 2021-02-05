@@ -255,8 +255,7 @@ public class TestReviewDAO
 		
 		System.out.println(">testFindByCustomerAndBook(): review Id is " + review.getReviewId());
 		
-		
-		
-		
 	}
+	
+	
 }

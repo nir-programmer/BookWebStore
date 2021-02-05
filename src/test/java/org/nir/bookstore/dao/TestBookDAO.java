@@ -405,4 +405,30 @@ public class TestBookDAO
 		bestSellingBooks.forEach(b -> System.out.println("book Id: " + b.getBookId() + 
 				", book title: " + b.getTitle()));
 	}
+	
+	@Test
+	@DisplayName("When calling listMostFavoredBooks()")
+	public void testListMostFavoredBooks()
+	{
+		List<Book> mostFavoredBooks = bookDAO.listMostFavoredBooks();
+		
+	
+		assertEquals(4, mostFavoredBooks.size());
+		
+		
+		System.out.println(">>testListMostFaovedBooks():number of books = "+ mostFavoredBooks.size()); 
+		
+		for(Book book : mostFavoredBooks)
+		{
+			System.out.println(book.getTitle());
+		}
+		
+		/*
+		 * mostFavoredBooks.forEach(b -> System.out.println("book Id: " + b.getBookId()
+		 * + ", book title: " + b.getTitle()));
+		 * 
+		 * 
+		 */		
+	}
 }
+
