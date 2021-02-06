@@ -53,6 +53,8 @@ public class HomePageServlet extends HttpServlet
 		
 		
 		//Read list of most favored books
+		mostFavoredBooks = bookDAO.listMostFavoredBooks();
+		request.setAttribute("mostFavoredBooks", mostFavoredBooks);
 		
 		
 		//close current session
