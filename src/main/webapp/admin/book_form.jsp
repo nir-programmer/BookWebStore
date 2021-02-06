@@ -24,11 +24,11 @@
 	<div align="center">
 		<h2 class="pageheading">
 			<c:if test="${book != null}">
-			Edit Book
-		</c:if>
+				Edit Book
+			</c:if>
 			<c:if test="${book == null}"> 
-			Create Book
-		</c:if>
+				Create New Book
+			</c:if>
 		</h2>
 	</div>
 

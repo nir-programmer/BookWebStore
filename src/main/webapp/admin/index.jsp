@@ -19,9 +19,11 @@
 	<div align="center">
 		<hr width="60%" />
 		<h2 class="pageheading">Quick Actions:</h2>
-		<br> <a href="create_book">New Book</a> &nbsp; <a
-			href="create_user">New User</a> &nbsp; <a href="create_category">New
-			Category</a> &nbsp; <a href="create_customer">New Customer</a> &nbsp; <br>
+		<br> 
+			<a href="new_book">New Book</a> &nbsp;
+			 <a href="users_form.jsp">New User</a> &nbsp; 
+			 <a href="categories_form.jsp">NewCategory</a> &nbsp; 
+			 <a href="customer_form.jsp">New Customer</a> &nbsp; <br>
 	</div>
 	
 	<hr width="60%" />

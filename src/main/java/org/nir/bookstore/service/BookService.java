@@ -76,6 +76,8 @@ public class BookService {
 
 		System.out.println(">>BookService.showBookNewForm(): list of categoires: ");
 		categories.forEach(c -> System.out.println(c.getName()));
+		
+		
 
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("book_form.jsp").forward(request, response);
