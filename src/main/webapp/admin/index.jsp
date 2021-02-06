@@ -112,6 +112,7 @@
 	<hr width="60%" />
 	<div align="center">
 		<h2 class="pageheading">Statistics:</h2>
+		
 	</div>
 
 	<hr width="60%" />
