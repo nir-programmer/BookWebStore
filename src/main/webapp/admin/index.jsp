@@ -28,6 +28,7 @@
 			 <a href="customer_form.jsp">New Customer</a> &nbsp; <br>
 	</div>
 	
+	<hr width="60%" />
 	
 	<div align="center">
 		<h2 class="pageheading">Recent Sales:</h2>
@@ -68,6 +69,7 @@
 		</table>
 		
 	</div>
+	<hr width="60%" />
 	
 	<div align="center">
 		<h2 class="pageheading">Recent Reviews:</h2>
@@ -112,7 +114,11 @@
 	<hr width="60%" />
 	<div align="center">
 		<h2 class="pageheading">Statistics:</h2>
-		
+		Total Users: ${users} &nbsp;&nbsp;&nbsp;
+		 Total Books: ${books} &nbsp;&nbsp;&nbsp;
+		 Total Customers: ${customers} &nbsp;&nbsp;&nbsp;
+		Total Reviews: ${reviews} &nbsp;&nbsp;&nbsp; 
+		Total Orders: ${orders} &nbsp;&nbsp;&nbsp;
 	</div>
 
 	<hr width="60%" />

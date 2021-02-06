@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.dao.BookDAO;
+import org.nir.bookstore.dao.CustomerDAO;
 import org.nir.bookstore.dao.OrderDAO;
 import org.nir.bookstore.dao.ReviewDAO;
+import org.nir.bookstore.dao.UsersDAO;
 import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.entities.Review;
@@ -34,8 +37,15 @@ public class AdminHomeServlet extends HttpServlet
 	{
 		OrderDAO orderDAO;
 		ReviewDAO reviewDAO;
+		UsersDAO usersDAO;
+		BookDAO bookDAO;
+		CustomerDAO customerDAO;
 		List<BookOrder> listRecentSales ; 
 		List<Review> listMostRecent; 
+		
+		long numberOfUsers, numberOfCustomers , numberOfOrders , numberOfReviews , numberOfBooks;
+		
+		
 		
 		//get the list of list recent sales from the data base
 		orderDAO = new OrderDAO(); 
@@ -50,10 +60,52 @@ public class AdminHomeServlet extends HttpServlet
 		reviewDAO.closeCurrentSession();
 		
 		
-		//add the lists to the request attributes
-		request.setAttribute("listRecentSales", listRecentSales);
-		request.setAttribute("listMostRecent", listMostRecent);
 		
+		
+		//////////////update statistics///////////////////
+		
+		//Count books
+		bookDAO = new BookDAO();
+		bookDAO.openCurrentSession();
+		numberOfBooks = bookDAO.count();
+		bookDAO.closeCurrentSession();
+		
+		
+		//count users
+		usersDAO = new UsersDAO();
+		usersDAO.openCurrentSession();
+		numberOfUsers = usersDAO.count();
+		usersDAO.closeCurrentSession();
+		
+		
+		//count reviews
+		reviewDAO = new ReviewDAO();
+		reviewDAO.openCurrentSession();
+		numberOfReviews = reviewDAO.count();
+		reviewDAO.closeCurrentSession();
+		
+		
+		//count customers
+		customerDAO = new CustomerDAO();
+		customerDAO.openCurrentSession();
+		numberOfCustomers = customerDAO.count();
+		customerDAO.closeCurrentSession();
+		
+		//count orders
+		
+		  orderDAO = new OrderDAO(); orderDAO.openCurrentSession(); numberOfOrders=
+		  orderDAO.count(); orderDAO.closeCurrentSession();
+		 
+		
+		//add the lists and statistics values to request attirbutes
+				request.setAttribute("listRecentSales", listRecentSales);
+				request.setAttribute("listMostRecent", listMostRecent);
+				request.setAttribute("users", numberOfUsers);
+				request.setAttribute("customers", numberOfCustomers);
+				request.setAttribute("reviews", numberOfReviews);
+				request.setAttribute("orders", numberOfOrders);
+				request.setAttribute("books", numberOfBooks);
+				
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}
