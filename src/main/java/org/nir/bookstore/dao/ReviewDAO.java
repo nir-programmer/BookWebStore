@@ -82,6 +82,11 @@ public class ReviewDAO extends HibernateDAO<Review> implements GenericeDAO<Revie
 			return null; 
 				
 	}
+	
+	public List<Review> listmostRecent()
+	{
+		return super.findWithNamedQuery("Review.listNew" , 0 , 3);
+	}
 
 	
 }

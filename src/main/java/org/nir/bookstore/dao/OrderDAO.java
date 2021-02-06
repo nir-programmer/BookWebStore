@@ -99,6 +99,9 @@ public class OrderDAO extends HibernateDAO<BookOrder> implements GenericeDAO<Boo
 		
 	}
 
-	
+	public List<BookOrder> listRecentSales()
+	{
+		return super.findWithNamedQuery("Order.listNew" , 0 , 3);
+	}
 
 }

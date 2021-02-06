@@ -549,12 +549,15 @@ public class TestOrderDAO
 	}
 	
 	@Test
-	@DisplayName("When calling findMaxCopies()")
-	public static void testFindBookWithMaxCopies()
+	@DisplayName("When calling listRecentSales()")
+	public void getListRecentSales()
 	{
+		List<BookOrder> recentSales = orderDAO.listRecentSales();
 		
+		assertEquals(3, recentSales.size());
+		
+		recentSales.forEach(s -> System.out.println(s.getOrderDate()));
 		
 		
 	}
-
 }

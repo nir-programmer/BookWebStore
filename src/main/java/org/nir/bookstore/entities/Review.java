@@ -34,7 +34,9 @@ import javax.persistence.Transient;
 				query = "SELECT r.book , COUNT(r.book.bookId) AS ReviewCount, AVG(r.rating) "
 						+ "AS AvgRating FROM Review r "
 						+ "GROUP BY r.book.bookId HAVING AVG(r.rating) >= 4.0 "
-						+ "ORDER BY ReviewCount DESC , AvgRating DESC")
+						+ "ORDER BY ReviewCount DESC , AvgRating DESC") , 
+	@NamedQuery(name = "Review.listNew", 
+				query = "SELECT r FROM Review r ORDER BY r.reviewTime DESC")
 	})
 @Table(name = "review", catalog = "bookstoredb")
 public class Review implements java.io.Serializable {

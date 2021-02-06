@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.dao.OrderDAO;
+import org.nir.bookstore.dao.ReviewDAO;
+import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Category;
+import org.nir.bookstore.entities.Review;
 
 /**
  * Servlet implementation class AdminHomeServlet
@@ -28,9 +32,28 @@ public class AdminHomeServlet extends HttpServlet
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		System.out.println("HELLO HOME PAGE");
-		System.out.println(">>AdminHomeServlet: list of categories = " + request.getAttribute("categories"));
-			
+		OrderDAO orderDAO;
+		ReviewDAO reviewDAO;
+		List<BookOrder> listRecentSales ; 
+		List<Review> listMostRecent; 
+		
+		//get the list of list recent sales from the data base
+		orderDAO = new OrderDAO(); 
+		orderDAO.openCurrentSession();
+		listRecentSales = orderDAO.listRecentSales();
+		orderDAO.closeCurrentSession();
+		
+		//get the list of most recent reviews form the data base
+		reviewDAO = new ReviewDAO() ;
+		reviewDAO.openCurrentSession();
+		listMostRecent = reviewDAO.listmostRecent();
+		reviewDAO.closeCurrentSession();
+		
+		
+		//add the lists to the request attributes
+		request.setAttribute("listRecentSales", listRecentSales);
+		request.setAttribute("listMostRecent", listMostRecent);
+		
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}

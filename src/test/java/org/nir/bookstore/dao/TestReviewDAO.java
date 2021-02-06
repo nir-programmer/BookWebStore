@@ -257,5 +257,20 @@ public class TestReviewDAO
 		
 	}
 	
+	@Test
+	@DisplayName("When calling listMostRecent() method")
+	public void testListMostRecent()
+	{
+		List<Review> mostRecent = reviewDAO.listmostRecent();
+		
+		assertEquals(3, mostRecent.size());
+		
+		
+		mostRecent.forEach(r -> System.out.println(r.getReviewTime()));
+		
+		
+		
+		
+	}
 	
 }
