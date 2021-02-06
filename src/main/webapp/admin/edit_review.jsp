@@ -64,7 +64,10 @@
 				<tr>
 					<td colspan="2" align="center">
 						<button type="submit" value="Save">Save</button>&nbsp;&nbsp;&nbsp;
-						<button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button>
+						<input	type="button" value="Cancel" 
+						onclick="javascript:window.location.href='${pageContext.request.contextPath}/admin/';" />
+						<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+						<!-- <input type="submit" id="cancelButton" value="Cancel" /> -->
 						<!-- <button id="cancelButton" value="Cancel">Cancel</button> -->
 					</td>
 
@@ -96,8 +99,7 @@
 
 		//# refer to an id attribute
 		$("#cancelButton").click(function() {
-			history.go(-1);
-		});
+			window.location.href='index.jsp';
 
 	});
 </script>
