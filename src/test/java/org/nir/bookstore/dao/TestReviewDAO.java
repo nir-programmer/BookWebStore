@@ -125,7 +125,7 @@ public class TestReviewDAO
 		assertNotNull(customer);
 		
 		
-		System.out.println(">> testReadCustomerAndBookOfReview():Customer's fullname : " + customer.getFullname() +
+		System.out.println(">> testReadCustomerAndBookOfReview():Customer's fullname : " + customer.getFirstname() +
 			"Book's title : " + book.getTitle()	); 
 		
 	}
@@ -160,7 +160,7 @@ public class TestReviewDAO
 		assertTrue(reviews.size() > 0);
 		
 		reviews.forEach(c -> System.out.println(c.getReviewId() + " - " + c.getBook().getTitle()
-				+ " - " + c.getCustomer().getFullname() + " - " + 
+				+ " - " + c.getCustomer().getFirstname() + " - " + 
 				c.getReviewTime()));
 
 	}

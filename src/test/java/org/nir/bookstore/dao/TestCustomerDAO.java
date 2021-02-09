@@ -93,7 +93,7 @@ public class TestCustomerDAO
 		assertNotNull(customer); 
 		System.out.println(">>testGetCustomerExists():The Customer: "); 
 		
-		System.out.println(customer.getFullname()); 
+		System.out.println(customer.getFirstname()); 
 		
 	}
 	
@@ -124,7 +124,7 @@ public class TestCustomerDAO
 		Customer customer = customerDAO.get(id);
 		customer.setFullname("Shalom Ithzak");
 		
-		assertEquals("Shalom Ithzak", customer.getFullname());
+		assertEquals("Shalom Ithzak", customer.getFirstname());
 	}
 	
 	@Test
@@ -157,7 +157,7 @@ public class TestCustomerDAO
 			customerDAO.delete(id);
 			Customer c = customerDAO.get(id); 
 			assertNull(c); 
-			System.out.println(">>testDeleteCustomerWithReviews():Customer :" + customer.getFullname()
+			System.out.println(">>testDeleteCustomerWithReviews():Customer :" + customer.getFirstname()
 			+ " has been deleted!");
 			
 			
@@ -175,7 +175,7 @@ public class TestCustomerDAO
 		
 		assertEquals(1, customers.size());
 		
-		customers.forEach(c -> System.out.println(c.getFullname()));
+		customers.forEach(c -> System.out.println(c.getFirstname()));
 		
 	}
 	
@@ -199,7 +199,7 @@ public class TestCustomerDAO
 		
 		assertNotNull(customer); 
 		
-		System.out.println(">>testFindByEmailFound(): the customer full name: " + customer.getFullname());
+		System.out.println(">>testFindByEmailFound(): the customer full name: " + customer.getFirstname());
 	
 	}
 	
@@ -217,7 +217,7 @@ public class TestCustomerDAO
 		//then
 		assertNotNull(customer);
 		
-		System.out.println("The customer fullname: " + customer.getFullname()); 
+		System.out.println("The customer fullname: " + customer.getFirstname()); 
 		
 	}
 	
@@ -250,7 +250,7 @@ public class TestCustomerDAO
 		customerId = 15; 
 		customer = customerDAO.get(customerId); 
 		assertNotNull(customer); 
-		System.out.println(">>testAllReviewsOfCustomer(): Customer fullname: " + customer.getFullname());
+		System.out.println(">>testAllReviewsOfCustomer(): Customer fullname: " + customer.getFirstname());
 		
 		reviews = customer.getReviews();
 		assertNotNull(reviews);

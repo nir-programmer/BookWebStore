@@ -246,7 +246,7 @@ public class TestBookDAO
 		
 		System.out.println(">>testReadAllReviewsForBook():The review of the book with id " + bookId);
 		reviews.forEach(r -> System.out.println("ReviewId " + r.getReviewId() + 
-				", Headline: " +  r.getHeadline() + " ,written by customer :" + r.getCustomer().getFullname()));
+				", Headline: " +  r.getHeadline() + " ,written by customer :" + r.getCustomer().getFirstname()));
 	}
 	//OK
 	@Test

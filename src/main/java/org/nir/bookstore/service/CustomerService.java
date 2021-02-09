@@ -40,7 +40,7 @@ public class CustomerService {
 			request.setAttribute("message", message);
 
 		System.out.println(">>CustomerService.listAll():list of customers:");
-		customers.forEach(c -> System.out.println(c.getFullname()));
+		customers.forEach(c -> System.out.println(c.getFirstname()));
 
 		request.setAttribute("customers", customers);
 		request.getRequestDispatcher("customers_list.jsp").forward(request, response);
@@ -285,7 +285,7 @@ public class CustomerService {
 			//Show the customer profile page
 			else
 			{
-				System.out.println(">>CustomerService.login():The Customer " + customer.getFullname() + " is Login!");
+				System.out.println(">>CustomerService.login():The Customer " + customer.getFirstname() + " is Login!");
 				//request.getSession().setAttribute("loggedCustomer", customer);
 					
 				showCustomerProfile();
@@ -383,7 +383,7 @@ public class CustomerService {
 
 		newCustomer.setPassword(password);
 		newCustomer.setPhone(phone);
-		newCustomer.setAddress(address);
+		newCustomer.setAddressLine1(address);
 		newCustomer.setCity(city);
 		newCustomer.setZipcode(zipCode);
 		newCustomer.setCountry(country);

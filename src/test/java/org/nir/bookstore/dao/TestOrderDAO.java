@@ -269,7 +269,7 @@ public class TestOrderDAO
 		assertTrue(bookOrders.size() == 4);
 
 		for (BookOrder bookOrder : bookOrders) {
-			System.out.println(bookOrder.getOrderId() + " - " + bookOrder.getCustomer().getFullname() + " - "
+			System.out.println(bookOrder.getOrderId() + " - " + bookOrder.getCustomer().getFirstname() + " - "
 					+ bookOrder.getStatus() + " - " + bookOrder.getTotal());
 
 			// loop over the OrderDetails Set
