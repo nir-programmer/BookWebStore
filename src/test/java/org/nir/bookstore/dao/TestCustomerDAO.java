@@ -60,24 +60,40 @@ public class TestCustomerDAO
 			
 	}
 	
-	//OK
+	//OK-PAYPAL
 	@Test
 	@DisplayName("when trying to create a new Customer")
 	void testcreateCustomer()
 	{
-		Customer customer1  = new Customer("a@a", "a", "Hatzhanchnim", "Hod Hasharon",
-				"Israel", "0544678017", "12344", "03266900",
-				new Date(), null, null);
+		Customer customer1 = new Customer();
+		Customer customer2 = new  Customer(); 
 		
-		Customer customer2  = new Customer("b@b", "b", "Hatzhanchnim", "Hod Hasharon",
-				"Israel", "0544678017", "12344", "03266900",
-				new Date(), null, null);
-				
+		/*
+		 * customer1.setEmail("billy.jane@gmail.com"); customer1.setFirstname("Billy");
+		 * customer1.setLastname("Jane"); customer1.setCity("New Youk");
+		 * customer1.setState("New York"); customer1.setCountry("United States");
+		 * customer1.setAddressLine1("100 North Avenue");
+		 * customer1.setAddressLine2("NON"); customer1.setPassword("secret");
+		 * customer1.setPhone("054-2345543"); customer1.setZipcode("888888");
+		 */
 		
-		Customer c1 = customerDAO.create(customer1);
-		Customer c2 = customerDAO.create(customer2);
-		assertNotNull(c1); 
-		assertNotNull(c2);
+		customer2.setEmail("niritzhak10@gmail.com");
+		customer2.setFirstname("Nir");
+		customer2.setLastname("Itzhak"); 
+		customer2.setCity("Tel Aviv");
+		customer2.setState("Tel Aviv");
+		customer2.setCountry("Israel");
+		customer2.setAddressLine1("Dizingof 22 ,north");
+		customer2.setAddressLine2("NON");
+		customer2.setPassword("superduper100");
+		customer2.setPhone("054-4678017");
+		customer2.setZipcode("123456");
+		
+		
+		//Customer c1 = customerDAO.create(customer1);
+		 Customer c2 = customerDAO.create(customer2); 
+		//assertNotNull(c1); 
+		 assertNotNull(c2); 
 		
 		
 		
@@ -87,7 +103,7 @@ public class TestCustomerDAO
 	@DisplayName("when trying to read exists customer")
 	void testGetCustomerExist()
 	{
-		Integer id = 1; 
+		Integer id = 12; 
 		Customer customer = customerDAO.get(id); 
 		
 		assertNotNull(customer); 
@@ -115,23 +131,25 @@ public class TestCustomerDAO
 	}
 	
 	
-	//OK
+	//OK PAYPAL
 	@Test
 	@DisplayName("when trying to update a customer")
 	void testUpdateCustomer()
 	{
-		int id = 1; 
+		int id = 12; 
 		Customer customer = customerDAO.get(id);
-		customer.setFullname("Shalom Ithzak");
+		customer.setFirstname("Nirrr"); 
 		
-		assertEquals("Shalom Ithzak", customer.getFirstname());
+		
+		assertEquals("Nirrr", customer.getFirstname());
 	}
 	
+	//OK-PAYPAL
 	@Test
 	@DisplayName("When delete a customer")
 	void testDeleteCustomer()
 	{	
-		Integer id = 37 ;
+		Integer id = 17 ;
 		customerDAO.delete(id);
 		
 		Customer c = customerDAO.get(id); 
@@ -173,20 +191,20 @@ public class TestCustomerDAO
 	{
 		List<Customer> customers = customerDAO.listAll();
 		
-		assertEquals(1, customers.size());
+		assertEquals(10, customers.size());
 		
 		customers.forEach(c -> System.out.println(c.getFirstname()));
 		
 	}
 	
-	//ok
+	//ok PAYPAL
 	@Test
 	@DisplayName("when calling count()")
 	void testCount()
 	{
 		long num = customerDAO.count();
 		
-		assertEquals(3, num);
+		assertEquals(10, num);
 		
 	}
 	
