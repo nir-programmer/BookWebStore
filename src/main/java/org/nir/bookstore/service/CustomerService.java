@@ -93,12 +93,14 @@ public class CustomerService
 
 	public void editCustomer() throws ServletException, IOException
 	{
-
+		System.out.println("\n\n\n\n>>Inside editCustomer() method!"); 
+		//PayPal
+		Map<String, String> mapCountries = generateCountries();
 		// get the id of the customer to be updated
 		Integer id = Integer.parseInt(request.getParameter("id"));
 
 		this.customerDAO.openCurrentSession();
-
+		
 		Customer customer = this.customerDAO.get(id);
 		// Assignment 12: Check if there is a customer with this id
 		if (customer == null) {
@@ -113,6 +115,9 @@ public class CustomerService
 
 		// Assignment 12: invoke the forwardToPage() method
 		request.setAttribute("customer", customer);
+		
+		//set the map of countrries
+		request.setAttribute("mapCountries", mapCountries);
 		// CommonUtility.forwardToPage(request, response, "customer_form.jsp" );
 		CommonUtitlity.forwardToPage("customer_form.jsp", request, response);
 

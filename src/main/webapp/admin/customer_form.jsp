@@ -70,7 +70,7 @@
 					<td align="right">Last Name:</td>
 					<td align="left">
 						<input type="text" name="lastname"
-							id="lastname" size="45" value="${customer.last}">
+							id="lastname" size="45" value="${customer.lastname}">
 					</td>
 				</tr>
 				
