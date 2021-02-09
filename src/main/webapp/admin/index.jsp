@@ -25,7 +25,7 @@
 			<a href="new_book">New Book</a> &nbsp;
 			 <a href="users_form.jsp">New User</a> &nbsp; 
 			 <a href="categories_form.jsp">NewCategory</a> &nbsp; 
-			 <a href="customer_form.jsp">New Customer</a> &nbsp; <br>
+			 <a href="new_customer">New Customer</a> &nbsp; <br>
 	</div>
 	
 	<hr width="60%" />

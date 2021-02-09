@@ -28,7 +28,7 @@
 
 
 		<h3>
-			<a href="customer_form.jsp">Create new Customer</a>
+			<a href="new_customer">Create new Customer</a>
 		</h3>
 
 	</div>
@@ -72,7 +72,7 @@
 					<td>${customer.firstname}</td>
 					<td>${customer.lastname}</td>
 					<td>${customer.city}</td>
-					<td>${customer.country}</td>
+					<td>${customer.countryName}</td>
 					<td>${customer.registerDate}</td>
 					<td><a href="${editLink}">Edit</a>&nbsp; 
 					<a href="javascript:confirmDelete(${customer.customerId})" >Delete</a>

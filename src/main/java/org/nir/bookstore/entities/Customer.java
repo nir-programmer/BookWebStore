@@ -3,6 +3,7 @@ package org.nir.bookstore.entities;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -139,6 +140,14 @@ public class Customer implements java.io.Serializable
 	{
 		return this.firstname + " " + lastname;
 	}
+	
+	//I need this for PayPal in the EL in the form of the customer_form.jsp
+	/*
+	 * @Transient public String getCountryName() { Locale locale = new Locale("",
+	 * this.country); return locale.getDisplayCountry();
+	 * 
+	 * }
+	 */
 	@Column(name = "state", nullable = false, length = 45)
 	public String getState()
 	{
@@ -191,7 +200,7 @@ public class Customer implements java.io.Serializable
 		this.city = city;
 	}
 
-	@Column(name = "country", nullable = false, length = 64)
+	@Column(name = "country", nullable = false, length = 4)
 	public String getCountry()
 	{
 		return this.country;
@@ -267,6 +276,13 @@ public class Customer implements java.io.Serializable
 	public void setBookOrders(Set<BookOrder> bookOrders)
 	{
 		this.bookOrders = bookOrders;
+	}
+	
+	//For listCustomers.jsp page! PayPal...
+	@Transient
+	public String getCountryName()
+	{
+		return new Locale("", this.country).getDisplayCountry();
 	}
 
 }

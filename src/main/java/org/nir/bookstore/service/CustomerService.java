@@ -2,7 +2,11 @@ package org.nir.bookstore.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +57,7 @@ public class CustomerService {
 		this.customerDAO.openCurrentSession();
 		Customer existCustomer = this.customerDAO.findByEmail(email);
 		this.customerDAO.closeCurrentSession();
-
+		
 		String message = "";
 
 		if (existCustomer != null) {
@@ -63,7 +67,10 @@ public class CustomerService {
 		else {
 
 			Customer newCustomer = new Customer();
-
+			System.out.println("\n\n>>CustomerSErvice.createCustomer():The new Country  is : ");
+		
+			System.out.println("Customer Country: " + newCustomer.getCountry());
+			
 			// read the form fields into the customer
 			readFormFields(newCustomer);
 
@@ -358,18 +365,59 @@ public class CustomerService {
 		this.showCustomerProfile();
 	}
 
+	//FOR PAYPAL!!!!
+	public void newCustomer() throws ServletException, IOException
+	{
+		String [] countryCodes ; 
+		Map<String, String> mapCountries; 
+		String customerForm; 
+		
+		
+		countryCodes = Locale.getISOCountries();
+		
+		mapCountries = new TreeMap<String, String>();
+		
+		for(String countryCode : countryCodes)
+		{
+			Locale locale = new Locale("", countryCode);
+			
+			String code = locale.getCountry();
+			String name = locale.getDisplayCountry();
+			
+			//I want to sort on the country name in the  page!
+			mapCountries.put(name, code);
+		}
+		
+		//loop over the map
+		System.out.println(">>CustomerService.newCustomer(): list of countries:");
+		Set<Entry<String,String>> entries= mapCountries.entrySet();
+		
+		entries.forEach(System.out::println);
+		//forward
+		request.setAttribute("mapCountries", mapCountries);
+		customerForm = "customer_form.jsp";
+		request.getRequestDispatcher(customerForm).forward(request, response);
+		
+	}
+	
 	// Util Methods
 	private void readFormFields(Customer newCustomer) {
 
 		String email = request.getParameter("email");
-		String fullName = request.getParameter("fullName");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
+		String addressLine1 = request.getParameter("address1");
+		String addressLine2 = request.getParameter("address2");
 		String city = request.getParameter("city");
+		String state = request.getParameter("state");
 		String zipCode = request.getParameter("zipCode");
 		String country = request.getParameter("country");
-
+		
+		
+		System.out.println("\n\n>>CustomerService.readFormFields():input of country: ");
+		System.out.println(country);
 		// In the case of request from edit_profile.jsp - this condition is not
 		// satisfied!
 		if (email != null && !email.equals(""))
@@ -377,14 +425,18 @@ public class CustomerService {
 
 		// In the case of request from edit_profile.jsp - this condition is not
 		// satisfied!
-		newCustomer.setFullname(fullName);
+		
 		if (password != null && !password.equals(""))
 			newCustomer.setPassword(password);
-
+		
+		newCustomer.setFirstname(firstname);
+		newCustomer.setLastname(lastname) ; 
 		newCustomer.setPassword(password);
 		newCustomer.setPhone(phone);
-		newCustomer.setAddressLine1(address);
+		newCustomer.setAddressLine1(addressLine1);
+		newCustomer.setAddressLine2(addressLine2);
 		newCustomer.setCity(city);
+		newCustomer.setState(state);
 		newCustomer.setZipcode(zipCode);
 		newCustomer.setCountry(country);
 	}
