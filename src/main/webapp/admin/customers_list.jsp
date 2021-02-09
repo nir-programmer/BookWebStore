@@ -44,7 +44,10 @@
 				<th>Index</th>
 				<th>ID</th>
 				<th>E-mail</th>
-				<th>Full Name</th>
+				<!-- Changed for PayPal -->
+				<!-- <th>Full Name</th> -->
+				<th>First Name</th>
+				<th>Last Name</th>
 				<th>City</th>
 				<th>Country</th>
 				<th>Registered Date</th>
@@ -64,7 +67,10 @@
 					<td>${status.index + 1}</td>
 					<td>${customer.customerId}</td>
 					<td>${customer.email}</td>
-					<td>${customer.fullname}</td>
+					<!--  Change for PayPal -->
+					<%-- <td>${customer.fullname}</td> --%>
+					<td>${customer.firstname}</td>
+					<td>${customer.lastname}</td>
 					<td>${customer.city}</td>
 					<td>${customer.country}</td>
 					<td>${customer.registerDate}</td>

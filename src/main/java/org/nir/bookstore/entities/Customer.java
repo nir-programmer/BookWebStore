@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -132,6 +133,12 @@ public class Customer implements java.io.Serializable
 		this.lastname = lastname;
 	}
 
+	//After PayPal update : I need this getter for the EL in the login.jsp page
+	@Transient
+	public String getFullname()
+	{
+		return this.firstname + " " + lastname;
+	}
 	@Column(name = "state", nullable = false, length = 45)
 	public String getState()
 	{
