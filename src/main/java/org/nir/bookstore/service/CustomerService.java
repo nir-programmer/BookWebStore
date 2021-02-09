@@ -18,23 +18,27 @@ import org.nir.bookstore.dao.OrderDAO;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.Review;
 
-public class CustomerService {
+public class CustomerService
+{
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private CustomerDAO customerDAO;
 
-	public CustomerService(HttpServletRequest request, HttpServletResponse response) {
+	public CustomerService(HttpServletRequest request, HttpServletResponse response)
+	{
 		this.request = request;
 		this.response = response;
 		this.customerDAO = new CustomerDAO();
 	}
 
-	public void listCustomers() throws ServletException, IOException {
+	public void listCustomers() throws ServletException, IOException
+	{
 		this.listCustomers(null);
 	}
 
-	public void listCustomers(String message) throws ServletException, IOException {
+	public void listCustomers(String message) throws ServletException, IOException
+	{
 
 		this.customerDAO.openCurrentSession();
 		List<Customer> customers = this.customerDAO.listAll();
@@ -51,13 +55,14 @@ public class CustomerService {
 
 	}
 
-	public void createCustomer() throws ServletException, IOException {
+	public void createCustomer() throws ServletException, IOException
+	{
 		String email = request.getParameter("email");
 
 		this.customerDAO.openCurrentSession();
 		Customer existCustomer = this.customerDAO.findByEmail(email);
 		this.customerDAO.closeCurrentSession();
-		
+
 		String message = "";
 
 		if (existCustomer != null) {
@@ -68,9 +73,9 @@ public class CustomerService {
 
 			Customer newCustomer = new Customer();
 			System.out.println("\n\n>>CustomerSErvice.createCustomer():The new Country  is : ");
-		
+
 			System.out.println("Customer Country: " + newCustomer.getCountry());
-			
+
 			// read the form fields into the customer
 			readFormFields(newCustomer);
 
@@ -86,7 +91,8 @@ public class CustomerService {
 
 	}
 
-	public void editCustomer() throws ServletException, IOException {
+	public void editCustomer() throws ServletException, IOException
+	{
 
 		// get the id of the customer to be updated
 		Integer id = Integer.parseInt(request.getParameter("id"));
@@ -112,7 +118,8 @@ public class CustomerService {
 
 	}
 
-	public void updateCustomer() throws ServletException, IOException {
+	public void updateCustomer() throws ServletException, IOException
+	{
 		// retrieve the id and email from the form
 		Integer id = Integer.parseInt(request.getParameter("customerId"));
 		String email = request.getParameter("email");
@@ -159,7 +166,8 @@ public class CustomerService {
 
 	}
 
-	public void deleteCustomer() throws ServletException, IOException {
+	public void deleteCustomer() throws ServletException, IOException
+	{
 		Integer id;
 		Customer customer;
 		Set<Review> reviews;
@@ -177,44 +185,36 @@ public class CustomerService {
 			// CommonUtility.showMessageBackend(request, response, message);
 			CommonUtitlity.showMessageBackend(message, request, response);
 			return;
-		} 
-		else 
-		{
+		} else {
 			// Assignment 18: Check if there are reviews made by this customer
 			reviews = customer.getReviews();
 
-			if (!reviews.isEmpty()) 
-			{
+			if (!reviews.isEmpty()) {
 				this.customerDAO.closeCurrentSessionWithTransaction();
 				message = "Could not delete customer with id " + id + " , there are reviews made by this customer";
 				System.out.println(">>CustomerService.deleteCustomer(): " + message);
 				CommonUtitlity.showMessageBackend(message, request, response);
-			} 
-			//There are no reviews made by this customer
-			else 
-			{
-				//Assignment 23: check if there are BookOrders for this customer
-				OrderDAO orderDAO = new OrderDAO(); 
+			}
+			// There are no reviews made by this customer
+			else {
+				// Assignment 23: check if there are BookOrders for this customer
+				OrderDAO orderDAO = new OrderDAO();
 				orderDAO.openCurrentSession();
-				long numberOfOrders = orderDAO.countWithNamedQuery("BookOrder.countByCustomer",
-						"customerId", id);
+				long numberOfOrders = orderDAO.countWithNamedQuery("BookOrder.countByCustomer", "customerId", id);
 				orderDAO.closeCurrentSession();
-				
-				//set an error message
-				if(numberOfOrders > 0)
-				{
-					message = "Could not delete customer with ID "+ id +"because he/she placed orders";
-				}
-				else
-				{
+
+				// set an error message
+				if (numberOfOrders > 0) {
+					message = "Could not delete customer with ID " + id + "because he/she placed orders";
+				} else {
 					message = "Customer with id " + id + " has been deleted succesfully!";
 					this.customerDAO.delete(id);
 					System.out.println(">>CustomerService.deleteCustomer(): " + message);
 					this.customerDAO.closeCurrentSessionWithTransaction();
-					
+
 				}
-				//End of 23
-				
+				// End of 23
+
 				request.setAttribute("message", message);
 				this.listCustomers(message);
 			}
@@ -223,7 +223,8 @@ public class CustomerService {
 	}
 
 	// Copy and paste the create() for register
-	public void registerCustomer() throws ServletException, IOException {
+	public void registerCustomer() throws ServletException, IOException
+	{
 		String email = request.getParameter("email");
 
 		this.customerDAO.openCurrentSession();
@@ -253,12 +254,14 @@ public class CustomerService {
 		request.getRequestDispatcher("/frontend/message.jsp").forward(request, response);
 	}
 
-	public void showLogin() throws ServletException, IOException {
+	public void showLogin() throws ServletException, IOException
+	{
 		System.out.println(">>CustomerService.showLogin():the URI is: \n" + request.getRequestURI());
 		request.getRequestDispatcher("frontend/login.jsp").forward(request, response);
 	}
 
-	public void doLogin() throws ServletException, IOException {
+	public void doLogin() throws ServletException, IOException
+	{
 		// fetch the email and address from the request
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -270,34 +273,30 @@ public class CustomerService {
 		this.customerDAO.closeCurrentSession();
 		System.out.println(">>CustomerService.doLogin():the URI is: \n" + request.getRequestURI());
 
-		//STEP 3
-		if (customer != null) 
-		{
+		// STEP 3
+		if (customer != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedCustomer", customer);
-			//The "redirectURL stores the original request URL of the customer
-			Object objRedirectURL = session.getAttribute("redirectURL"); 
-			
+			// The "redirectURL stores the original request URL of the customer
+			Object objRedirectURL = session.getAttribute("redirectURL");
+
 			/*
-			 * If the  URI is in the session as an attribute value 
-			 * then REDIRECT the request with the response object 
-			 * then remove this from the session and REDIRECT the customer to the login page
+			 * If the URI is in the session as an attribute value then REDIRECT the request
+			 * with the response object then remove this from the session and REDIRECT the
+			 * customer to the login page
 			 */
-			if(objRedirectURL != null)
-			{
+			if (objRedirectURL != null) {
 				String redirectURL = (String) objRedirectURL;
 				session.removeAttribute("redirectURL");
 				response.sendRedirect(redirectURL);
 			}
-			//Show the customer profile page
-			else
-			{
+			// Show the customer profile page
+			else {
 				System.out.println(">>CustomerService.login():The Customer " + customer.getFirstname() + " is Login!");
-				//request.getSession().setAttribute("loggedCustomer", customer);
-					
+				// request.getSession().setAttribute("loggedCustomer", customer);
+
 				showCustomerProfile();
 			}
-			
 
 		}
 		// if isLogin == false forword to login.jsp page
@@ -314,13 +313,15 @@ public class CustomerService {
 		}
 	}
 
-	public void showCustomerProfile() throws ServletException, IOException {
+	public void showCustomerProfile() throws ServletException, IOException
+	{
 
 		request.getRequestDispatcher("frontend/customer_profile.jsp").forward(request, response);
 
 	}
 
-	public void showCustomerProfileEditForm() throws ServletException, IOException {
+	public void showCustomerProfileEditForm() throws ServletException, IOException
+	{
 		/*
 		 * Customer loggedCustomer =
 		 * (Customer)request.getSession().getAttribute("loggedCustomer");
@@ -346,7 +347,8 @@ public class CustomerService {
 
 	}
 
-	public void updateCustomerProfile() throws ServletException, IOException {
+	public void updateCustomerProfile() throws ServletException, IOException
+	{
 		// get the session
 		HttpSession session = request.getSession();
 
@@ -365,43 +367,52 @@ public class CustomerService {
 		this.showCustomerProfile();
 	}
 
-	//FOR PAYPAL!!!!
+	// FOR PAYPAL!!!!
 	public void newCustomer() throws ServletException, IOException
 	{
-		String [] countryCodes ; 
-		Map<String, String> mapCountries; 
-		String customerForm; 
-		
-		
-		countryCodes = Locale.getISOCountries();
-		
-		mapCountries = new TreeMap<String, String>();
-		
-		for(String countryCode : countryCodes)
-		{
-			Locale locale = new Locale("", countryCode);
-			
-			String code = locale.getCountry();
-			String name = locale.getDisplayCountry();
-			
-			//I want to sort on the country name in the  page!
-			mapCountries.put(name, code);
-		}
-		
-		//loop over the map
+		String customerForm;
+
+		// Eclipse generation
+		Map<String, String> mapCountries = generateCountries();
+
+		// loop over the map
 		System.out.println(">>CustomerService.newCustomer(): list of countries:");
-		Set<Entry<String,String>> entries= mapCountries.entrySet();
-		
+		Set<Entry<String, String>> entries = mapCountries.entrySet();
+
 		entries.forEach(System.out::println);
-		//forward
+
+		// forward
 		request.setAttribute("mapCountries", mapCountries);
 		customerForm = "customer_form.jsp";
 		request.getRequestDispatcher(customerForm).forward(request, response);
-		
+
 	}
-	
+
+	private Map<String, String> generateCountries()
+	{
+		String[] countryCodes;
+		Map<String, String> mapCountries;
+		// String customerForm;
+
+		countryCodes = Locale.getISOCountries();
+
+		mapCountries = new TreeMap<String, String>();
+
+		for (String countryCode : countryCodes) {
+			Locale locale = new Locale("", countryCode);
+
+			String code = locale.getCountry();
+			String name = locale.getDisplayCountry();
+
+			// I want to sort on the country name in the page!
+			mapCountries.put(name, code);
+		}
+		return mapCountries;
+	}
+
 	// Util Methods
-	private void readFormFields(Customer newCustomer) {
+	private void readFormFields(Customer newCustomer)
+	{
 
 		String email = request.getParameter("email");
 		String firstname = request.getParameter("firstname");
@@ -414,8 +425,7 @@ public class CustomerService {
 		String state = request.getParameter("state");
 		String zipCode = request.getParameter("zipCode");
 		String country = request.getParameter("country");
-		
-		
+
 		System.out.println("\n\n>>CustomerService.readFormFields():input of country: ");
 		System.out.println(country);
 		// In the case of request from edit_profile.jsp - this condition is not
@@ -425,12 +435,12 @@ public class CustomerService {
 
 		// In the case of request from edit_profile.jsp - this condition is not
 		// satisfied!
-		
+
 		if (password != null && !password.equals(""))
 			newCustomer.setPassword(password);
-		
+
 		newCustomer.setFirstname(firstname);
-		newCustomer.setLastname(lastname) ; 
+		newCustomer.setLastname(lastname);
 		newCustomer.setPassword(password);
 		newCustomer.setPhone(phone);
 		newCustomer.setAddressLine1(addressLine1);
@@ -440,7 +450,5 @@ public class CustomerService {
 		newCustomer.setZipcode(zipCode);
 		newCustomer.setCountry(country);
 	}
-	
-	
 
 }
