@@ -153,9 +153,9 @@ public class OrderService
 		 //Create a BookOrder and store order information and shopping information from the form
 		 bookOrder = new BookOrder();
 		 
-		 bookOrder.setRecipientName(recipientName);
+		 bookOrder.setFirstname(recipientName);
 		 bookOrder.setRecipientPhone(recipientPhone);
-		 bookOrder.setShippingAddress(shippingAddress);
+		 bookOrder.setAddressLine1(shippingAddress);
 		 //remove the statement in the OrderDAO that set this property!
 		 String paymenMethod = request.getParameter("paymentMethod");
 		 bookOrder.setPaymentMethod(paymenMethod);

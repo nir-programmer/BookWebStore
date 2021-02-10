@@ -54,13 +54,24 @@ public class BookOrder implements java.io.Serializable
 	private Integer orderId;
 	private Customer customer;
 	private Date orderDate;
-	private String shippingAddress;
-	private String recipientName;
-	private String recipientPhone;
+	private String addressLine1;
+	private String addressLine2;
+	private String firstname;
+	private String lastname;
+	private String phone;
+	private String city;
+	private String state;
+	private String zipcode;
+	private String country;
 	private String paymentMethod;
+	
 	private float total;
-
+	private float subtotal;
+	private float shippingFee;
+	private float tax;
+	
 	private String status;
+	
 	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
 
 	public BookOrder()
@@ -79,9 +90,9 @@ public class BookOrder implements java.io.Serializable
 	{
 		this.customer = customer;
 		this.orderDate = orderDate;
-		this.shippingAddress = shippingAddress;
-		this.recipientName = recipientName;
-		this.recipientPhone = recipientPhone;
+		this.addressLine1 = shippingAddress;
+		this.firstname = recipientName;
+		this.phone = recipientPhone;
 		this.paymentMethod = paymentMethod;
 		this.total = total;
 		this.status = status;
@@ -92,13 +103,125 @@ public class BookOrder implements java.io.Serializable
 	{
 		this.customer = customer;
 		this.orderDate = orderDate;
-		this.shippingAddress = shippingAddress;
-		this.recipientName = recipientName;
-		this.recipientPhone = recipientPhone;
+		this.addressLine1 = shippingAddress;
+		this.firstname = recipientName;
+		this.phone = recipientPhone;
 		this.paymentMethod = paymentMethod;
 		this.total = total;
 		this.status = status;
 		this.orderDetails = orderDetails;
+	}
+	
+	@Column(name = "r_address_line2", nullable = false, length = 256)
+	public String getAddressLine2()
+	{
+		return addressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2)
+	{
+		this.addressLine2 = addressLine2;
+	}
+
+	@Column(name = "lastname", nullable = false, length = 30)
+	public String getLastname()
+	{
+		return lastname;
+	}
+	
+	public void setLastname(String lastname)
+	{
+		this.lastname = lastname;
+	}
+	
+	@Column(name = "r_phone", nullable = false, length = 15)
+	public String getPhone()
+	{
+		return phone;
+	}
+
+	public void setPhone(String phone)
+	{
+		this.phone = phone;
+	}
+	@Column(name = "r_city", nullable = false, length = 32)
+	public String getCity()
+	{
+		return city;
+	}
+
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+	
+	@Column(name = "r_state", nullable = false, length = 45)
+	public String getState()
+	{
+		return state;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+
+	@Column(name = "r_zipcode", nullable = false, length = 24)
+	public String getZipcode()
+	{
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode)
+	{
+		this.zipcode = zipcode;
+	}
+
+	@Column(name = "r_country", nullable = false, length = 4)
+	public String getCountry()
+	{
+		return country;
+	}
+
+	public void setCountry(String country)
+	{
+		this.country = country;
+	}
+
+	@Column(name = "subtotal", nullable = false, precision = 12, scale = 0)
+	public float getSubtotal()
+	{
+		return subtotal;
+	}
+	
+	
+	public void setSubtotal(float subtotal)
+	{
+		this.subtotal = subtotal;
+	}
+
+	
+	@Column(name = "shipping_fee", nullable = false, precision = 12, scale = 0)
+	public float getShippingFee()
+	{
+		return shippingFee;
+	}
+	
+	
+	public void setShippingFee(float shippingFee)
+	{
+		this.shippingFee = shippingFee;
+	}
+	
+	@Column(name = "tax", nullable = false, precision = 12, scale = 0)
+	public float getTax()
+	{
+		return tax;
+	}
+
+	public void setTax(float tax)
+	{
+		this.tax = tax;
 	}
 
 	@Id
@@ -140,37 +263,37 @@ public class BookOrder implements java.io.Serializable
 		this.orderDate = orderDate;
 	}
 
-	@Column(name = "shipping_address", nullable = false, length = 256)
-	public String getShippingAddress()
+	@Column(name = "r_address_line1", nullable = false, length = 256)
+	public String getAddressLine1()
 	{
-		return this.shippingAddress;
+		return this.addressLine1;
 	}
 
-	public void setShippingAddress(String shippingAddress)
+	public void setAddressLine1(String addressLine1)
 	{
-		this.shippingAddress = shippingAddress;
+		this.addressLine1 = addressLine1;
 	}
 
-	@Column(name = "recipient_name", nullable = false, length = 30)
-	public String getRecipientName()
+	@Column(name = "firstname", nullable = false, length = 30)
+	public String getFirstname()
 	{
-		return this.recipientName;
+		return this.firstname;
 	}
 
-	public void setRecipientName(String recipientName)
+	public void setFirstname(String firstname)
 	{
-		this.recipientName = recipientName;
+		this.firstname = firstname;
 	}
 
 	@Column(name = "recipient_phone", nullable = false, length = 15)
 	public String getRecipientPhone()
 	{
-		return this.recipientPhone;
+		return this.phone;
 	}
 
 	public void setRecipientPhone(String recipientPhone)
 	{
-		this.recipientPhone = recipientPhone;
+		this.phone = recipientPhone;
 	}
 
 	@Column(name = "payment_method", nullable = false, length = 20)

@@ -81,9 +81,9 @@ public class TestOrderDAO
 
 		// add the customer and other fields to the bookOrder
 		bookOrder.setCustomer(customer);
-		bookOrder.setRecipientName("AAAAAA");
+		bookOrder.setFirstname("AAAAAA");
 		bookOrder.setRecipientPhone("0544678017");
-		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
+		bookOrder.setAddressLine1("Hod Hasharon, Hatzanchanim 13, 3");
 
 		// Create the Book with existing id : 33(java 8)
 		book1 = new Book(33);
@@ -145,9 +145,9 @@ public class TestOrderDAO
 
 		// add the customer and other fields to the bookOrder
 		bookOrder.setCustomer(customer1);
-		bookOrder.setRecipientName("Nir Ithzak");
+		bookOrder.setFirstname("Nir Ithzak");
 		bookOrder.setRecipientPhone("0544678017");
-		bookOrder.setShippingAddress("Hod Hasharon, Hatzanchanim 13, 3");
+		bookOrder.setAddressLine1("Hod Hasharon, Hatzanchanim 13, 3");
 
 		// Create new Books with existing id's
 		book1 = new Book(32);
@@ -204,7 +204,7 @@ public class TestOrderDAO
 
 		System.out.println(
 				">>testGetFound():bookOrder with id " + orderId + " ,has " + bookOrder.getOrderDetails().size());
-		System.out.println(">>testGetFOune():order.ReciepentName: " + bookOrder.getRecipientName());
+		System.out.println(">>testGetFOune():order.ReciepentName: " + bookOrder.getFirstname());
 
 	}
 
@@ -295,7 +295,7 @@ public class TestOrderDAO
 		assertNotNull(bookOrder);
 
 		// set a new Reciepient name - AAAA
-		bookOrder.setRecipientName("AAAAAAAAAA");
+		bookOrder.setFirstname("AAAAAAAAAA");
 
 		// call update()
 		orderDAO.update(bookOrder);
