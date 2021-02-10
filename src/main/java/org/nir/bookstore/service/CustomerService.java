@@ -95,7 +95,7 @@ public class CustomerService
 	{
 		System.out.println("\n\n\n\n>>Inside editCustomer() method!"); 
 		//PayPal
-		Map<String, String> mapCountries = generateCountries();
+		generateCountries();
 		// get the id of the customer to be updated
 		Integer id = Integer.parseInt(request.getParameter("id"));
 
@@ -117,7 +117,7 @@ public class CustomerService
 		request.setAttribute("customer", customer);
 		
 		//set the map of countrries
-		request.setAttribute("mapCountries", mapCountries);
+		//request.setAttribute("mapCountries", mapCountries);
 		// CommonUtility.forwardToPage(request, response, "customer_form.jsp" );
 		CommonUtitlity.forwardToPage("customer_form.jsp", request, response);
 
@@ -320,7 +320,9 @@ public class CustomerService
 
 	public void showCustomerProfile() throws ServletException, IOException
 	{
-
+		//For PayPal
+		generateCountries();
+		
 		request.getRequestDispatcher("frontend/customer_profile.jsp").forward(request, response);
 
 	}
@@ -332,8 +334,9 @@ public class CustomerService
 		 * (Customer)request.getSession().getAttribute("loggedCustomer");
 		 * System.out.println(">>CustomerService.showCustomerProfileEditForm():" +
 		 * "customer full name: " + loggedCustomer.getFullname())
-		 */;
-
+		 */
+		
+		 generateCountries();
 		request.getRequestDispatcher("frontend/edit_profile.jsp").forward(request, response);
 
 		/*
@@ -378,22 +381,23 @@ public class CustomerService
 		String customerForm;
 
 		// Eclipse generation
-		Map<String, String> mapCountries = generateCountries();
+		 generateCountries();
 
 		// loop over the map
 		System.out.println(">>CustomerService.newCustomer(): list of countries:");
-		Set<Entry<String, String>> entries = mapCountries.entrySet();
-
-		entries.forEach(System.out::println);
-
-		// forward
-		request.setAttribute("mapCountries", mapCountries);
+		/*
+		 * Set<Entry<String, String>> entries = mapCountries.entrySet();
+		 * 
+		 * entries.forEach(System.out::println);
+		 * 
+		 * // forward request.setAttribute("mapCountries", mapCountries);
+		 */
 		customerForm = "customer_form.jsp";
 		request.getRequestDispatcher(customerForm).forward(request, response);
 
 	}
 
-	private Map<String, String> generateCountries()
+	private void generateCountries()
 	{
 		String[] countryCodes;
 		Map<String, String> mapCountries;
@@ -412,7 +416,7 @@ public class CustomerService
 			// I want to sort on the country name in the page!
 			mapCountries.put(name, code);
 		}
-		return mapCountries;
+		request.setAttribute("mapCountries", mapCountries);
 	}
 
 	// Util Methods
@@ -454,6 +458,13 @@ public class CustomerService
 		newCustomer.setState(state);
 		newCustomer.setZipcode(zipCode);
 		newCustomer.setCountry(country);
+	}
+	
+	//For Back End After PayPal 
+	public void showCustomerRegistrationForm() throws ServletException, IOException
+	{
+		generateCountries();
+		request.getRequestDispatcher("/frontend/customer_registration.jsp").forward(request, response);
 	}
 
 }

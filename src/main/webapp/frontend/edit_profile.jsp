@@ -31,11 +31,25 @@
 					<td align="left"><b>${loggedCustomer.email }</b>(cannot be change)</td>
 				</tr>
 
-				<tr>
+				<%--Replace PayPal
+				 <tr>
 					<td align="right">Full Name:</td>
 					<td align="left"><input type="text" name="fullName"
 						id="fullName" size="45" value="${loggedCustomer.fullname}"></td>
+				</tr> --%>
+				
+				<tr>
+					<td align="right">First Name:</td>
+					<td align="left"><input type="text" name="firstname"
+						id="firstname" size="45" value="${loggedCustomer.firstname}"></td>
 				</tr>
+
+				<tr>
+					<td align="right">Last Name:</td>
+					<td align="left"><input type="text" name="lastname"
+						id="lastname" size="45" value="${loggedCustomer.lastname}"></td>
+				</tr>
+				
 
 
 				<tr>
@@ -44,16 +58,40 @@
 						size="45" value="${loggedCustomer.phone}"></td>
 				</tr>
 
+				<%-- Change for PyPal
 				<tr>
 					<td align="right">Address:</td>
 					<td align="left"><input type="text" id="address"
 						name="address" value="${loggedCustomer.address}" size="45"></td>
+				</tr> --%>
+				<tr>
+					<td align="right">Address Line 1:</td>
+					<td align="left">
+					<input type="text" id="address1"
+						name="address1" value="${loggedCustomer.addressLine1}" size="45">
+					</td>
 				</tr>
-
+				
+				<tr>
+					<td align="right">Address Line 2:</td>
+					<td align="left">
+					<input type="text" id="address2"
+						name="address2" value="${loggedCustomer.addressLine2}" size="45">
+					</td>
+				</tr>
+				
 				<tr>
 					<td align="right">City:</td>
 					<td align="left"><input id="city" name="city" type="text"
 						value="${loggedCustomer.city}" size="45"></td>
+				</tr>
+				
+				<!-- For PayPal.. -->
+				<tr>
+					<td align="right">State:</td>
+					<td align="left">
+						<input id="state" name="state" type="text" value="${loggedCustomer.state}" size="45">
+					</td>
 				</tr>
 
 				<tr>
@@ -62,10 +100,26 @@
 						type="text" value="${loggedCustomer.zipcode}" size="45"></td>
 				</tr>
 
-				<tr>
+				<%--Replace for PayPal
+				 <tr>
 					<td align="right">Country:</td>
 					<td align="left"><input type="text" id="country"
 						name="country" value="${loggedCustomer.country}" size="45"></td>
+				</tr> --%>
+				
+				<tr>
+					<td align="right">Country:</td>
+					<td align="left">
+						<select  id="country" name="country" >
+						<c:forEach items="${mapCountries}" var="country">
+						<!-- country.key is the country name.country.value is the country code -->
+						<option value="${country.value}"
+							 <c:if test = '${loggedCustomer.country eq country.value}'>selected='selected'</c:if> >${country.key}
+						</option>
+						
+						</c:forEach>
+						</select>
+					</td>
 				</tr>
 
 				<tr><td colspan="2" align="center"><i>(Leave password fields blank if you 

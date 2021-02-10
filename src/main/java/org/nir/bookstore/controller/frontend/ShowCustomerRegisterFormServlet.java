@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.service.CustomerService;
 
 /**
@@ -26,8 +27,9 @@ public class ShowCustomerRegisterFormServlet extends HttpServlet {
 	{
 		//WRONT URI
 		//request.getRequestDispatcher("/register_form.jsp").forward(request, response);
+		CustomerService customerService = new CustomerService(request, response);
+		customerService.showCustomerRegistrationForm();
 		
-		request.getRequestDispatcher("/frontend/customer_registration.jsp").forward(request, response);
 	}
 
 }
