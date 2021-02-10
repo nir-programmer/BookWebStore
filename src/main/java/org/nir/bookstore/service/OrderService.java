@@ -154,7 +154,7 @@ public class OrderService
 		 bookOrder = new BookOrder();
 		 
 		 bookOrder.setFirstname(recipientName);
-		 bookOrder.setRecipientPhone(recipientPhone);
+		 bookOrder.setPhone(recipientPhone);
 		 bookOrder.setAddressLine1(shippingAddress);
 		 //remove the statement in the OrderDAO that set this property!
 		 String paymenMethod = request.getParameter("paymentMethod");

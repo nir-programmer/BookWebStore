@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
@@ -56,19 +57,18 @@ public class TestOrderDAO
 	 * @throws IOException
 	 ************************************************************/
 
-	// OK!!!!!!
+	// With PayPal -OK!
 	@Test
-	@DisplayName("when create a BookOrder by BookDAO")
+	@DisplayName("when create a BookOrder by BookDAO After Refactoring PayPal")
 	public void testCreateBookOrder()
 	{
 		Customer customer;
 		BookOrder bookOrder;
-		OrderDetail orderDetail1;
-		OrderDetail orderDetail2;
+		OrderDetail orderDetail;
+
 		// OrderDetailId orderDetailId;
 		Set<OrderDetail> orderDetails;
-		Book book1;
-		Book book2;
+		Book book;
 
 		// create the customer with id = 12
 		customer = new Customer();
@@ -79,48 +79,55 @@ public class TestOrderDAO
 		// create the BookOrder
 		bookOrder = new BookOrder();
 
-		// add the customer and other fields to the bookOrder
+		// Set Order's Overview and Order's Recipient Information -OK
 		bookOrder.setCustomer(customer);
-		bookOrder.setFirstname("AAAAAA");
-		bookOrder.setRecipientPhone("0544678017");
-		bookOrder.setAddressLine1("Hod Hasharon, Hatzanchanim 13, 3");
+		bookOrder.setFirstname("Nir");
+		bookOrder.setLastname("b");
+		bookOrder.setPhone("0544678017");
+		bookOrder.setAddressLine1("123 , South Street");
+		bookOrder.setAddressLine2("Clifton Park");
+		bookOrder.setCity("New York");
+		bookOrder.setState("New York");
+		bookOrder.setCountry("US");
+		bookOrder.setPaymentMethod("paypal");
+		bookOrder.setZipcode("123456");
+		// this is the coutnry code . not country name
+		bookOrder.setCountry("US");
 
 		// Create the Book with existing id : 33(java 8)
-		book1 = new Book(33);
-		book2 = new Book(34);
-		// Create set of orderDetails
+		book = new Book(33);
+
 		orderDetails = new HashSet<OrderDetail>();
 
 		// create a new OrderDetail
-		orderDetail1 = new OrderDetail();
-		orderDetail2 = new OrderDetail();
+		orderDetail = new OrderDetail();
+
+		/* orderDetail2 = new OrderDetail(); */
 		// MANY TO MANY: add the book and the bookOrder references to the
 		// Join table(orderDetail) I have to do this!he got EXCEPTION
-		orderDetail1.setBook(book1);
-		orderDetail1.setQuantity(2);
-		orderDetail1.setSubtotal(73.44f);
-		orderDetail1.setBookOrder(bookOrder);
+		orderDetail.setBook(book);
+		orderDetail.setQuantity(2);
+		orderDetail.setSubtotal(178.f);
+		orderDetail.setBookOrder(bookOrder);
 
-		orderDetail2.setBook(book2);
-		orderDetail2.setQuantity(3);
-		orderDetail2.setSubtotal(179.97f);
-		orderDetail2.setBookOrder(bookOrder);
-		// add the orderDetail to the set
-		orderDetails.add(orderDetail1);
-		orderDetails.add(orderDetail2);
+		orderDetails.add(orderDetail);
 
-		// add the Set to the BookOrder
+		// Transaction information
 		bookOrder.setOrderDetails(orderDetails);
-
-		// persist the BookOrder in db and save the returned value
+		bookOrder.setTax(17.8f);
+		bookOrder.setShippingFee(2.0f);
+		bookOrder.setTotal(178f + 17.8f + 2.0f);
 
 		BookOrder savedOrder = orderDAO.create(bookOrder);
 
-		assertTrue(savedOrder != null && savedOrder.getOrderDetails().size() > 0);
+		System.out.println("\n\n>>The id of the  savedorder is: " + savedOrder.getOrderId());
 
+		assertTrue(savedOrder.getOrderId() > 0);
 		// loop over the set of OrderDetails
-		savedOrder.getOrderDetails().forEach(o -> System.out.println("oid = " + o.getBookOrder() + " , bid = "
-				+ o.getBook().getBookId() + " , quantity = " + o.getQuantity() + " ,subtotal = " + o.getSubtotal()));
+		System.out.println("\n\n\n\n");
+		savedOrder.getOrderDetails().forEach(
+				o -> System.out.println("oid = " + o.getBookOrder().getOrderId() + " , bid = " + o.getBook().getBookId()
+						+ " , quantity = " + o.getQuantity() + " ,subtotal = " + o.getSubtotal()));
 
 	}
 
@@ -145,9 +152,16 @@ public class TestOrderDAO
 
 		// add the customer and other fields to the bookOrder
 		bookOrder.setCustomer(customer1);
-		bookOrder.setFirstname("Nir Ithzak");
-		bookOrder.setRecipientPhone("0544678017");
-		bookOrder.setAddressLine1("Hod Hasharon, Hatzanchanim 13, 3");
+		bookOrder.setFirstname("Nir");
+		bookOrder.setLastname("Itzhak");
+		bookOrder.setPhone("0544678017");
+		bookOrder.setAddressLine1("123 , South Street");
+		bookOrder.setAddressLine2("Clifton Park");
+		bookOrder.setCity("New York");
+		bookOrder.setState("New York");
+		bookOrder.setCountry("US");
+		bookOrder.setPaymentMethod("paypal");
+		bookOrder.setZipcode("123456");
 
 		// Create new Books with existing id's
 		book1 = new Book(32);
@@ -166,6 +180,13 @@ public class TestOrderDAO
 		// set the quantity and subtotal vlues
 		orderDetail1.setQuantity(2);
 		orderDetail1.setSubtotal(78f);
+
+		// Transaction Information
+		// about 10% of the subtotal
+		bookOrder.setTax(7.8f);
+		bookOrder.setShippingFee(2.0f);
+		// total = subtotal + tax + shipping fee
+		bookOrder.setTotal(78f + 7.8f + 2.0f);
 
 		// Create the second orderDetail with book2 and the bookOrder
 		orderDetail2 = new OrderDetail();
@@ -197,14 +218,32 @@ public class TestOrderDAO
 		BookOrder bookOrder;
 
 		// get the bookOrder from the database
-		orderId = 30;
+		orderId = 50;
 		bookOrder = orderDAO.get(orderId);
 
 		assertNotNull(bookOrder);
 
-		System.out.println(
-				">>testGetFound():bookOrder with id " + orderId + " ,has " + bookOrder.getOrderDetails().size());
-		System.out.println(">>testGetFOune():order.ReciepentName: " + bookOrder.getFirstname());
+		System.out.println(">>testGetFound():The BookOrder from the data base:");
+		
+		System.out.println("First Name: " + bookOrder.getFirstname());
+		System.out.println("Last Name: " + bookOrder.getLastname());
+		System.out.println("Phone: " + bookOrder.getPhone());
+		System.out.println("Address Line 1: " + bookOrder.getAddressLine1());
+		System.out.println("Address Line 2: " + bookOrder.getAddressLine2());
+		System.out.println("City: " + bookOrder.getCity());
+		System.out.println("State: " + bookOrder.getState());
+		System.out.println("Country: " + bookOrder.getCountry());
+		System.out.println("zipcode: " + bookOrder.getZipcode());
+		System.out.println("Payment Method: " + bookOrder.getPaymentMethod());
+		System.out.println("Status: " + bookOrder.getStatus());
+		System.out.println("Subtotal " + bookOrder.getSubtotal());
+		System.out.println("Shipping Fee" + bookOrder.getShippingFee());
+		System.out.println("Tax " + bookOrder.getTax());
+		System.out.println("Total: " + bookOrder.getTotal());
+		
+		assertEquals(1, bookOrder.getOrderDetails().size());
+		
+		
 
 	}
 
@@ -289,14 +328,17 @@ public class TestOrderDAO
 	public void testUpdateBookOrder()
 	{
 		// Read a BookOreder from the database
-		Integer id = 34;
+		Integer id = 50;
 		BookOrder bookOrder = orderDAO.get(id);
 
 		assertNotNull(bookOrder);
 
 		// set a new Reciepient name - AAAA
 		bookOrder.setFirstname("AAAAAAAAAA");
-
+		bookOrder.setSubtotal(267f);
+		bookOrder.setShippingFee(2.0f);
+		bookOrder.setTax(26.7f);
+		bookOrder.setTotal(267f + 2f + 26.7f);
 		// call update()
 		orderDAO.update(bookOrder);
 	}
@@ -547,16 +589,95 @@ public class TestOrderDAO
 		bookOrders.forEach(o -> System.out.println("order id: " + o.getOrderId() + " - " + o.getOrderDate()));
 
 	}
-	
+
 	@Test
 	@DisplayName("When calling listRecentSales()")
 	public void getListRecentSales()
 	{
 		List<BookOrder> recentSales = orderDAO.listRecentSales();
-		
+
 		assertEquals(3, recentSales.size());
-		
+
 		recentSales.forEach(s -> System.out.println(s.getOrderDate()));
+
+	}
+
+	//PayPal: OK
+	@Test
+	@DisplayName("After PayPal: When update the OrderDetail's quantity")
+	public void testUpdateOrderDetail()
+	{
+		Integer orderId = 49; 
+		BookOrder order = orderDAO.get(orderId);
+		Set<OrderDetail> orderDetails = order.getOrderDetails();
+		
+		assertNotNull(order);
+		System.out.println(">>The order with id = " + orderId + " Exists!") ;
+		
+		System.out.println("\n\n>>The Set of order details is : ");
+		orderDetails.forEach(od -> 
+				System.out.println("oid = " + od.getBookOrder().getOrderId() + 
+				", bid = " + od.getBook().getBookId() +
+				", quantity = " + od.getQuantity() + 
+				", Subototal = " + od.getSubtotal() + "\n\n"));
+		
+		
+		
+		//Create an iterator on the Ser of order Details
+		Iterator<OrderDetail> iterator = order.getOrderDetails().iterator();
+		
+		
+		while(iterator.hasNext())
+		{
+			OrderDetail orderDetail = iterator.next();
+			
+			if(orderDetail.getBook().getBookId() == 33)
+			{
+				//System.out.println("in if..");
+				System.out.println(">>in if ! order id = " + orderDetail.getBookOrder().getOrderId());
+				orderDetail.setQuantity(3);
+				orderDetail.setSubtotal(267);
+				
+			}
+		}
+		
+		System.out.println(">>Before Updating the order....");
+		orderDAO.update(order);
+		System.out.println(">>After Updating the order!Check in get()..");
+		
+		
+	}
+	
+	@Test
+	@DisplayName("PayPal: When tring to get order details ")
+	public void testGetOrderDetails()
+	{
+		Integer  orderId = 49; 
+		Integer bookId = 33; 
+		BookOrder bookOrder = orderDAO.get(orderId);
+		
+		Iterator<OrderDetail> iterator = bookOrder.getOrderDetails().iterator();
+		
+		int expectedQuantity = 3;
+		float expectedSubtotal = 267;
+		int actualQuantity  = 0;
+		float actualSubtotal = 0;
+		
+		while(iterator.hasNext())
+		{
+			OrderDetail orderDetail = iterator.next();
+			
+			if(orderDetail.getBook().getBookId() == bookId)
+			{
+				actualQuantity = orderDetail.getQuantity();
+				actualSubtotal = orderDetail.getSubtotal();
+			}
+		}
+		
+		
+		assertEquals(expectedQuantity, actualQuantity);
+		assertEquals(expectedSubtotal, actualSubtotal);
+		
 		
 		
 	}
