@@ -291,6 +291,8 @@ public class OrderService
 		HttpSession session;
 		//////////////////////////////////
 		
+		//For Pay Pal - generete the countries and set in the request
+		CommonUtitlity.generateCountries(request);
 		
 		
 		

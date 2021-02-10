@@ -43,40 +43,32 @@
 						<td><b>Order Date:</b></td>
 						<td>${order.orderDate}</td>
 					</tr>
-
-					<tr>
-						<td><b>Recipient Name:</b></td>
-						<td><input type="text" size="45" name="recipientName"
-							value="${order.recipientName}"></td>
-					</tr>
-
-
-					<tr>
-						<td><b>Recipient Phone:</b></td>
-						<td><input type="text" name="recipientPhone" size="45"
-							value="${order.recipientPhone}"></td>
-					</tr>
-
-					<tr>
-						<td><b>Ship to :</b></td>
-						<td><input type="text" size="45" name="shippingAddress"
-							value="${order.shippingAddress}"></td>
-					</tr>
-
-
+					
+					
 					<tr>
 						<td><b>Payment Method:</b></td>
-						<td><select name="paymentMethod">
-								<option value="Cash on delivery">Cash on delivery</option>
+						<td>
+							<select name="paymentMethod">
+								<option value="Cash on delivery"
+									 <c:if test="${order.paymentMethod eq 'Cash On Delivery'}">
+									 	selected ='selected'
+									</c:if>
+								>
+								Cash on delivery
+								</option>
+								
+								<option value="paypal"
+									 <c:if test="${order.paymentMethod eq 'paypal'}">
+									 	selected ='selected'
+									</c:if>
+								>
+								PayPal or Credit card
+								</option>
+
 						</select></td>
 					</tr>
 
-					<%--This will be recalculated...
-					 <tr>
-						<td><b>Total Amount:</b></td>
-						<td>${order.total}</td>
-					</tr> --%>
-
+				
 					<tr>
 						<td><b>Order Status:</b></td>
 						<td><select name="status">
@@ -106,6 +98,83 @@
 
 						</select></td>
 					</tr>
+
+					</table>
+					
+					<!-- Section 2 : Recipient Information -->
+					<h2>Recipient Information</h2>
+					<table>
+					<tr>
+						<td><b>First Name:</b></td>
+						<td><input type="text" size="45" name="firstname" id="firstname"
+							value="${order.firstname}"></td>
+					</tr>
+					
+					<tr>
+						<td><b>Last Name:</b></td>
+						<td><input type="text" size="45" name="lastname" id="lastname"
+							value="${order.lastname}"></td>
+					</tr>
+
+					<tr>
+						<td><b>Phone:</b></td>
+						<td><input type="text" name="phone" id ="phone" size="45"
+							value="${order.phone}"></td>
+					</tr>
+
+					<tr>
+						<td><b>Address Line 1:</b></td>
+						<td><input type="text" size="45" name="address1" id="address1"
+							value="${order.addressLine1}"></td>
+					</tr>
+					
+					<tr>
+						<td><b>Address Line 2:</b></td>
+						<td><input type="text" size="45" name="address2" id="address2"
+							value="${order.addressLine2}"></td>
+					</tr>
+					
+					<tr>
+						<td><b>City:</b></td>
+						<td><input type="text" size="45" name="city" id="city"
+							value="${order.city}"></td>
+					</tr>
+					
+					<tr>
+						<td><b>State:</b></td>
+						<td><input type="text" size="45" name="state" id="state"
+							value="${order.state}"></td>
+					</tr>
+					
+					<tr>
+						<td><b>Zipcode:</b></td>
+						<td><input type="text" size="45" name="zipcode" id="zipcode"
+							value="${order.zipcode}"></td>
+					</tr>
+					
+					
+					<tr>
+					<td align="right">Country:</td>
+					<td align="left">
+						<select  id="country" name="country" >
+						<c:forEach items="${mapCountries}" var="country">
+						<!-- country.key is the country name.country.value is the country code -->
+						<option value="${country.value}"
+							<c:if test = '${order.country eq country.value}'>
+							selected='selected'</c:if>
+						 >
+							 ${country.key}
+						</option>
+						
+						</c:forEach>
+						</select>
+					</td>
+				</tr>
+					
+					
+					
+			
+
 
 				</table>
 			</div>

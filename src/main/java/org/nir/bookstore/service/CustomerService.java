@@ -95,7 +95,7 @@ public class CustomerService
 	{
 		System.out.println("\n\n\n\n>>Inside editCustomer() method!"); 
 		//PayPal
-		generateCountries();
+		CommonUtility.generateCountries(this.request);
 		// get the id of the customer to be updated
 		Integer id = Integer.parseInt(request.getParameter("id"));
 
@@ -321,7 +321,7 @@ public class CustomerService
 	public void showCustomerProfile() throws ServletException, IOException
 	{
 		//For PayPal
-		generateCountries();
+		CommonUtility.generateCountries(this.request);
 		
 		request.getRequestDispatcher("frontend/customer_profile.jsp").forward(request, response);
 
@@ -336,7 +336,7 @@ public class CustomerService
 		 * "customer full name: " + loggedCustomer.getFullname())
 		 */
 		
-		 generateCountries();
+		CommonUtility.generateCountries(this.request);
 		request.getRequestDispatcher("frontend/edit_profile.jsp").forward(request, response);
 
 		/*
@@ -381,7 +381,7 @@ public class CustomerService
 		String customerForm;
 
 		// Eclipse generation
-		 generateCountries();
+		CommonUtility.generateCountries(this.request);
 
 		// loop over the map
 		System.out.println(">>CustomerService.newCustomer(): list of countries:");
@@ -397,28 +397,7 @@ public class CustomerService
 
 	}
 
-	private void generateCountries()
-	{
-		String[] countryCodes;
-		Map<String, String> mapCountries;
-		// String customerForm;
-
-		countryCodes = Locale.getISOCountries();
-
-		mapCountries = new TreeMap<String, String>();
-
-		for (String countryCode : countryCodes) {
-			Locale locale = new Locale("", countryCode);
-
-			String code = locale.getCountry();
-			String name = locale.getDisplayCountry();
-
-			// I want to sort on the country name in the page!
-			mapCountries.put(name, code);
-		}
-		request.setAttribute("mapCountries", mapCountries);
-	}
-
+	
 	// Util Methods
 	private void readFormFields(Customer newCustomer)
 	{
@@ -463,7 +442,7 @@ public class CustomerService
 	//For Back End After PayPal 
 	public void showCustomerRegistrationForm() throws ServletException, IOException
 	{
-		generateCountries();
+		CommonUtility.generateCountries(this.request);
 		request.getRequestDispatcher("/frontend/customer_registration.jsp").forward(request, response);
 	}
 

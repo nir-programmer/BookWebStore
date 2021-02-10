@@ -4,6 +4,7 @@ package org.nir.bookstore.entities;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -382,6 +383,13 @@ public class BookOrder implements java.io.Serializable
 		
 		return totalCopies; 
 	}
+	
+	//For order_detail.jsp page in the admin! PayPal...
+		@Transient
+		public String getCountryName()
+		{
+			return new Locale("", this.country).getDisplayCountry();
+		}
 	
 	
 

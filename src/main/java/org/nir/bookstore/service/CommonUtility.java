@@ -1,7 +1,6 @@
 package org.nir.bookstore.service;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,10 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.nir.bookstore.entities.Book;
+import org.nir.bookstore.entities.Customer;
 
-public class CommonUtitlity {
-
+public class CommonUtility
+{
 	public static void forwardToPage(String page, String message,
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
