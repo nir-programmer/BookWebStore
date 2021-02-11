@@ -104,7 +104,24 @@ public class OrderService
 	public void showCheckOutForm() throws ServletException, IOException
 	{
 		String checkoutPage = "frontend/checkout.jsp";
-		System.out.println(">>OrderSerice.showCheckOutForm():URL IS : " +request.getRequestURI().toString());
+		//FOR PAY PAL: I need the transactions in the cart to display in the checkout page
+		HttpSession session = request.getSession();
+		
+		//read the cart from the session
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); 
+		
+		
+		//tax is 10% of subtoal 
+		float tax = cart.getTotalAmount() * 0.1f;
+		
+		//shipping fee is 1.0 USD Per one copy of a book
+		float shippingFee = cart.getTotalQuantity() * 1.0f;
+		
+		float total = cart.getTotalAmount() + tax + shippingFee; 
+		
+		session.setAttribute("tax", tax);
+		session.setAttribute("shippingFee", shippingFee);
+		session.setAttribute("total" , total);
 		
 		//CommonUtitlity.forwardToPage(checkoutPage, request, response);
 		request.getRequestDispatcher(checkoutPage).forward(request, response);

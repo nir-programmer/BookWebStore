@@ -70,34 +70,54 @@
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="3"></td>
-							<td><b>${cart.totalQuantity}&nbsp;book(s)</b></td>
-							<td><b>TOTAL:</b></td>
-							<td colspan="2"><b><fmt:formatNumber
-										value="${cart.totalAmount}" type="currency" /></b></td>
+							
+							<%-- <td><b>${cart.totalQuantity}&nbsp;book(s)</b></td>
+							<td><b>TOTAL:</b></td> --%>
+							
+							<!-- FOR PAYPAL -->
+							<td colspan="7" align="right">
+								<p>Number of copies: <b>${cart.totalQuantity} </b></p>
+								<p>Subtotal: <b><fmt:formatNumber value="${cart.totalAmount}"
+									 type="currency" /></b>
+								</p>
+								
+								<p>Tax: <b><fmt:formatNumber value="${tax}"
+									 type="currency" /></b>
+								</p>
+								<p>Shipping Fee: <b><fmt:formatNumber value="${shippingFee}"
+									 type="currency" /></b>
+								</p>
+								<p>TOTAL: <b><fmt:formatNumber value="${total}"
+									 type="currency" /></b>
+								</p>
+								
+							</td>
 
 						</tr>
 					</table>
 					
-					<!-- section 2: Shipping details -->
+					<!-- section 2: Shipping details AFTER UPDATE WITH PAYPAL! -->
 					
 					<h2>Your Shipping Information</h2>
 					<!-- relative URL of the Servlet that handles Submission of the this form  -->
+					
 					<form id ="orderForm" action = "place_order" method="post">
 						<table class="normal">
 							<tr>
-								<td>Recipient Name:</td>
+								<td>First Name:</td>
 								<!-- important : default value form the session -->
-								<td><input type="text"  name="recipientName" value="${loggedCustomer.fullname}" /></td>
+								<td>
+									<input type="text"  name="firstname" value="${loggedCustomer.firstname}" />
+								</td>
 							</tr>
 							<tr> 
-								<td>Recipient Phone:</td>
+								<td>Phone:</td>
 								<td><input type="text"  name="recipientPhone" value="${loggedCustomer.phone}" /></td>
 							</tr>
 							
 							<tr> 
 								<td>Street Address:</td>
-								<td><input type="text"  name="address" value="${loggedCustomer.address}" /></td>
+								<td><input type="text"  name="address" value="${loggedCustomer.addressLine1}" /></td>
 							</tr>
 							
 							<tr> 
