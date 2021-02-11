@@ -48,9 +48,10 @@
 					<td>${order.total}</td>
 				</tr>
 
+			<!-- UPdated for pay pal -->
 				<tr>
 					<td><b>Recipient Name:</b></td>
-					<td>${order.recipientName}</td>
+					<td>${order.reci}</td>
 				</tr>
 
 				<tr>

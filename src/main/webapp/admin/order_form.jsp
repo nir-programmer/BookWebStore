@@ -169,13 +169,7 @@
 						</c:forEach>
 						</select>
 					</td>
-				</tr>
-					
-					
-					
-			
-
-
+				</tr>s
 				</table>
 			</div>
 
@@ -218,6 +212,7 @@
 							</tr>
 						</c:forEach>
 
+				<!-- TRANSACTION INFORMATION FOR PAYPAL -->
 						<tr>
 						<td colspan="7" align="right">
 						

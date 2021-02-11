@@ -20,6 +20,8 @@ import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.OrderDetail;
 
+import net.bytebuddy.matcher.SubTypeMatcher;
+
 public class OrderService
 {
 	private HttpServletRequest request;
@@ -365,9 +367,23 @@ public class OrderService
 		Set<OrderDetail> orderDetails;
 		
 		//Read GENERAL information of the order from the form(section 1 )
-		String recipientName;
-		String recipientPhone; 
-		String shippingAddress; 
+		String firstname;
+		String lastname;
+		String phone; 
+		String address1;
+		String address2;
+		String city; 
+		String state;
+		String zipcode; 
+		String country; 
+		
+		//Transaction information for PayPal
+		float shippingFee; 
+		float tax;
+		/*
+		 * float subtotal; float total ;
+		 */
+		
 		String paymentMethod;
 		String status; 
 		
@@ -393,9 +409,22 @@ public class OrderService
 		 
 		 
 		 //2.Read GENERAL values from the form in the order_form.jsp :
-		 recipientName = request.getParameter("recipientName");
-		 recipientPhone = request.getParameter("recipientPhone");
-		 shippingAddress = request.getParameter("shippingAddress"); 
+		 firstname = request.getParameter("firstname");
+		 lastname = request.getParameter("lastname");
+		 phone = request.getParameter("phone");
+		 address1 = request.getParameter("address1"); 
+		 address2 = request.getParameter("address2"); 
+		 city = request.getParameter("city");
+		 state = request.getParameter("state"); 
+		 zipcode = request.getParameter("zipcode");
+		 country = request.getParameter("country");
+		 
+		 //Read transaction information input for PayPal
+		 shippingFee = Float.parseFloat(request.getParameter("shippingfee"));
+		 tax = Float.parseFloat(request.getParameter("tax"));
+		
+		 
+		 
 		 paymentMethod = request.getParameter("paymentMethod"); 
 		 status = request.getParameter("status"); 
 		 
@@ -406,16 +435,23 @@ public class OrderService
 		 arrayPrice = request.getParameterValues("price"); 
 		 arrayQuantity = new String[arrayBookId.length]; 
 		 
+		 
+		 
 		 //read quantities into the array 
 		 for (int i = 1 ; i <= arrayQuantity.length; i++)
 			 arrayQuantity[i -1 ]  = request.getParameter("quantity" + i); 
 		 
 		 //read the Set of OrderDetail from the order in the session
 		 orderDetails = bookOrder.getOrderDetails();
+		 
 		 //Remove all OrderDetail from this BookOrder's  orderDetails! 
 		 orderDetails.clear();
 		 
-		//Recreate them from the form fields(section 2) //quantity, subtotal , Book, BookOrder
+		/*
+		 * Recreate them from the form fields(section 2) //quantity, subtotal , Book, BookOrder
+		 * For PayPal : subtotal is the same! the total amout is updated by adding the 
+		 * shipping fee and tax values
+		 */
 		 for(int i = 0 ; i < arrayBookId.length; i ++ )
 		 {
 			 int bookId = Integer.parseInt(arrayBookId[i]); 
@@ -442,9 +478,37 @@ public class OrderService
 			 totalAmount += subtotal;
 		 }
 		
-		 //set the totalAmout in the BookOrder
+		//PayPal: set Transaction information in the BookOrder:(tax, shippingFee, subtotal , total)
+		 bookOrder.setTax(tax);
+		 bookOrder.setShippingFee(shippingFee);
+		 //From the loop above
+		 bookOrder.setSubtotal(totalAmount);
+		 
+		 //calculae the totalAmount
+		 totalAmount += shippingFee + tax ; 
+		 
+		 //set the new total (with tax and shippingfee)
 		 bookOrder.setTotal(totalAmount);
+		 
+		 
+		 
+		 
+		 //set the general values in the BookOrder
+		 bookOrder.setFirstname(firstname);
+		 bookOrder.setLastname(lastname);
+		 bookOrder.setPhone(phone);
+		 bookOrder.setAddressLine1(address1);
+		 bookOrder.setAddressLine2(address2);
+		 bookOrder.setCity(city);
+		 bookOrder.setState(state);
+		 bookOrder.setZipcode(zipcode);
+		 bookOrder.setCountry(country);
+		 bookOrder.setPaymentMethod(paymentMethod);
+		 //bookOrder.setTotal(totalAmount);
 		 bookOrder.setStatus(status);
+		 
+		 
+		 
 		 
 		 //update the database - add this BookOrder
 		 this.orderDAO.openCurrentSessionWithTransaction();

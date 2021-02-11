@@ -124,7 +124,7 @@ public class BookOrder implements java.io.Serializable
 		this.addressLine2 = addressLine2;
 	}
 
-	@Column(name = "lastname", nullable = false, length = 30)
+	@Column(name = "r_lastname", nullable = false, length = 30)
 	public String getLastname()
 	{
 		return lastname;
