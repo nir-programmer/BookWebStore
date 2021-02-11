@@ -103,6 +103,7 @@ public class OrderService
 
 	public void showCheckOutForm() throws ServletException, IOException
 	{
+		Map<String, String> mapCountries;
 		String checkoutPage = "frontend/checkout.jsp";
 		//FOR PAY PAL: I need the transactions in the cart to display in the checkout page
 		HttpSession session = request.getSession();
@@ -123,6 +124,8 @@ public class OrderService
 		session.setAttribute("shippingFee", shippingFee);
 		session.setAttribute("total" , total);
 		
+		//IMPORTANT: load the countries into the request
+		CommonUtility.generateCountries(request);
 		//CommonUtitlity.forwardToPage(checkoutPage, request, response);
 		request.getRequestDispatcher(checkoutPage).forward(request, response);
 		
