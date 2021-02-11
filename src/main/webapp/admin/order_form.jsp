@@ -208,7 +208,7 @@
 										value="${orderDetail.book.price}" type="currency" />
 								</td>
 								<td>
-<%--IMPORTANT(form the shoppincart): <input type="hidden" name="book_id" value="${item.key.bookId}" /> --%>
+<%--IMPORTANT(form the shoppingcart): <input type="hidden" name="book_id" value="${item.key.bookId}" /> --%>
 									<input type="hidden" name="bookId" value="${orderDetail.book.bookId}">
 									<input type="text" size="5" name="quantity${status.index + 1 }" 
 									    value="${orderDetail.quantity}">
@@ -219,12 +219,34 @@
 						</c:forEach>
 
 						<tr>
-							<td colspan="4" align="right"><b><i>TOTAL:</i></b></td>
-							<td><b>${order.bookCopies}</b></td>
-
-							<td><fmt:setLocale value="en_US" /> <b><fmt:formatNumber
-										value="${order.total}" type="currency" /></b></td>
-
+						<td colspan="7" align="right">
+						
+						<fmt:setLocale value="en_US" /> 
+							<p>
+								<b>Subtotal: <fmt:formatNumber
+									value="${order.subtotal}" type="currency" />
+								</b>
+							</p>
+							<p>
+								<b>Tax: 
+									<input type="text" size="5" id ="tax" name="tax" value="${order.tax}"  />
+								</b>
+							</p>
+							
+							<p>
+								<b>Shipping Fee: 
+									<input type="text"  size = "5" id="shippingfee" 
+									name="shippingfee" value="${order.shippingFee}" />
+								</b>
+							</p>
+							
+							<p>
+								<b>Total: <fmt:formatNumber
+									value="${order.total}" type="currency" />
+								</b>
+							</p>
+					</td>
+						
 						</tr>
 					</table>
 				</div>
@@ -266,31 +288,64 @@
 		$("#orderForm").validate({
 			rules: 
 			{
+				firstname: "required",
+				lastname: "required",
+				phone: "required",
+				address1: "required",
+				address2: "required",
+				city: "required",
+				state: "required",
+				zipcode: "required",
+				country: "required",
 				
-				recipientName: "required",
-				recipientPhone: "required",
-				shippingAddress: "required",
-				
+			
 				<c:forEach var="book" items="${order.orderDetails}" varStatus="status">
 				 quantity${status.index + 1}: {
 					required: true , number: true, 	min: 1
 				},
+				
+				tax: {required: true, number: true , min: 0},
+				shippingfee: {required: true, number: true , min: 0},
+				
+				
 		</c:forEach>
 				
 			},
+			
 			messages: 
 			{
-				recipientName: "Please enter a recipient name",
-				recipientPhone: "Please enter a recipient phone",
-				shippingAddress: "Please enter a shipping address",
+				firstname: "Please enter a first name",
+				lastname: "Please enter a last name",
+				phone: "Please enter a phone",
+				address1: "Please enter address line 1",
+				address2: "Please enter address line 2",
+				city: "Please enter a city",
+				state: "Please enter a state",
+				zipcode: "Please enter a zipcode",
+				country: "Please enter a country",
 				
 				<c:forEach var="book" items="${order.orderDetails}" varStatus="status">
 				quantity${status.index + 1}: {
 					required: "Please enter quantity" ,
 					number: "Quantity must be a number", 
-					min: "Quantity must be greater than 0"
+					min: "Quantity must be equal or greater than 0"
 					},
-			</c:forEach> 
+			</c:forEach>
+					  
+			
+			shippingfee:{
+				required: "Please enter shipping fee", 
+				number: "Shipping fee must be a number", 
+				min: "Shipping fee must be equal or greater than 0"
+			},
+			tax:{
+				required: "Please enter tax", 
+				number: "Tax must be a number", 
+				min: "Tax must be greater than 0"
+			} 
+			
+			
+				
 			}
 		}); 
 		
