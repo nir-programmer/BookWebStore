@@ -277,10 +277,57 @@ public class PaymentService
 		
 		return listTransactions;
 		
+	}
+
+	public void reviewPayment() throws ServletException, IOException
+	{
+		//read the 2 query parameters from the PayPal response:
+		String paymentId  = request.getParameter("paymentId"); 
+		String payerId = request.getParameter("PayerID"); 
 		
 		
+		if(paymentId == null || payerId == null)
+		{
+			throw new ServletException("Error in display payment review");
+		}
 		
+		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, mode); 
 		
+		//Try get a payment object(connect to the PayPal server) 
+		try 
+		{
+			Payment payment = Payment.get(apiContext, paymentId);
+			
+			//for displaying in the first section(payer information) of the review_payment.jsp
+			PayerInfo payerInfo = payment.getPayer().getPayerInfo();
+			request.setAttribute("payer", payerInfo);
+			
+			//for displaying in the second section(recipient information) of the review_payment.jsp
+			Transaction transaction = payment.getTransactions().get(0); 
+			ShippingAddress shippingAddress = transaction.getItemList().getShippingAddress();
+			request.setAttribute("recipient", shippingAddress);
+			
+			//for displaying in the third section(transaction information) of the review_payment.jsp
+			request.setAttribute("transaction", transaction);
+			
+			//forward to review_payment.jsp page
+			String reviewPage = "frontend/review_payment.jsp"; 
+			request.getRequestDispatcher(reviewPage).forward(request, response);
+			
+		} 
+		catch (PayPalRESTException | IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new ServletException("Error in  getting payment details form PayPal"); 
+		}
+		
+				
+		//Test these values are not null = OK
+		/*
+		 * System.out.println(">>PaymernServcie.reviewPayement():\npaymentId = " +
+		 * paymentId + "\nPayerID = " + payerId);
+		 */
 		
 	}
 	
