@@ -125,7 +125,27 @@ public class OrderService
 
 	public void placeOrder() throws ServletException, IOException
 	{
+		String paymentMethod = request.getParameter("paymentMethod");
 
+		// Create a BookOrder from the form values:
+		BookOrder order = readOrderInfo();
+
+		// Check the paymentMethod value and continue
+		if (paymentMethod.contentEquals("paypal")) {
+			PaymentService paymentService = new PaymentService(request, response);
+			// The order object will be created by the method
+			paymentService.authorizePayment(order);
+		} else {
+			placeOrderCOD(order);
+
+		}
+
+	}
+
+	// Util method to create a BookOrder form the form input fields in the
+	// checkout.jsp page
+	private BookOrder readOrderInfo()
+	{
 		// This will created here and added to the database
 		BookOrder bookOrder;
 
@@ -171,15 +191,10 @@ public class OrderService
 		// I added this now!it didn't have it before PayPal , intresting....
 		String paymentMethod = request.getParameter("paymentMethod");
 
-		// Remove this - Don't need this value with paypal..
-		// String shippingAddress = address1 + " ,"+ city + ", " + zipCode + ", " +
-		// country;
-
-		// Create a BookOrder and store order information and shopping information from
-		// the form
 		bookOrder = new BookOrder();
 
 		// Set all the values to the order.
+		bookOrder.setPaymentMethod(paymentMethod);
 		bookOrder.setFirstname(firstname);
 		bookOrder.setLastname(lastname);
 		bookOrder.setPhone(phone);
@@ -188,13 +203,10 @@ public class OrderService
 		bookOrder.setCity(city);
 		bookOrder.setState(state);
 		bookOrder.setZipcode(zipcode);
-
 		// NOTE :This is the country CODE not country NAME!
 		bookOrder.setCountry(country);
 
 		// remove the statement in the OrderDAO that set this property!
-		String paymenMethod = request.getParameter("paymentMethod");
-		bookOrder.setPaymentMethod(paymenMethod);
 
 		// Get the SESSION
 		session = request.getSession();
@@ -248,26 +260,38 @@ public class OrderService
 		 */
 		float tax = (float) session.getAttribute("tax");
 		float shippingFee = (float) session.getAttribute("shippingFee");
-		
+
 		// NOTE: The totalAmount is the cart is the SUBTOTAL of the order
 		float subtotal = cart.getTotalAmount();
 
 		// Compute total by the ShoppingCart and set to the order
 		// total = cart.getTotalAmount();
-		total = (float) session.getAttribute("total"); 
-		
-		
-		//Set transaction inforamtion to the order object: shipping fee , tax , subtotal , total)
+		total = (float) session.getAttribute("total");
+
+		// Set transaction inforamtion to the order object: shipping fee , tax ,
+		// subtotal , total)
 		bookOrder.setTax(tax);
 		bookOrder.setShippingFee(shippingFee);
 		bookOrder.setSubtotal(subtotal);
 		bookOrder.setTotal(total);
 
-		
+		return bookOrder;
+
+	}
+
+	// The order parameter is the return value of the readOrderInfo() util method!
+	private void placeOrderCOD(BookOrder order) throws ServletException, IOException
+	{
+		HttpSession session = request.getSession();
+
 		// adding the BookOrder to the database
 		this.orderDAO.openCurrentSessionWithTransaction();
-		this.orderDAO.create(bookOrder);
+		this.orderDAO.create(order);
 		this.orderDAO.closeCurrentSessionWithTransaction();
+
+		// Clear the shopping cart in the session
+		ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("cart");
+		shoppingCart.clear();
 
 		// forward to the message.jsp page
 		String message = "Thank you.Your order has been recieved." + "We will deflever your books whithin a few days.";

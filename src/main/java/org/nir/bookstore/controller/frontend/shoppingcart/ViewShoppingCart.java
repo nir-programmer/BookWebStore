@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.entities.Book;
 
-/**
- * Servlet implementation class ViewShoppingCart
- */
+
 @WebServlet("/view_cart")
 public class ViewShoppingCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
