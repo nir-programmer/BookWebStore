@@ -146,11 +146,10 @@
 		<br/>
 		<div>  
 			<form action="execute_payment" method="post">
+				<input type="hidden" name="paymentId" value="${param.paymentId}" />
+				<input type="hidden" name="PayerID" value="${param.PayerID}" />
 				<input type="submit" value="Pay Now" />
-				
-			
 			</form>
-		
 		</div>
 	</div>
 </body>

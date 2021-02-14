@@ -20,6 +20,10 @@ import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Customer;
 import org.nir.bookstore.entities.OrderDetail;
 
+import com.paypal.api.payments.ItemList;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.ShippingAddress;
+
 import net.bytebuddy.matcher.SubTypeMatcher;
 
 public class OrderService
@@ -131,15 +135,91 @@ public class OrderService
 		BookOrder order = readOrderInfo();
 
 		// Check the paymentMethod value and continue
-		if (paymentMethod.contentEquals("paypal")) {
+		if (paymentMethod.equals("paypal")) 
+		{
+			//Put the order object in the Session-later I need this order in the placeOrderPaypal
+			request.getSession().setAttribute("order4Paypal", order);
+			
 			PaymentService paymentService = new PaymentService(request, response);
-			// The order object will be created by the method
+			
 			paymentService.authorizePayment(order);
-		} else {
+		} 
+		else 
+		{
 			placeOrderCOD(order);
 
 		}
 
+	}
+
+	public Integer placeOrderPaypal(Payment payment)
+	{
+		//Read the order that was set in the session by the placeOrder() method before..
+		BookOrder order = (BookOrder) request.getSession().getAttribute("order4Paypal"); 
+		
+	
+		 //Read the shipping information from the payment object(this information is from paypal's page)
+		ItemList itemList = payment.getTransactions().get(0).getItemList();
+		ShippingAddress shippingAddress = itemList.getShippingAddress();
+		
+		//phone of the recipient
+		String shippingPhoneNumber = itemList.getShippingPhoneNumber();
+		String recipientName = shippingAddress.getRecipientName();
+		
+		//Split the recipient name from paypal to my database column
+		String[] names = recipientName.split(" "); 
+		order.setFirstname(names[0]);
+		order.setLastname(names[1]);
+		
+		order.setAddressLine1(shippingAddress.getLine1());
+		order.setAddressLine2(shippingAddress.getLine2());
+		order.setCity(shippingAddress.getCity());
+		order.setState(shippingAddress.getCountryCode());
+		order.setCountry(shippingAddress.getCountryCode());
+		order.setPhone(shippingPhoneNumber);
+		
+		
+		//Persist the order to the database by the util method which used also by the placeOrderCOD()
+		return saveOrder(order);
+		
+		
+	}
+
+	// The order parameter is the return value of the readOrderInfo() util method!
+	private void placeOrderCOD(BookOrder order) throws ServletException, IOException
+	{
+		Integer savedOrderId = saveOrder(order);
+	
+		// forward to the message.jsp page
+		String message = "Thank you.Your order has been recieved." + "We will deflever your books whithin a few days.";
+	
+		String targetPage = "frontend/message.jsp";
+		request.setAttribute("message", message);
+	
+		request.getRequestDispatcher(targetPage).forward(request, response);
+	
+	}
+
+	/*
+	 * Util method to save the order into the data base for both placeOrderCOD()
+	 *  and placeOrderPaypal (later...) 
+	 */
+	private Integer saveOrder(BookOrder order)
+	{ 
+		Integer savedOrderId  = null; 
+		HttpSession session = request.getSession();
+
+		// adding the BookOrder to the database
+		this.orderDAO.openCurrentSessionWithTransaction();
+		BookOrder savedOrder= this.orderDAO.create(order);
+		savedOrderId = savedOrder.getOrderId();
+		this.orderDAO.closeCurrentSessionWithTransaction();
+
+		// Clear the shopping cart in the session
+		ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("cart");
+		shoppingCart.clear();
+		
+		return savedOrderId;
 	}
 
 	// Util method to create a BookOrder form the form input fields in the
@@ -279,30 +359,7 @@ public class OrderService
 
 	}
 
-	// The order parameter is the return value of the readOrderInfo() util method!
-	private void placeOrderCOD(BookOrder order) throws ServletException, IOException
-	{
-		HttpSession session = request.getSession();
-
-		// adding the BookOrder to the database
-		this.orderDAO.openCurrentSessionWithTransaction();
-		this.orderDAO.create(order);
-		this.orderDAO.closeCurrentSessionWithTransaction();
-
-		// Clear the shopping cart in the session
-		ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("cart");
-		shoppingCart.clear();
-
-		// forward to the message.jsp page
-		String message = "Thank you.Your order has been recieved." + "We will deflever your books whithin a few days.";
-
-		String targetPage = "frontend/message.jsp";
-		request.setAttribute("message", message);
-
-		request.getRequestDispatcher(targetPage).forward(request, response);
-
-	}
-
+	
 	// He changed the type of the listByCustomer() to Integer( instead of Customer)
 	public void listOrdersByCustomer() throws ServletException, IOException
 	{
