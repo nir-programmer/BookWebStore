@@ -56,8 +56,8 @@ public class ExecutePaymentServlet extends HttpServlet {
 			//response.getWriter().println("Payment Succussful. Order ID: " + orderId);
 			
 			//Forward to the payment_reciept.jsp page
-			String recieptPage = "frontend/payment_reciept.jsp"; 
-			request.getRequestDispatcher(recieptPage).forward(request, response);
+			String receiptPage = "frontend/payment_receipt.jsp"; 
+			request.getRequestDispatcher(receiptPage).forward(request, response);
 			
 		} 
 		catch (PayPalRESTException e) 

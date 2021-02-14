@@ -6,74 +6,84 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Review Payment - Online Book Store</title>
+<title>Payment Receipt - Online Book Store</title>
 <link rel="stylesheet" href="css/style.css">
-<!-- <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.validate.min.js"></script> -->
+
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	
 	<div align="center">
+		<h2>
+			You have made payment successfully. Thank you for purchasing!
+		</h2>
+		
 		<h3>
-			<i>Please carefully review the following information before
-				making payment</i>
+			Your Payment Receipt
 		</h3>
-
-		<!-- First Section: Payer Information -->
-		<h2>Payer Information:</h2>
+		
+		<h2>Seller Information</h2>
 		<table>
-			<tr>
-				<td><b>First Name: </b>${payer.firstName}</td>
+			<tr> 
+				<td><b>E-mail: </b></td>
+				<td>sales@evergreenbooks.com</td>
 			</tr>
-
-			<tr>
-				<td><b>Last Name: </b>${payer.lastName}</td>
-			</tr>
-
-			<tr>
-				<td><b>E-mail: </b>${payer.email}</td>
+			
+			<tr> 
+				<td><b>Phone Number: </b> </td>
+				<td> +972 123 456 789 </td>
 			</tr>
 		</table>
-
-		<!-- Second Section: Recipient Information -->
-
-		<h2>Recipient Information:</h2>
+		
+		<!-- Section 2 : Buyer Information -->
+		<h2>Buyer Information</h2>
+		<table>
+		
+		<tr> 
+				<td><b>First Name: </b></td>
+				<td>${payer.firstName }</td>
+			</tr>
+			
+			<tr> 
+				<td><b>Last Name: </b></td>
+				<td>${payer.lastName }</td>
+			</tr>
+			
+			<tr> 
+				<td><b>E-mail: </b></td>
+				<td>${payer.email }</td>
+			</tr>
+			
+		</table>
+		
+		
+		<!-- Section 3 : Order Details information -->
+		<h2>Order Details</h2>
 		<table>
 			<tr>
-				<td><b>Recipient Name: </b>${recipient.recipientName}</td>
+				<td><b>OrderId</b> </td>
+				<!-- from the session which was set by the ExecutePaymentSErvlet-->
+				<td>${orderId }</td>
 			</tr>
-
+			
 			<tr>
-				<td><b>Address Line 1: </b>${recipient.line1}</td>
+				<td><b>Ordered By: </b> </td>
+				<td>${loggedCustomer.fullname}</td>
 			</tr>
-
+			
 			<tr>
-				<td><b>Address Line 2: </b>${recipient.line2}</td>
+				<td><b>Transaction Description </b> </td>
+				<td>${transaction.description}</td>
 			</tr>
-
+			
 			<tr>
-				<td><b>City: </b>${recipient.city}</td>
+				<td colspan="2"><b>Items</b></td>
+				
 			</tr>
-
-			<tr>
-				<td><b>State: </b>${recipient.state}</td>
-			</tr>
-
-			<tr>
-				<td><b>County: </b>${recipient.countryCode}</td>
-			</tr>
-
-			<tr>
-				<td><b>Postal Code: </b>${recipient.postalCode}</td>
-			</tr>
-		</table>
-
-
-		<!--3 Second Section: Recipient Information -->
-		<h2>Transaction Details:</h2>
-
-		<!-- 3.1 List of items(table) -->
-		<table >
+			
+			<tr> 
+				<td colspan="2"> 
+					<table >
 			<tr>
 				<td><b>Description: </b></td>
 				<td>${transaction.description}</td>
@@ -142,15 +152,13 @@
 				</td>
 			</tr>
 		</table>
+				
+				</td>
+			</tr>
+			
+			
+		</table>
 		
-		<br/>
-		<div>  
-			<form action="execute_payment" method="post">
-				<input type="hidden" name="paymentId" value="${param.paymentId}" />
-				<input type="hidden" name="PayerID" value="${param.PayerID}" />
-				<input type="submit" value="Pay Now" />
-			</form>
-		</div>
 	</div>
 </body>
 
