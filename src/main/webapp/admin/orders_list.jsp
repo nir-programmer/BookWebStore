@@ -61,7 +61,8 @@
 					<td>${order.customer.fullname}</td>
 					<!-- This value is returned from a transient getter in BookOrder entity -->
 					<td>${order.bookCopies}</td>
-					<td><fmt:setLocale value="en_US" /> <fmt:formatNumber
+					<td><fmt:setLocale value="en_US" />
+							 <fmt:formatNumber
 							value="${order.total}" type="currency" /></td>
 					<td>${order.paymentMethod}</td>
 					<td>${order.status}</td>
