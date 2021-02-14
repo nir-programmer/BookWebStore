@@ -302,7 +302,7 @@ public class PaymentService
 		} catch (PayPalRESTException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new ServletException("Error in  getting payment details form PayPal");
+			throw new ServletException("Error in  getting payment details from PayPal");
 		}
 
 		// Test these values are not null = OK
