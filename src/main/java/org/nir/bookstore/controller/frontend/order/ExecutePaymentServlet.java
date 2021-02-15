@@ -49,11 +49,16 @@ public class ExecutePaymentServlet extends HttpServlet {
 			Transaction transaction =  payment.getTransactions().get(0); 
 			//No need shipping address here!
 			
-			request.setAttribute("payer", payerInfo);
-			request.setAttribute("transaction", transaction);
+			/*
+			 * WRONG:I need to set this into the session to be used in 
+			 * receipt pop up window!!!!
+			 * request.setAttribute("payer", payerInfo);
+				request.setAttribute("transaction", transaction);
+			 */
+			session.setAttribute("payer", payerInfo);
+			session.setAttribute("transaction", transaction);
 			
-			//Display a successfull message to the client
-			//response.getWriter().println("Payment Succussful. Order ID: " + orderId);
+			
 			
 			//Forward to the payment_reciept.jsp page
 			String receiptPage = "frontend/payment_receipt.jsp"; 
