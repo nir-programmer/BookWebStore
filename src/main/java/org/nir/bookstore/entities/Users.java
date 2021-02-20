@@ -47,7 +47,6 @@ public class Users implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "user_id", unique = true, nullable = false)
 	public Integer getUserId() {
 		return this.userId;

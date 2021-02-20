@@ -31,8 +31,8 @@ public class HibernateDAO<E>
 	///
 	
 	
-	protected  Session currentSession;  
-	protected Transaction currentTransaction; 
+	private  Session currentSession;  
+	private  Transaction currentTransaction; 
 	
 	//new code
 	private static SessionFactory sessionFactory; 
@@ -79,10 +79,7 @@ public class HibernateDAO<E>
 	{
 		getCurrentSession().save(entity);
 		
-		//try to fix to many connectinos- close the session
-		/*
-		 * if(currentSession != null) closeCurrentSession();
-		 */
+		
 		return entity; 
 	}
 	
