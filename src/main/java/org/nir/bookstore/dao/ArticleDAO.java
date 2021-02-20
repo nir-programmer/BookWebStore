@@ -16,8 +16,7 @@ public class ArticleDAO extends HibernateDAO<Article> implements GenericeDAO<Art
 	@Override
 	public Article get(Object id)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return super.find(Article.class, id);
 	}
 
 	
@@ -29,7 +28,7 @@ public class ArticleDAO extends HibernateDAO<Article> implements GenericeDAO<Art
 	@Override
 	public void delete(Object id)
 	{
-		// TODO Auto-generated method stub
+		super.delete(Article.class, id);
 		
 	}
 

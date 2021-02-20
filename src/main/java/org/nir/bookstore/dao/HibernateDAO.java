@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.nir.bookstore.entities.Article;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.BookOrder;
 import org.nir.bookstore.entities.Category;
@@ -53,6 +54,7 @@ public class HibernateDAO<E>
 				 .addAnnotatedClass(Review.class)
 				 .addAnnotatedClass(Users.class)
 				 .addAnnotatedClass(BookOrder.class)
+				 .addAnnotatedClass(Article.class)
 				 .buildSessionFactory();
 		
 		numberOfClosedSessionFactory ++ ;

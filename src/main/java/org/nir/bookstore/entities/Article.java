@@ -16,6 +16,7 @@ public class Article
 	@Column(name = "article_id")
 	private Integer articleId; 
 	
+	
 	private String title ; 
 	
 	private String content;
@@ -59,6 +60,10 @@ public class Article
 		this.content = content;
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		return "Article [articleId=" + articleId + ", title=" + title + ", content=" + content + "]";
+	}
 
 }
