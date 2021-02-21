@@ -43,5 +43,11 @@
 				<img alt="" src="../images/orders.png"><br>Orders
 				</a>
 		</div>
+		
+		<div>
+			<a href="list_articles">
+				<img alt="" src="../images/articles.png"><br>Articles
+				</a>
+		</div>
 </div>
 </div>
