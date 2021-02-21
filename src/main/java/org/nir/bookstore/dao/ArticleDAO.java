@@ -35,15 +35,14 @@ public class ArticleDAO extends HibernateDAO<Article> implements GenericeDAO<Art
 	@Override
 	public List<Article> listAll()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return super.findWithNamedQuery("Article.findAll" ,0 ,4); 
+		
 	}
 
 	@Override
 	public long count()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return super.countWithNamedQuery("Article.CountAll"); 
 	}
 
 }

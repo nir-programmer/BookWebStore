@@ -5,9 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "Article.findAll", query = "FROM Article a ORDER BY a.articleId"),
+				@NamedQuery(name = "Article.CountAll" , query = "SELECT COUNT(*) FROM Article a")
+	 })
 @Table(name = "articles")
 public class Article
 {
@@ -16,9 +21,10 @@ public class Article
 	@Column(name = "article_id")
 	private Integer articleId; 
 	
-	
+	@Column(name="title" , unique = true)
 	private String title ; 
 	
+	@Column(name="content")
 	private String content;
 
 	public Article() {}

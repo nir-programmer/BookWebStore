@@ -27,7 +27,6 @@ public class HibernateDAO<E>
 	private static  int numberOfClosedSessions = 0 ;
 	private static int  numberOfBeginTransactions  = 0 ;
 	private static int numberOfCommitedTransactions  = 0 ;
-	private static int numberOfOpenSessionFactory = 0 ; 
 	private static int numberOfClosedSessionFactory = 0 ; 
 	///
 	
