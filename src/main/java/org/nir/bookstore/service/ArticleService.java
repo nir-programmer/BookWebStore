@@ -25,7 +25,6 @@ public class ArticleService
 		this.articleDAO  = new ArticleDAO();
 	}
 
-
 	public void listArticles() throws ServletException, IOException
 	{
 		String articlesPage = "articles_list.jsp";
