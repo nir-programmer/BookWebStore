@@ -169,3 +169,18 @@ div.book
 	font-size: x-large;
 	font-weight: bold;
 }
+
+/*My Refactoring*/
+
+.option-box-img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    float: left;
+}
+	
+	
+	
+	
+
+

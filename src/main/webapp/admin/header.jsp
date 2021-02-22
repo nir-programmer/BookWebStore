@@ -12,41 +12,41 @@
 	<!--  for putting the items in the same line -->
 	<div id="headermenu">
 		<div>
-			<a href="list_users"> <img src="../images/users.png"><br>Users
+			<a href="list_users"> <img class="option-box-img" src="../images/users.png"><br>Users
 			</a>
 		</div>
 		
 		<div >
-			<a href="list_categories"> <img src="../images/categories.png"><br>Categories
+			<a href="list_categories"> <img class="option-box-img" src="../images/categories.png"><br>Categories
 			</a>
 		</div>
 		
 		<div >
-			<a href="list_books"> <img alt="" src="../images/books.png"><br>Books
+			<a href="list_books"> <img alt="" class="option-box-img" src="../images/books.png"><br>Books
 			</a>
 		</div>
 		
 		<div >
 		<a href="list_customers"> 
-			<img alt="" src="../images/customers.png"><br>Customers
+			<img alt=""  class="option-box-img" src="../images/customers.png"><br>Customers
 		</a> 
 		</div>
 		
 		<div>
 			<a href="list_reviews">
-				<img alt="" src="../images/reviews.png"><br>Reviews
+				<img alt="" class="option-box-img" src="../images/reviews.png"><br>Reviews
 				</a> 
 		</div>
 		
 		<div>
 			<a href="list_orders">
-				<img alt="" src="../images/orders.png"><br>Orders
+				<img alt="" class="option-box-img" src="../images/orders.png"><br>Orders
 				</a>
 		</div>
 		
 		<div>
 			<a href="list_articles">
-				<img alt="" src="../images/articles.png"><br>Articles
+				<img alt="" class="option-box-img" src="../images/articles.png"><br>Articles
 				</a>
 		</div>
 </div>
