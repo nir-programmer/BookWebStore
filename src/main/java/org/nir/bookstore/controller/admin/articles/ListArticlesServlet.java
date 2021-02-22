@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.service.ArticleService;
+
 
 @WebServlet("/admin/list_articles")
 public class ListArticlesServlet extends HttpServlet {
@@ -19,8 +21,15 @@ public class ListArticlesServlet extends HttpServlet {
     }
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		 
+		ArticleService articleService  = new ArticleService(request, response);
+		
+		articleService.listArticles(); 
+				
+				
 		
 		
 	}
