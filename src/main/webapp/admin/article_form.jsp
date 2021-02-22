@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create New Book</title>
+<title>Create New Article</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,44 +23,30 @@
 
 	<div align="center">
 		<h2 class="pageheading">
-			<c:if test="${book != null}">
-				Edit Book
+			<c:if test="${article != null}">
+				Edit Article
 			</c:if>
-			<c:if test="${book == null}"> 
-				Create New Book
+			<c:if test="${article == null}"> 
+				Create New Article
 			</c:if>
 		</h2>
 	</div>
 
 	<div align="center">
-	
-		<c:if test="${book != null}">
-			<form action="update_book" method="post" id="bookForm" enctype="multipart/form-data">
-			<input type="hidden" name="bookId" value="${book.bookId}" >
+
+		<c:if test="${article != null}">
+			<form action="update_article" method="post" id="articleForm">
+				<input type="hidden" name="articleId" value="${article.articleId}">
 		</c:if>
-		
-		<c:if test="${book == null }">
-			<form action="create_book" method="post" id="bookForm" enctype="multipart/form-data">
+
+		<c:if test="${article == null }">
+			<form action="create_article" method="post" id="articleForm">
 		</c:if>
-		
+
 
 		<table class="form">
 
-			<tr>
-				<td>Category:</td>
-				<td><select name="category">
-						<c:forEach var="category" items="${categories}">
-							<c:if test="${category.categoryId eq book.category.categoryId}">
-								<option value="${category.categoryId }" selected >
-							</c:if>
-							<c:if test="${category.categoryId ne book.category.categoryId}">
-								<option value="${category.categoryId}">
-							</c:if>
-								${category.name}
-								</option> 
-						</c:forEach>
-				</select></td>
-			</tr>
+
 
 			<tr>
 				<td align="right">Title:</td>
@@ -68,106 +54,48 @@
 					size="20" value="${book.title}"></td>
 			</tr>
 
-			<tr>
-				<td align="right">Author:</td>
-				<td align="left"><input id="author" type="text" name="author"
-					size="20" value="${book.author}"></td>
-			</tr>
 
 			<tr>
-				<td align="right">ISBN:</td>
-				<td align="left"><input id="isbn" type="text" name="isbn"
-					size="20" value="${book.isbn}"></td>
+				<td align="right">Content:</td>
+				<td align="left"><textarea rows="5" cols="50"
+						name="content" id="content">${article.content}
+					</textarea></td>
 			</tr>
 
-			<tr>
-				<td align="right">Publish Date:</td>
-				<td align="left">
-				<input id="publishDate" type="text"
-					name="publishDate" size="20"
-					 value="<fmt:formatDate pattern="MM/dd/yyyy"  value='${book.publishDate}' />" /></td>
-			</tr>
 
-			
-			<tr>
-				<td align="right">Book Image:</td>
-				<td align="left"><input id="bookImage" type="file"
-					name="bookImage" size="20" /><br /> 
-					<img id="thumbnail"
-					alt="Image Preview" style="width: 20%; margin-top: 10px;"
-					src="data:image/jpg;base64,${book.base64Image}" /></td>
-			</tr>
-
-			<tr>
-				<td align="right">Price:</td>
-				<td align="left">
-				<input id="price" type="text" name="price"
-					size="20" value="${book.price}"></td> 
-				<tr><tr>
-				
-			<td align="right">Description:</td>
-				<td align="left">
-					<textarea rows="5" cols="50" name="description" id="description">${book.description}
-					</textarea>
-					
-				</td>
-		</tr>
-		
-		
 			<td>&nbsp;</td>
-		
+
 			<tr>
 				<td colspan="2" align="center">
-					<button type="submit" value=Save">Save</button>
-				&nbsp;&nbsp;&nbsp;
-				<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
-				<button id="cancelButton" value="Cancel">Cancel</button>
+					<button type="submit" value=Save">Save</button> &nbsp;&nbsp;&nbsp;
+					<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+					<button id="cancelButton" value="Cancel">Cancel</button>
 				</td>
 			</tr>
-			
+
 		</table>
 		</form>
 
 
 	</div>
 
-<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$('#publishDate').datepicker();
-		/* $('.content').richText(); */
-		$('#description').richText();
-		$('#bookImage').change(function() {
-			showImageThumbnail(this);
-		});
+		
 
-		$("#bookForm").validate({
+		$("#articleForm").validate({
 			rules : {
-				category : "required",
 				title : "required",
-				author : "required",
-				isbn : "required",
-				publishedDate : "required",
-				<c:if test = "${book == null}"> 
-				bookImage : "required",
-				</c:if>
-				price : "required",
-				description : "required",
-
+				content : "required",
 			},
 			messages : {
-				category : "Please select a category for the book",
-				title : "Please enter title of the book",
-				author : "Please enter author of the book ",
-				isbn : "Please enter isbn of the book",
-				publishedDate : "Please enter publish date of the book",
-				bookImage : "Please choose an image of the book",
-				price : "Please enter price of the book",
-				description : "Please enter description of the book",
+				title: "Please enter a title of the article",
+				content : "Please enter description of the book",
 			}
 		});
 
@@ -177,16 +105,6 @@
 
 	});
 
-	//fileInput is the fileInput element
-	function showImageThumbnail(fileInput) {
-		var file = fileInput.files[0];
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			$('#thumbnail').attr("src", e.target.result);
-		};
-
-		reader.readAsDataURL(file);
-	}
 </script>
 
 </html>
