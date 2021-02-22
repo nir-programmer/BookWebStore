@@ -16,25 +16,24 @@
 
 	<jsp:include page="header.jsp"></jsp:include>
 
+	
+
+	
 	<div align="center">
-		<h2 class="pageheading">Articles Management</h2>
-		<c:url value="create_article" var="createLink">
-			<c:param name="id" value="${article.articleId}" />
-		</c:url>
+		<h2 class="pageheading">Books Management</h2>
+		<h3>
+			<a href="new_article">Create new Article</a>
+		</h3>
 
-		<c:url value="edit_article" var="editLink">
-			<c:param name="id" value="${article.articleId}" />
-		</c:url>
-
-
-		
 	</div>
-
-	<c:if test="${message != null}">
-		<div align="center">
-			<h4 class="message">${message}</h4>
+	
+	<c:if test="${message != null}"> 
+		<div align="center" >
+			<h4 class ="message">${message}</h4>
 		</div>
-	</c:if>
+	</c:if>	
+	
+	
 	<div align="center">
 		<table border="1">
 			<tr>

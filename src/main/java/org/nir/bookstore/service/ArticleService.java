@@ -42,8 +42,16 @@ public class ArticleService
 		request.setAttribute("articles", articles);
 		
 		
-		//forward to articles_list.jsp
+		//forward to articles_list.jspbook_form.jsp
 		request.getRequestDispatcher("articles_list.jsp").forward(request, response);
+		
+	}
+
+	public void newArticle() throws ServletException, IOException
+	{
+		String articleFormPage = "article_form.jsp"; 
+		
+		request.getRequestDispatcher(articleFormPage).forward(request, response);
 		
 	}
 	
