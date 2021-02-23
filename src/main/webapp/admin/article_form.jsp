@@ -46,7 +46,7 @@
 
 
 		<table class="form">
-			<!-- I'm addmin an hidden input field for the id -->
+			<!-- I'm adding an hidden input field for the id -->
 			<tr>
 				<td><input id="id" name="id" type="hidden"
 					value="${article.articleId}" /></td>

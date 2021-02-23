@@ -119,6 +119,43 @@ public class ArticleService
 		
 	}
 
+	public void updateArticle() throws IOException, ServletException
+	{
+		Integer articleId ; 
+		String title ; 
+		String content; 
+		Article article; 
+		
+		//1.Read the form data for the title and content from the request
+		//NOTE ALSO THE ID !!!
+		articleId = Integer.parseInt(request.getParameter("id"));
+		title = request.getParameter("title"); 
+		content = request.getParameter("content"); 
+		
+	
+		//2. Read the article form the database into an object::OK
+		this.articleDAO.openCurrentSessionWithTransaction();
+		article = this.articleDAO.get(articleId);
+		
+		
+		//response.getWriter().println(">>updateArticle(): The article from db: " + article);
+		
+		//3. Update the object with the request values(title and content)
+		article.setContent(content);
+		article.setTitle(title);
+		
+		//4. Update the object into the database
+		this.articleDAO.update(article);
+		
+		this.articleDAO.closeCurrentSessionWithTransaction();
+		
+		
+		//5. Call the listAll() methods with a message...
+		this.listArticles("The article has been update successfully!");
+		
+			
+	}
+
 	
 	
 	
