@@ -11,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Article.findAll", query = "FROM Article a ORDER BY a.articleId"),
-				@NamedQuery(name = "Article.CountAll" , query = "SELECT COUNT(*) FROM Article a")
+				@NamedQuery(name = "Article.CountAll" , query = "SELECT COUNT(*) FROM Article a"),
+				@NamedQuery(name = "Article.findByTitle", query = "FROM Article a WHERE a.title =:title"),
 	 })
 @Table(name = "articles")
 public class Article

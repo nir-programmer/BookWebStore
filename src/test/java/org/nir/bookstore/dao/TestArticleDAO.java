@@ -207,7 +207,19 @@ public class TestArticleDAO {
 		
 		System.out.println("Number of articles in the database: " + actual);
 		
+	}
+	
+	@Test
+	@DisplayName("When calling findByTitle()")
+	public void testFindByNameExists()
+	{
 		
+		String title = "Contact Us"; 
+		Article article =articleDAO.findByTitle(title);
+		
+		assertNotNull(article);
+		
+		System.out.println(">>testFindByTitle(): the article is: " +  article);
 		
 	}
 	

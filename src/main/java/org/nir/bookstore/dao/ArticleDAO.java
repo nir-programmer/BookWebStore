@@ -44,5 +44,20 @@ public class ArticleDAO extends HibernateDAO<Article> implements GenericeDAO<Art
 	{
 		return super.countWithNamedQuery("Article.CountAll"); 
 	}
-
+	
+	public Article findByTitle(String title)
+	{
+		List<Article> articles; 
+		
+		//call findWithNamedQuery of super
+	  articles = super.findWithNamedQuery("Article.findByTitle", "title", title); 
+		
+	  System.out.println(">>The articles with title = " + title);
+	  articles.forEach(System.out::println);
+	  
+		if(articles.size() ==1 ) 
+			return articles.get(0); 
+		
+		return null; 
+	}
 }
