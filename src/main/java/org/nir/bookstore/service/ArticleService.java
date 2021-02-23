@@ -94,6 +94,31 @@ public class ArticleService
 		
 	}
 
+	public void editArticle() throws IOException, ServletException
+	{
+		Integer articleId; 
+		Article article ; 
+		
+		//1.Read the id of the article form the request : OK
+		articleId  = Integer.parseInt(request.getParameter("id"));
+		
+		//response.getWriter().println(">>editArticle(): The id: " + articleId);
+		
+		//2.get the Article from the database: OK!!
+		this.articleDAO.openCurrentSessionWithTransaction();;
+		article = this.articleDAO.get(articleId);
+		this.articleDAO.closeCurrentSessionWithTransaction();
+		
+		//response.getWriter().println(">>editArticle(): The article from db: " + article);
+		
+		//3.Add the article to the request
+		request.setAttribute("article", article);
+		
+		//4.Forward the request to the article_form.jsp page
+		request.getRequestDispatcher("article_form.jsp").forward(request, response);
+		
+	}
+
 	
 	
 	

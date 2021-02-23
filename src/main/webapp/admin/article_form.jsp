@@ -56,7 +56,7 @@
 				<td align="right">Title:</td>
 
 				<td align="left"><input id="title" type="text" name="title"
-					size="20" value="${book.title}"></td>
+					size="20" value="${article.title}"></td>
 			</tr>
 
 			<tr>
