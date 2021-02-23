@@ -9,7 +9,8 @@
 <title>Create New Article</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/richtext.min.css">
 
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
@@ -45,20 +46,23 @@
 
 
 		<table class="form">
-
-
-
+			<!-- I'm addmin an hidden input field for the id -->
+			<tr>
+				<td><input id="id" name="id" type="hidden"
+					value="${article.articleId}" /></td>
+			</tr>
+			
 			<tr>
 				<td align="right">Title:</td>
+
 				<td align="left"><input id="title" type="text" name="title"
 					size="20" value="${book.title}"></td>
 			</tr>
 
-
 			<tr>
 				<td align="right">Content:</td>
-				<td align="left"><textarea rows="5" cols="50"
-						name="content" id="content">${article.content}
+				<td align="left"><textarea rows="5" cols="50" name="content"
+						id="content">${article.content}
 					</textarea></td>
 			</tr>
 
@@ -86,15 +90,13 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		
-
 		$("#articleForm").validate({
 			rules : {
 				title : "required",
 				content : "required",
 			},
 			messages : {
-				title: "Please enter a title of the article",
+				title : "Please enter a title of the article",
 				content : "Please enter description of the book",
 			}
 		});
@@ -104,7 +106,6 @@
 		});
 
 	});
-
 </script>
 
 </html>
