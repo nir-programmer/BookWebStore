@@ -220,8 +220,22 @@ public class TestArticleDAO {
 		assertNotNull(article);
 		
 		System.out.println(">>testFindByTitle(): the article is: " +  article);
-		
 	}
 	
+	
+	@Test
+	@DisplayName("When calling findByTitle() with non exists title")
+	public void testFindByNameNotExists()
+	{
+		
+		String title = "Contact Ussss"; 
+		Article article =articleDAO.findByTitle(title);
+		
+		assertNull(article);
+		
+		System.out.println(">>testFindByTitle(): the article is: " +  article);
+	}
+	
+
 
 }

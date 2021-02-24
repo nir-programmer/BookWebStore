@@ -78,11 +78,23 @@ public class ArticleService
 		
 		//response.getWriter().println(">>createArticle(): title = " + title + " \ncontent = " + content);
 		
+		//2. Check if there is an article with this title - if there is - forward to message.jsp 
+		this.articleDAO.openCurrentSessionWithTransaction();
+		Article existArticle = this.articleDAO.findByTitle(title);
+		if(existArticle != null)
+		{
+			this.articleDAO.closeCurrentSessionWithTransaction();
+			message = "Could not create a new article!\nThere is already an article with title: " + title;
+			CommonUtitlity.forwardToPage("message.jsp", message, request, response);
+			
+			return ;
+		}
+			
 		//2.Create a new Article Object from these values
 		article = new Article(title, content);
 		
 		//3.Persist the object to the database: OK!!!
-		this.articleDAO.openCurrentSessionWithTransaction();
+		
 		Article savedArticle = this.articleDAO.create(article);
 		this.articleDAO.closeCurrentSessionWithTransaction();
 		
@@ -125,16 +137,26 @@ public class ArticleService
 		String title ; 
 		String content; 
 		Article article; 
-		
+		String message; 
 		//1.Read the form data for the title and content from the request
 		//NOTE ALSO THE ID !!!
 		articleId = Integer.parseInt(request.getParameter("id"));
 		title = request.getParameter("title"); 
 		content = request.getParameter("content"); 
 		
+		
+		//2. Check if there is an article with this title - if there is - forward to message.jsp 
+		this.articleDAO.openCurrentSessionWithTransaction();
+		Article existArticle = this.articleDAO.findByTitle(title);
+				if(existArticle != null)
+				{
+					this.articleDAO.closeCurrentSessionWithTransaction();
+					message = "Could not update the article!\nThere is already an article with title: " + title;
+					CommonUtitlity.forwardToPage("message.jsp", message, request, response);
+					return ;
+				}
 	
 		//2. Read the article form the database into an object::OK
-		this.articleDAO.openCurrentSessionWithTransaction();
 		article = this.articleDAO.get(articleId);
 		
 		
