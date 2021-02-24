@@ -204,4 +204,27 @@ public class ArticleService {
 
 	}
 
+	/*************************************************
+	 * 					Front End
+	 ******************************************/
+	public void getAbout() throws IOException 
+	{
+		Article article; 
+		
+		//read the title of the article form the request
+		String title = request.getParameter("title"); 
+		response.getWriter().println(">>title = " + title);
+		
+		
+		//get the Article from the db by title
+		this.articleDAO.openCurrentSessionWithTransaction();
+		article = this.articleDAO.findByTitle(title);
+		
+		
+		response.getWriter().println(">>The article from the db = \n" + title);
+		this.articleDAO.closeCurrentSessionWithTransaction();
+		
+		
+	}
+
 }

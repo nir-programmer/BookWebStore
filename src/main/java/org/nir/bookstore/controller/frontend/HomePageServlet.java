@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nir.bookstore.dao.ArticleDAO;
 import org.nir.bookstore.dao.BookDAO;
 import org.nir.bookstore.dao.CategoryDAO;
+import org.nir.bookstore.entities.Article;
 import org.nir.bookstore.entities.Book;
 import org.nir.bookstore.entities.Category;
 import org.nir.bookstore.service.CategoriesService;
@@ -30,10 +32,13 @@ public class HomePageServlet extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{	
 		BookDAO bookDAO; 
+		ArticleDAO articleDAO; // my code
+		
 		String targetPage; 
 		List<Book> newBooks;
 		List<Book> bestSellingBooks;
 		List<Book> mostFavoredBooks;
+		List<Article> articles; //my code
 		
 		//Open current session
 		bookDAO = new BookDAO(); 
@@ -62,6 +67,17 @@ public class HomePageServlet extends HttpServlet
 		bookDAO.closeCurrentSession();
 		System.out.println(">>HomePageServlet.doGet():bookDAO.closeCurrentSession() RETURNED!");
 		
+		/*
+		 * My Code: Create the dao , read list of articles into the request
+		 */
+		articleDAO = new ArticleDAO();
+		articleDAO.openCurrentSessionWithTransaction();
+		articles = articleDAO.listAll();
+		articleDAO.closeCurrentSession();
+		
+		request.setAttribute("articles", articles);
+		
+		//end of my code
 		
 		//forward to the home page
 		targetPage = "frontend/index.jsp"; 
