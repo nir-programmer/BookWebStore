@@ -148,7 +148,7 @@ public class TestArticleDAO {
 	@DisplayName("When deleging article")
 	public void testDeleteArticle()
 	{ 
-		Integer id = 2; 
+		Integer id = 7; 
 		
 		System.out.println(">>testDeleteArticle():Trying to delete article with id = " + id); 
 		
