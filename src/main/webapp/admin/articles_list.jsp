@@ -20,7 +20,7 @@
 
 	
 	<div align="center">
-		<h2 class="pageheading">Books Management</h2>
+		<h2 class="pageheading">Articles Management</h2>
 		<h3>
 			<a href="new_article">Create new Article</a>
 		</h3>
@@ -48,6 +48,10 @@
 					<c:param name="id" value="${article.articleId}"></c:param>
 				</c:url>
 				
+				<c:url value="delete_article" var="deleteLink">
+					<c:param name="id" value="${article.articleId}"></c:param>
+				</c:url>
+				
 				<tr> 
 					<td>${status.index + 1  } </td>
 					<td>${article.articleId}</td>
@@ -56,8 +60,9 @@
 					<td>
 						<%-- <a href="${editLink}">Edit</a>&nbsp;  --%>
 						<a href="edit_article?id=${article.articleId}">Edit</a>&nbsp; 
-						<a href="javascript:void(0);" class="deleteLink" id="${article.articleId}">Delete</a> 
-				
+						<a href="delete_article?id=${article.articleId}">Delete</a>&nbsp; 
+						
+						<%-- <a href="javascript:void(0)" class="deleteLink" id="${article.articleId}">Delete</a> --%>
 					</td>
 				</tr>
 
@@ -78,9 +83,9 @@
 			$(this).on("click", function()
 				{
 				reviewId = $(this).attr("id");
-				if(confirm('Are you sure you want to delete review with ID '+reviewId + '?'))
+				if(confirm('Are you sure you want to delete article with ID '+articleId + '?'))
 				{
-					window.location = 'delete_review?id=' +  reviewId;
+					window.location = 'delete_article?id=' +  articleId;
 				} 
 			});
 		});
