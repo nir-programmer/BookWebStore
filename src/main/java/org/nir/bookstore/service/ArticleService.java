@@ -136,44 +136,76 @@ public class ArticleService
 		Integer articleId ; 
 		String title ; 
 		String content; 
-		Article article; 
+		Article existArticle , articleByTitle ; 
 		String message; 
+		
+		
+
+		//1.Read the form data for the title and content from the request
+		 articleId = Integer.parseInt(request.getParameter("id")); 
+		 title = request.getParameter("title"); 
+		content = request.getParameter("content");
+		
+		//3 articleByTitle <- findByTitle(title); 
+		this.articleDAO.openCurrentSessionWithTransaction();
+		existArticle = this.articleDAO.get(articleId);
+		articleByTitle = this.articleDAO.findByTitle(title);
+		//4 if the articleByTitle exists AND articleByTitle not equals to existedArticle 
+		//Send an error message!!! and return 
+		if( articleByTitle != null && !articleByTitle.equals(existArticle))
+		{
+			this.articleDAO.closeCurrentSessionWithTransaction();
+			message = "Could not update the article!\nThere is already an article with title: " + title;
+			CommonUtility.forwardToPage("message.jsp", message, request, response);
+			return; 
+		}
+		
+		//5 else
+			//5.1 Update the object with the request values(title and content)
+			existArticle.setTitle(title);
+			existArticle.setContent(content);
+			
+			//5.2 Update the object into the database
+			this.articleDAO.update(existArticle);
+		
+			this.articleDAO.closeCurrentSessionWithTransaction();
+		
+			//5.3 Call the listAll() methods with a message...
+			this.listArticles("The article has been update successfully!");
+			
 		//1.Read the form data for the title and content from the request
 		//NOTE ALSO THE ID !!!
-		articleId = Integer.parseInt(request.getParameter("id"));
-		title = request.getParameter("title"); 
-		content = request.getParameter("content"); 
-		
-		
-		//2. Check if there is an article with this title - if there is - forward to message.jsp 
-		this.articleDAO.openCurrentSessionWithTransaction();
-		Article existArticle = this.articleDAO.findByTitle(title);
-				if(existArticle != null)
-				{
-					this.articleDAO.closeCurrentSessionWithTransaction();
-					message = "Could not update the article!\nThere is already an article with title: " + title;
-					CommonUtitlity.forwardToPage("message.jsp", message, request, response);
-					return ;
-				}
-	
-		//2. Read the article form the database into an object::OK
-		article = this.articleDAO.get(articleId);
-		
-		
-		//response.getWriter().println(">>updateArticle(): The article from db: " + article);
-		
-		//3. Update the object with the request values(title and content)
-		article.setContent(content);
-		article.setTitle(title);
-		
-		//4. Update the object into the database
-		this.articleDAO.update(article);
-		
-		this.articleDAO.closeCurrentSessionWithTransaction();
-		
-		
-		//5. Call the listAll() methods with a message...
-		this.listArticles("The article has been update successfully!");
+		/*
+		 * articleId = Integer.parseInt(request.getParameter("id")); title =
+		 * request.getParameter("title"); content = request.getParameter("content");
+		 * 
+		 * 
+		 * //2. Check if there is an article with this title - if there is - forward to
+		 * message.jsp this.articleDAO.openCurrentSessionWithTransaction(); Article
+		 * existArticle = this.articleDAO.findByTitle(title); if(existArticle != null) {
+		 * this.articleDAO.closeCurrentSessionWithTransaction(); message =
+		 * "Could not update the article!\nThere is already an article with title: " +
+		 * title; CommonUtitlity.forwardToPage("message.jsp", message, request,
+		 * response); return ; }
+		 * 
+		 * //2. Read the article form the database into an object::OK article =
+		 * this.articleDAO.get(articleId);
+		 * 
+		 * 
+		 * //response.getWriter().println(">>updateArticle(): The article from db: " +
+		 * article);
+		 * 
+		 * //3. Update the object with the request values(title and content)
+		 * article.setContent(content); article.setTitle(title);
+		 * 
+		 * //4. Update the object into the database this.articleDAO.update(article);
+		 * 
+		 * this.articleDAO.closeCurrentSessionWithTransaction();
+		 * 
+		 * 
+		 * //5. Call the listAll() methods with a message...
+		 * this.listArticles("The article has been update successfully!");
+		 */
 		
 			
 	}
