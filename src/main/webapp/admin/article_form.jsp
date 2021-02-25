@@ -9,8 +9,7 @@
 <title>Create New Article</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/richtext.min.css">
 
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
@@ -61,7 +60,8 @@
 
 			<tr>
 				<td align="right">Content:</td>
-				<td align="left"><textarea rows="5" cols="50" name="content"
+				<td align="left">
+					<textarea rows="5" cols="50" name="content"
 						id="content">${article.content}
 					</textarea></td>
 			</tr>
@@ -72,7 +72,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit" value=Save">Save</button> &nbsp;&nbsp;&nbsp;
-					<!-- <button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button> -->
+					<button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button>
 					<button id="cancelButton" value="Cancel">Cancel</button>
 				</td>
 			</tr>
