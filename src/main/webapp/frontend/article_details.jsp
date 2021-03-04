@@ -6,34 +6,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${article.title}-OnlineBooks Store</title>
+<title>${article.title}-OnlineBooksStore</title>
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
-	<div align="center"> 
-		<p> 
-			${article.content}
-			
-		</p>
-	
+	<div align="center" class='box'>
+		<p>${article.content}</p>
+
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
-	
+
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#buttonWriteReview").click(function() {
-			//redirect the browser to the URL of the WriteReviewServlet(/write_review)
-			window.location = 'write_review?book_id=' + ${book.bookId};
-		});
+		//create the div element 
+		const message = document.createElement('div');
 		
-		$("#buttonAddToCart").click(function() {
-			//redirect the browser to the URL of the WriteReviewServlet(/write_review)
-			window.location = 'add_to_cart?book_id=' + ${book.bookId};
-		});
-	});
+		//Add html content to the element
+		message.innerHTML = `We use cooked for improved functionallity nd analytics.
+		 <button class="btn btn--close-cookie">Got it!</button>`;
+		
+		//add the cookie-message class to the classList
+		message.classList.add('cookie-message')
+		message.innerHTML = `We are using cookies to support better service 
+		<button>Got it</button>`;
+		
+		//insert to the box
+		const box = document.querySelector('.box');
+		box.prepend(message);
+		
 	</script>
 </body>
 </html>

@@ -180,7 +180,16 @@ div.book
 }
 	
 	
-	
+.cookie-message{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	widows: 100%;
+	background-color: gray;
+	color:#bbb;
+	font-size: 1.5 rem;
+	font-weight: 400;
+	}
 	
 
 

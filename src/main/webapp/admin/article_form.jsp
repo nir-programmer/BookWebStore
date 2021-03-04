@@ -9,7 +9,8 @@
 <title>Create New Article</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/richtext.min.css">
 
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
@@ -35,12 +36,14 @@
 	<div align="center">
 
 		<c:if test="${article != null}">
-			<form action="update_article" method="post" id="articleForm">
+			<form action="update_article" method="post" name="articleForm" 
+				onsubmit="return validateForm()">
 				<input type="hidden" name="articleId" value="${article.articleId}">
 		</c:if>
 
 		<c:if test="${article == null }">
-			<form action="create_article" method="post" id="articleForm">
+			<form action="create_article" method="post" name="articleForm"
+			onsubmit="return validateForm()">
 		</c:if>
 
 
@@ -50,7 +53,7 @@
 				<td><input id="id" name="id" type="hidden"
 					value="${article.articleId}" /></td>
 			</tr>
-			
+
 			<tr>
 				<td align="right">Title:</td>
 
@@ -61,7 +64,7 @@
 			<tr>
 				<td align="right">Content:</td>
 				<td align="left">
-					<textarea rows="5" cols="50" name="content"
+				<textarea rows="5" cols="50" name="content"
 						id="content">${article.content}
 					</textarea></td>
 			</tr>
@@ -71,7 +74,8 @@
 
 			<tr>
 				<td colspan="2" align="center">
-					<button type="submit" value=Save">Save</button> &nbsp;&nbsp;&nbsp;
+					<button type="submit" id="submit" value=Save">Save</button>
+					&nbsp;&nbsp;&nbsp;
 					<button onclick="javascript:history.go(-1);" value="Cancel">Cancel</button>
 					<button id="cancelButton" value="Cancel">Cancel</button>
 				</td>
@@ -88,7 +92,29 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	function validateForm() {
+		const title = document.articleForm.title.value;
+
+		const content = document.getElementById("content");
+		
+		alert(content.textContent);
+
+		if (title == null || title == "") 
+		{
+			
+			alert("title can't be blank")
+			return false;
+		}
+		
+		if(content == null || content == "")
+		{
+			alert("alert can't be blank")
+			return false;
+		}
+		
+	}
+
+	/* $(document).ready(function() {
 
 		$("#articleForm").validate({
 			rules : {
@@ -105,7 +131,7 @@
 			history.go(-1);
 		});
 
-	});
+	}); */
 </script>
 
 </html>
