@@ -19,13 +19,14 @@
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 
-	<script type="text/javascript">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+	<!-- <script type="text/javascript">
 		//create the div element 
 		const message = document.createElement('div');
 		
 		//Add html content to the element
 		message.innerHTML = `We use cooked for improved functionallity nd analytics.
-		 <button class="btn btn--close-cookie">Got it!</button>`;
+		 <button class="btn-close-cookie">Got it!</button>`;
 		
 		//add the cookie-message class to the classList
 		message.classList.add('cookie-message')
@@ -36,6 +37,11 @@
 		const box = document.querySelector('.box');
 		box.prepend(message);
 		
-	</script>
+		//remove the box when click on the buttons
+		const btnCloseCookie = document.querySelector('.btn btn-close-cookie').addEventListener('click', function(){
+			message.remove(message); 
+		})
+		
+	</script> -->
 </body>
 </html>
