@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.nir.bookstore.entities.Article;
 
 public class TestArticleDAO {
-
+//
 	private static ArticleDAO articleDAO = null; 
 
 	@BeforeAll
